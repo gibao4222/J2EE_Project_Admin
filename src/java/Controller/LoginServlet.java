@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet{
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String tentbao = request.getParameter("txtThuebao");
+//            String tentbao = request.getParameter("txtThuebao");
 //            ResultSet rs=null;
 //            if(tentbao != null && tentbao.length()!=0)
 //                rs = read(tentbao);
