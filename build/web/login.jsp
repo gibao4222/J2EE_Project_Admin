@@ -121,5 +121,13 @@
     </div>
 
     <script src="./resources/js/login.js"></script>
+    <form action="Login">
+            Nhập tên thuê bao:<input type="text" name="txtThuebao" vaule=""><br/>
+            Nhập số điện thoại:<input type="text" name="txtSDT" vaule=""><br/>
+            Địa chỉ:<input type="text" name="txtDiaChi" vaule=""><br/>
+            <input type="submit" name="submit" value="Tra cuu">
+
+            
+        </form>
     </body>
 </html>hgh
