@@ -19,7 +19,7 @@ public class Connect {
     //Mở kết nối DB
     public void openConnection(){
         try {
-            String conStr = "jdbc:mysql://localhost:3306/qldienthoai";
+            String conStr = "jdbc:mysql://localhost:3306/csdl_j2ee";
             String username="root";String password="";
             con=null;
             stmt=null;

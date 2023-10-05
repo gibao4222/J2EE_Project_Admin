@@ -2,76 +2,110 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import static java.lang.System.out;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.Statement;
+
 
 /**
  *
- * @author Admin
+ * @author Thanhchan
  */
-@WebServlet(name="LoginServlet", urlPatterns={"/Login"})
-public class LoginServlet extends HttpServlet{
-   Connect connect = new Connect();
-   public LoginServlet(){
-       connect.openConnection();
-   }
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+@WebServlet(name = "loginn", urlPatterns = {"/login"})
+public class LoginServlet extends HttpServlet {
+    String newSQL;
+    String kq;
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-//            String tentbao = request.getParameter("txtThuebao");
-//            ResultSet rs=null;
-//            if(tentbao != null && tentbao.length()!=0)
-//                rs = read(tentbao);
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");  
+            out.println("<title>Servlet loginn</title>");            
             out.println("</head>");
             out.println("<body>");
-//            out.println("<h1>Kết quả tra điện thoại theo yêu cầu của bạn :</h1>");
-//            out.println("<table border=1 cellPadding=1 cellSpacing=1>");
-//            try{
-//            out.println("<tr><th>Số thứ tự</th><th>Tên thuê bao</th><th>Số điện thoại</th><th>Địa chỉ</th></tr>\n");
-//                if(rs!=null){
-//                    for(int i=1;rs.next();){
-//                        out.println("<tr>"+"<td>"+i+"</td>"+"<td>"+rs.getString(2)+"</td>"
-//                        +"<td>"+rs.getString(3)+"</td>"
-//                        +"<td>"+rs.getString(4)+"</td> </tr>\n");
-//                    }
-//                    out.println("</table>");
-//                    rs.close();
-//                    connect.stmt.close();
-//                    connect.con.close();
-//                }
-//            out.println("</body>");
-//            out.println("</html>");
-//            }catch(Exception e){
-//                out.println("Error:"+e);
-//            }
+            out.println("<h1>Servlet loginn at " + request.getContextPath() + "</h1>");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+           
+            out.println(email);
+           out.println(password); 
+            newSQL = "SELECT account.password, customer.email FROM account INNER JOIN customer ON account.idPerson = customer.idCustomer WHERE account.password=" + password +" AND customer.email='"+email+"'";
+;
+            
+            String conStr = "jdbc:mysql://localhost:3306/csdl_j2ee";
+            Statement stmt = null;
+            ResultSet rs = null;    
+            try{
+                Connection con = null;
+                Class.forName("com.mysql.jdbc.Driver");
+                con = DriverManager.getConnection(conStr,"root","");
+                stmt = con.createStatement();
+                rs = stmt.executeQuery(newSQL);
+                String name="";
+                if(rs.next()) {
+                    name = rs.getString("email");
+                    kq="true";
+                   
+                    CookieUtils.add("email", email, response); 
+                    CookieUtils.add("password", password, response); 
+                                            request.setAttribute("message", "Đăng nhập thành công"); 
+                                     String emaill = CookieUtils.get("email", request); 
+                String passwordd = CookieUtils.get("password", request); 
+                    request.setAttribute("emaill", emaill); 
+                    request.setAttribute("passwordd", passwordd);
+                out.print("hi"+" "+emaill);
+                                request.getRequestDispatcher("index.jsp").forward(request, response);         
+
+//                request.getRequestDispatcher("login.jsp").forward(request, response); 
+
+
+            }else{
+                kq = "false";
+                request.setAttribute("message", "Tài khoản hoặc mật khẩu không đúng"); 
+                request.getRequestDispatcher("login.jsp").forward(request, response); 
+
+
+            }
+               
+
+                
+            }catch(Exception e){
+                out.println("Error:"+e);
+            }
+            
+            out.println("</body>");
+            out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -79,12 +113,13 @@ public class LoginServlet extends HttpServlet{
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -92,21 +127,18 @@ public class LoginServlet extends HttpServlet{
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-//    public ResultSet read(String tentbao){
-//        String newSQL = "SELECT * FROM customer"+ " WHERE TenThueBao like '%" + tentbao + "%'";
-//        ResultSet rs = connect.doReadQuery(newSQL);
-//        return rs;
-//    }
+
 }

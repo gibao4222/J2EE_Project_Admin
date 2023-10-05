@@ -24,7 +24,9 @@ public class HeaderComponent {
                 +"<div id='iconHeader'>"
                 +"  "+icon1
                 +"  "+icon2
+                   +"<h1><a href="+"Logout"+">Logout</a></h1>"
                 + "</div>"
+             
                 + "</div>";
     }
 }

@@ -18,23 +18,28 @@
     </head>
     <body>
         <div class="container">
+
       <div class="forms-container">
+
         <div class="signin-signup">
-            <form th:action="@{/signin}" method="POST" class="sign-in-form">
+        
+            <form action="login" method="post" class="sign-in-form">
+                                                  <mark>${message}</mark>
+
             <h2 class="title">Sign in</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" name="username" placeholder="Username" />
+              <input type="text" name="email" value="${emaill}" placeholder="Email" />
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" name="password" placeholder="Password" />
+              <input type="password" name="password" value="${passwordd}" placeholder="Password" />
             </div>
             <input type="submit" value="Login" class="btn solid" />
-            <p style="color:red;" th:text="${errorLogin}"></p>
+            <p style="color:red;" ></p>
             <p class="social-text">Or Sign in with social platforms</p>
             <div class="social-media">
-              <a href="#" class="social-icon">
+              <a href="#" class="social-icon">  
                 <i class="fab fa-facebook-f"></i>
               </a>
               <a href="#" class="social-icon">
