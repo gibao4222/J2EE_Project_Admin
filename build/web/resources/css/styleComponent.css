@@ -29,13 +29,14 @@ body{
     background: #F2F1F1;
     position: fixed;
     top: 0;
+    /*z-index: 0;*/
 }
 .header .labelHeader{
     color: #3D80E5;
     font-size: 35px;
     font-style: normal;
     font-weight: 400;
-    line-height: 80px;
+    /*line-height: 80px;*/
     position: absolute;
     left: 315px
 }
@@ -336,4 +337,13 @@ thead th.active,tbody td.active {
 .export__file .export__file-options img{
     width: 2rem;
     height: auto;
+}
+
+
+
+
+/*Navbar*/
+#accordionSidebar{
+    position: relative !important;
+    z-index: 9999;
 }
