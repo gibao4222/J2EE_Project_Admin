@@ -82,7 +82,7 @@
             <a class="collapse-item" href="">Nhà Sản Xuất</a>
             <a class="collapse-item" href="">Danh Sách Sản Phẩm</a>
             <a class="collapse-item" href="">Danh Mục Sản Phẩm</a>
-            <a class="collapse-item" href="">Chương Trình Khuyến Mãi</a>
+            <a class="collapse-item" href="promotion.jsp">Chương Trình Khuyến Mãi</a>
           </div>
         </div>
         </li>
