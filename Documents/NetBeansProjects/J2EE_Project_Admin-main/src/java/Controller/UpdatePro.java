@@ -20,7 +20,7 @@ import java.io.PrintWriter;
  *
  * @author Thanhchan
  */
-@WebServlet(urlPatterns = {"/update-product"})
+@WebServlet(urlPatterns = {"/update-produlct"})
 public class UpdatePro extends HttpServlet {
 
     /**

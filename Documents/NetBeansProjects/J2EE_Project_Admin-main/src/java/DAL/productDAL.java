@@ -140,7 +140,7 @@ public class productDAL extends MyDatabaseManager{
         productDAL p = new productDAL();
        
          List<product> list  =  p.readproduct();
-         System.out.println(list.get(2).getId());
+         System.out.println(list.get(0).getId());
 //         product pro = p.findProduct(24);
             product pro = new product();
          pro.setNameProduct("adadad");
@@ -156,7 +156,7 @@ public class productDAL extends MyDatabaseManager{
                                  pro.setQuantity("adadad");
          pro.setPrice(Float.parseFloat("23213"));
          pro.setPortray("ấdasdad");
-         p.updatePro(pro, 24);
+         p.updatePro(pro, 41);
           System.out.println(pro.getStuff());
           
           
