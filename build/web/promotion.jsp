@@ -30,69 +30,77 @@
         
       </div>
      
-      <form action="" method="POST">
+        <form action="add-Promotion" id="promotionForm" method="POST">
 
         <div class="modal-body">
-            
+            <input type="hidden" name="idPromo" id="idPromo" value="">
             <div class="form-group">
 
                 <label style="margin-left: 15px"> Mã Giảm Giá </label>
-                <input type="text" style="width: 90%;margin: auto" name="code" class="form-control" placeholder="Enter Coupon code">
+                <input type="text" style="width: 90%;margin: auto" name="code" id="code" class="form-control" placeholder="Enter Coupon code">
 
             </div>
             
             <div class="form-group">
 
                 <label style="margin-left: 15px"> Tên Chương Trình Khuyến Mãi </label>
-                <input type="text" style="width: 90%;margin: auto" name="namePromo" class="form-control" placeholder="Enter Name Promotion">
+                <input type="text" style="width: 90%;margin: auto" name="namePromo" id="namePromo" class="form-control" placeholder="Enter Name Promotion">
 
             </div>
             
             <div class="form-group">
 
                 <label style="margin-left: 15px"> Ngày Bắt Đầu </label>
-                <input type="text" style="width: 90%;margin: auto" name="dateStart" class="form-control" placeholder="Enter Date Start">
+                <input type="text" style="width: 90%;margin: auto" name="dateStart" id="dateStart" class="form-control" placeholder="Enter Date Start">
 
             </div>
             
             <div class="form-group">
 
                 <label style="margin-left: 15px"> Ngày Kết Thúc </label>
-                <input type="text" style="width: 90%;margin: auto" name="dateEnd" class="form-control" placeholder="Enter Date End">
+                <input type="text" style="width: 90%;margin: auto" name="dateEnd" id="dateEnd" class="form-control" placeholder="Enter Date End">
 
             </div>
             
             <div class="form-group">
 
                 <label style="margin-left: 15px"> Chiết Khấu </label>
-                <input type="text" style="width: 90%;margin: auto" name="saleOff" class="form-control"  placeholder="Enter Discount">
+                <input type="text" style="width: 90%;margin: auto" name="saleOff" id="saleOff" class="form-control"  placeholder="Enter Discount">
                 
             </div>
             
             <div class="form-group">
 
                 <label style="margin-left: 15px"> Giảm Tối Đa </label>
-                <input type="text" style="width: 90%;margin: auto" name="reduceMax" class="form-control" placeholder="Enter Reduce Max">
+                <input type="text" style="width: 90%;margin: auto" name="reduceMax" id="reduceMax" class="form-control" placeholder="Enter Reduce Max">
 
             </div>
             
             <div class="form-group">
+                <label style="margin-left: 15px"> Danh Sách Sản Phẩm </label>
                 <div class="container-fluid" style="display: flex; justify-content: space-between; gap: 10px;">
                     <div class="card shadow mb-4"style="min-width: 650px;">
                         <div class="card-body" >
                             <div class="table-responsive table-Cover">
+                                
                                 <table class="table table-bordered table-ScrollBar" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
-                                            <th>Danh Sách Quyền</th>
+                                            <th>Mã Sản Phẩm</th>
+                                            <th>Tên Sản Phẩm</th>
+                                            <th>Ảnh</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${dataPermission}" var="c">
-                                        <tr data-permissionid="${c.idPermission}">
+                                    <c:forEach items="${dataProduct}" var="c">
+                                        <tr data-productid="${c.idProduct}">
                                             <td><input type="checkbox"></td>
-                                            <td> ${c.idPermission} | ${c.namePermission} | ${c.portray}</td>
+
+                                                        <td>${c.idProduct}</td>
+                                            <td>${c.nameProduct}</td>
+                                            <td><img src="./resources/img/${c.image}" style="width: 120px; height: 100px" ></td>
+
                                             
                                         </tr>
                                     </c:forEach>
@@ -143,7 +151,7 @@
 
     <div class="table-responsive">
 
-     <form action="" method="POST">
+     <form action="promotion" method="POST">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
@@ -157,21 +165,23 @@
           </tr>
         </thead>
         <tbody>
-          
+            <c:forEach items="${dataPromotion}" var="c">
           <tr>
-            <td> <?php echo $i; ?> </td>
-            <td> <?php echo $result['code']; ?></td>
-             <td> <?php echo $result['discount']; ?>%</td>
-            <td> <?php echo $result['discount']; ?>%</td>
-            <td> <?php echo $result['discount']; ?>%</td>
+            <td> ${c.idPromo}</td>
+            <td> ${c.code}</td>
+             <td> ${c.namePromo}</td>
+            <td> ${c.dateStart} -> ${c.dateEnd}</td>
+            <td> ${c.saleOff}%<input id="rowReduceMax" value="${c.reduceMax}" type="hidden"></td>
+
             <td>
-                <form action="" method="post">
-                  <input type="hidden" name="delete_id" value="<?php echo $result['id_discount']?>">
+                <form action="delete-Promotion" method="post">
+                    <input type="hidden" name="idPromo" id="idPromo" value="${c.idPromo}">
                   <button  type="submit" name="delete_btn" class="btn btn-danger">Xóa</button>
                 </form>
+                <button  type="button" name="edit_btn" id="edit_btn" class="btn btn-success" data-toggle="modal" data-target="#addadminprofile">ê đít</button>
             </td>
           </tr>
-
+        </c:forEach>
         </tbody>
       </table>
        </form>
@@ -181,7 +191,30 @@
 </div>
 
 </div>
-
+<script>
+    //Cập nhật
+                document.addEventListener('click',function(e){
+                    if(e.target && e.target.id === 'edit_btn'){
+                        
+                        let form = document.getElementById('promotionForm');
+                        form.action='update-Promotion';
+                        
+                        
+                        let row = e.target.closest('tr');
+                        
+                        document.getElementById("idPromo").value = row.cells[0].innerText;
+                        document.getElementById("namePromo").value = row.cells[2].innerText;
+                        document.getElementById("code").value = row.cells[1].innerText;
+                        let time = row.cells[3].innerText.split('->');
+                        document.getElementById("dateStart").value = time[0];
+                        document.getElementById("dateEnd").value = time[1];
+                        document.getElementById("saleOff").value = row.cells[4].innerText.slice(0,-1);
+                        let permissionCell = row.cells[4];
+                        let permissionInput = permissionCell.querySelector('input');
+                        let str = permissionInput ? permissionInput.value : '';
+                        document.getElementById("reduceMax").value = str;
+                    }});
+</script>
 
 <!-- /.container-fluid -->
 

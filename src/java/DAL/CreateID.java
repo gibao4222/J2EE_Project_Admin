@@ -50,8 +50,11 @@ public class CreateID extends MyDatabaseManager{
             case "GP":
                 query = "SELECT * FROM permissiongroup";
                 break;
+            case "Pr":
+                query = "SELECT * FROM promotion";
+                break;
             case "PR":
-                
+                query = "SELECT * FROM product";
                 break;
             case "CA":
                 

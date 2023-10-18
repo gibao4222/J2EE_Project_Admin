@@ -11,13 +11,13 @@ import java.sql.*;
  */
 public class PromotionModel {
     String idPromo,namePromo,code;
-    Date dateStart,dateEnd;
+    String dateStart,dateEnd;
     float saleOff, reduceMax;
 
     public PromotionModel() {
     }
 
-    public PromotionModel(String idPromo, String namePromo, String code, Date dateStart, Date dateEnd, float saleOff, float reduceMax) {
+    public PromotionModel(String idPromo, String namePromo, String code, String dateStart, String dateEnd, float saleOff, float reduceMax) {
         this.idPromo = idPromo;
         this.namePromo = namePromo;
         this.code = code;
@@ -27,6 +27,17 @@ public class PromotionModel {
         this.reduceMax = reduceMax;
     }
 
+    public PromotionModel(String namePromo, String code, String dateStart, String dateEnd, float saleOff, float reduceMax) {
+        this.namePromo = namePromo;
+        this.code = code;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.saleOff = saleOff;
+        this.reduceMax = reduceMax;
+    }
+
+    
+    
     public String getIdPromo() {
         return idPromo;
     }
@@ -51,19 +62,19 @@ public class PromotionModel {
         this.code = code;
     }
 
-    public Date getDateStart() {
+    public String getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(String dateStart) {
         this.dateStart = dateStart;
     }
 
-    public Date getDateEnd() {
+    public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
 
