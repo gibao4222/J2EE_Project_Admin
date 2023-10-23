@@ -56,11 +56,17 @@ public class CreateID extends MyDatabaseManager{
             case "PR":
                 query = "SELECT * FROM product";
                 break;
+            case "ST":
+                query = "SELECT * FROM staff";
+                break;
+            case "CT":
+                 query = "SELECT * FROM customer";
+                break;
             case "CA":
                 
                 break;
             case "SU":
-                
+                query = "SELECT * FROM supplier";
                 break;
             default:
         
