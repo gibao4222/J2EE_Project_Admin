@@ -2,35 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DAL;
+package Model;
 
 /**
  *
  * @author trinh
  */
-public class orderDetail {
-   String idOrderDetail;
-   String idOrder;
-   String idProduct;
-   String dateCreated;
-   String quantity;
-    String total;
-   String price;
- String idSale;
+public class OrderDetail {
+    String idOrderDetail, idOrder, idProduct,dateCreated,quantity,price,total, idSale;
 
-    public orderDetail(String idOrderDetail, String idOrder, String idProduct, String dateCreated, String quantity, String total, String price, String idSale) {
+    public OrderDetail(String idOrderDetail, String idOrder, String idProduct, String dateCreated, String quantity, String price, String total, String idSale) {
         this.idOrderDetail = idOrderDetail;
         this.idOrder = idOrder;
         this.idProduct = idProduct;
         this.dateCreated = dateCreated;
         this.quantity = quantity;
-        this.total = total;
         this.price = price;
+        this.total = total;
         this.idSale = idSale;
     }
 
-    orderDetail() {
-        
+    public OrderDetail() {
+       
     }
 
     public String getIdOrderDetail() {
@@ -73,20 +66,20 @@ public class orderDetail {
         this.quantity = quantity;
     }
 
-    public String getTotal() {
-        return total;
-    }
-
-    public void setTotal(String total) {
-        this.total = total;
-    }
-
     public String getPrice() {
         return price;
     }
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
     }
 
     public String getIdSale() {
@@ -96,9 +89,6 @@ public class orderDetail {
     public void setIdSale(String idSale) {
         this.idSale = idSale;
     }
-
-   
     
-   
     
 }

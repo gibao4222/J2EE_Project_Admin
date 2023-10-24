@@ -9,32 +9,27 @@ package DAL;
  * @author trinh
  */
 public class Order {
- String idOrders;
-     String idCustomer;
-     int status;
-     String dateCreated;
-     String totalBill;
+ String idOrder, idCustomer,dateCreated,  totalBill,status;
 
-    public Order(String idOrders, String idCustomer, int status, String dateCreated, String totalBill) {
-        this.idOrders = idOrders;
+    public Order(String idOrder, String idCustomer, String dateCreated, String totalBill, String status) {
+        this.idOrder = idOrder;
         this.idCustomer = idCustomer;
-        this.status = status;
         this.dateCreated = dateCreated;
         this.totalBill = totalBill;
+        this.status = status;
     }
+
 
     Order() {
        
     }
 
- 
-
-    public String getIdOrders() {
-        return idOrders;
+    public String getIdOrder() {
+        return idOrder;
     }
 
-    public void setIdOrders(String idOrders) {
-        this.idOrders = idOrders;
+    public void setIdOrder(String idOrder) {
+        this.idOrder = idOrder;
     }
 
     public String getIdCustomer() {
@@ -43,14 +38,6 @@ public class Order {
 
     public void setIdCustomer(String idCustomer) {
         this.idCustomer = idCustomer;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public String getDateCreated() {
@@ -68,6 +55,16 @@ public class Order {
     public void setTotalBill(String totalBill) {
         this.totalBill = totalBill;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
 
    
 }

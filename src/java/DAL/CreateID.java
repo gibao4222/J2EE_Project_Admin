@@ -50,14 +50,20 @@ public class CreateID extends MyDatabaseManager{
             case "GP":
                 query = "SELECT * FROM permissiongroup";
                 break;
-            case "PR":
-                
+            case "ST":
+                query = "SELECT * FROM staff";
                 break;
-            case "CA":
-                
+            case "OD":
+                query = "SELECT * FROM orders";
                 break;
-            case "SU":
-                
+            case "DT":
+                query = "SELECT * FROM orderdetail";
+                break;
+            case "IP":
+                query = "SELECT * FROM import";
+                break;
+                  case "ID":
+                query = "SELECT * FROM importdetail";
                 break;
             default:
         
