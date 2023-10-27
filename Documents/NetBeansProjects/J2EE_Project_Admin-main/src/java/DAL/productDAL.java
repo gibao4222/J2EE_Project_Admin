@@ -11,12 +11,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.List;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  *
  * @author Thanhchan
  */
 public class productDAL extends MyDatabaseManager{
+    Locale locale = new Locale("en", "EN");
     public productDAL() {
 
         productDAL.connectDB();

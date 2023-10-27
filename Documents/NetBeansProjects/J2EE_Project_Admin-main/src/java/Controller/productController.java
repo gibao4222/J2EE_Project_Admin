@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Thanhchan
  */
-@WebServlet({"/show-product", "/add-product", "/update-poduct","/delete-product","/save-product"})
+@WebServlet({"/show-product", "/add-product", "/update-poduct","/delete-product","/save-product","/home"})
 public class productController extends HttpServlet {
 
     /**
@@ -138,6 +138,11 @@ request.setAttribute("proupdate", pro);
             p.updatePro(pro,id);
            request.setAttribute("message", "update thành công");
                       response.sendRedirect("show-product");
+}else if(uri.contains("home")){ // [Tính chu vi].Click
+ productDAL p = new productDAL();
+        List <product> list = p.readproduct();
+        request.setAttribute("data", list);
+        request.getRequestDispatcher("homepage.jsp").forward(request, response);
 }else {
   String id = request.getParameter("id");
                  
