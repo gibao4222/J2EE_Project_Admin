@@ -43,6 +43,7 @@
                 <label>Email</label>
                 <input id="email" type="text" name="email" class="form-control" placeholder="Enter Email">
             </div>
+            
             <div class="form-group">
                 <label> Địa Chỉ</label>
                 <input id="address" type="text" name="address" class="form-control" value="" placeholder="Enter Address">

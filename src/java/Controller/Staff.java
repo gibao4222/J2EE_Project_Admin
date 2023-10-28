@@ -4,8 +4,10 @@
  */
 package Controller;
 
+import DAL.AccountDAL;
 import DAL.CreateID;
 import DAL.StaffDAL;
+import Model.AccountModel;
 import Model.StaffModel;
 import com.google.gson.JsonObject;
 import jakarta.servlet.RequestDispatcher;
@@ -88,6 +90,7 @@ public class Staff extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
            StaffDAL staffDAL = new StaffDAL();
+           AccountDAL accountDAL = new AccountDAL();
            String url = request.getRequestURI();
            JsonObject jsonResponse = new JsonObject();
            if (request.getCharacterEncoding()== null) {
@@ -102,6 +105,12 @@ public class Staff extends HttpServlet {
                String bankAccount = String.valueOf(request.getParameter("bankAccount"));
                String accountNumber = String.valueOf(request.getParameter("accountNumber"));
                String idGroup = String.valueOf(request.getParameter("idGroup"));
+//               add-Account 
+                String idACcount = new CreateID("TK").create();               
+                String password = String.valueOf(request.getParameter("password"));
+                String status = "0";
+                AccountModel accountModel= new AccountModel(idACcount, idStaff, email, password, status);
+                accountDAL.addAccount(accountModel);
                 StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber, idGroup);
                staffDAL.addStaff(staffModel);
                 jsonResponse.addProperty("message", "Thêm  thành công rồi thk lòn");
