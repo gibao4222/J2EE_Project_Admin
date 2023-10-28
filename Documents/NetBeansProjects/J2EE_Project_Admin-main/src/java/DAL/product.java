@@ -9,8 +9,11 @@ package DAL;
  * @author Thanhchan
  */
 public class product {
-    int id;
+    int id,id_category;
     String portray,quantity,stuff,size,image,introduce,nameProduct;
+    float price;
+    public product() {
+    }
 
     public int getId() {
         return id;
@@ -18,6 +21,14 @@ public class product {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId_category() {
+        return id_category;
+    }
+
+    public void setId_category(int id_category) {
+        this.id_category = id_category;
     }
 
     public String getPortray() {
@@ -84,8 +95,9 @@ public class product {
         this.price = price;
     }
 
-    public product(int id, String portray, String quantity, String stuff, String size, String image, String introduce, String nameProduct, float price) {
+    public product(int id, int id_category, String portray, String quantity, String stuff, String size, String image, String introduce, String nameProduct, float price) {
         this.id = id;
+        this.id_category = id_category;
         this.portray = portray;
         this.quantity = quantity;
         this.stuff = stuff;
@@ -95,12 +107,6 @@ public class product {
         this.nameProduct = nameProduct;
         this.price = price;
     }
-    float price;
 
-    public product() {
-    }
-
-   
-
-   
+    
 }

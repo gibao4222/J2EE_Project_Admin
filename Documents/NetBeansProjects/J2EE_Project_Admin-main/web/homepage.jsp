@@ -37,7 +37,7 @@
 <span class="caret"></span></button>
 <ul class="dropdown-menu">
     <c:forEach items="${datacate}" var="v">
-<li><a tabindex="-1" href="danhmucsanpham?id=<c:out value="${v.idCategory}"/>">${v.nameCategory}</a></li>
+<li><a tabindex="-1" href="category?id_category=<c:out value="${v.idCategory}"/>">${v.nameCategory}</a></li>
  </c:forEach>
 
 

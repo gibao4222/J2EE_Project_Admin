@@ -55,6 +55,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registerbtn'])){
             </div>
              <div class="form-group">
 
+                 <div class="form-group">
+
+                <label>category </label>
+                <select name="id_category" id="id_category">
+                    <c:forEach items="${cate}" var="v">
+                        <option value="${v.idCategory }">${v.nameCategory}</option>
+                     </c:forEach>
+                </select>
+            </div>
+            </div>
+             <div class="form-group">
+
                 <label> introduce </label>
                 <input type="text" name="introduce" id="introduce1" class="form-control" placeholder="Enter introduce">
             </div>
@@ -142,7 +154,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registerbtn'])){
         <thead>
           <tr>
             <th> ID </th>
-            <th>nameProduct</th>   
+            <th>nameProduct</th>  
+            <th>category</th>
                     <th>introduce</th>
                     <th>image</th>
                     <th>size</th>
@@ -158,7 +171,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registerbtn'])){
           <c:forEach items="${data}" var="c">
                 <tr>
                     <td>  ${c.id} </td>
+                   
                     <td>  ${c.nameProduct} </td>
+                     <td>  ${c.id_category} </td>
                      <td>  ${c.introduce} </td>
                      <td>  ${c.image} </td>
                      <td>   ${c.size}  </td>

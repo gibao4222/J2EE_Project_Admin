@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Thanhchan
  */
-@WebServlet({"/show-product", "/add-product", "/update-poduct","/delete-product","/save-product","/home"})
+@WebServlet({"/show-product", "/add-product", "/update-poduct","/delete-product","/save-product","/home","/category"})
 public class productController extends HttpServlet {
 
     /**
@@ -64,6 +64,12 @@ public class productController extends HttpServlet {
             throws ServletException, IOException {
        String uri = request.getRequestURI();
      if(uri.contains("show-product")) { // [Tính diện tích].Click
+         String id_category=request.getParameter("id_category");
+         
+         categoryDAL c = new categoryDAL();
+         List<category> cate = c.readcategory();
+         request.setAttribute("cate", cate);
+              
  productDAL p = new productDAL();
         List <product> list = p.readproduct();
         request.setAttribute("data", list);
@@ -141,6 +147,9 @@ request.setAttribute("proupdate", pro);
            request.setAttribute("message", "update thành công");
                       response.sendRedirect("show-product");
 }else if(uri.contains("home")){ // [Tính chu vi].Click
+    String id_category=request.getParameter("id_category");
+         System.out.print(id_category);
+        
     categoryDAL c = new categoryDAL();
         List <category> listcate = c.readcategory();
         request.setAttribute("datacate", listcate);
@@ -148,9 +157,22 @@ request.setAttribute("proupdate", pro);
         List <product> list = p.readproduct();
         request.setAttribute("data", list);
         request.getRequestDispatcher("homepage.jsp").forward(request, response);
+         
+}if(uri.contains("category")){ // [Tính chu vi].Click
+    String id_category=request.getParameter("id_category");
+         System.out.print(id_category);
+        
+    categoryDAL c = new categoryDAL();
+        List <category> listcate = c.readcategory();
+        request.setAttribute("datacate", listcate);
+ productDAL p = new productDAL();
+        List <product> list = p.findproductbyId_category(Integer.parseInt(id_category));
+        request.setAttribute("data", list);
+        request.getRequestDispatcher("homepage.jsp").forward(request, response);
+         
 }else {
   String id = request.getParameter("id");
-                 
+                
                    productDAL p = new productDAL();
                    p.deleteproduct( parseInt(id)  );
                    response.setContentType("text/html");
