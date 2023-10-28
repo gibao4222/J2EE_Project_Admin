@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import DAL.category;
+import DAL.categoryDAL;
 import DAL.product;
 import DAL.productDAL;
 import jakarta.servlet.ServletException;
@@ -139,6 +141,9 @@ request.setAttribute("proupdate", pro);
            request.setAttribute("message", "update thành công");
                       response.sendRedirect("show-product");
 }else if(uri.contains("home")){ // [Tính chu vi].Click
+    categoryDAL c = new categoryDAL();
+        List <category> listcate = c.readcategory();
+        request.setAttribute("datacate", listcate);
  productDAL p = new productDAL();
         List <product> list = p.readproduct();
         request.setAttribute("data", list);

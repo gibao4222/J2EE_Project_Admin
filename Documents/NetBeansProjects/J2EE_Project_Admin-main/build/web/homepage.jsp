@@ -14,6 +14,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web bán thức ăn </title>
     <link rel="stylesheet" href="./resources/css/style1.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -29,16 +32,21 @@
                     <a href="">Trang chủ</a>
                 </div>
                 <div class="item">
-                    <li>
-                <a href="#">Ẩm thực <span class="arrow">&#9660;</span></a>
- 
-                <ul class="sub-menu">
-                    <li><a href="#">Món ăn miền Bắc</a></li>
-                    <li><a href="#">Món ăn miền Trung</a></li>
-                    <li><a href="#">Món ăn miền Nam</a></li>
-                    <li><a href="#">Ẩm thực đường phố</a></li>
-                </ul>
-            </li>
+                   <div class="dropdown">
+<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">sản phẩm
+<span class="caret"></span></button>
+<ul class="dropdown-menu">
+    <c:forEach items="${datacate}" var="v">
+<li><a tabindex="-1" href="danhmucsanpham?id=<c:out value="${v.idCategory}"/>">${v.nameCategory}</a></li>
+ </c:forEach>
+
+
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
                 </div>
                 <div class="item">
                     <a href="">Blog</a>
