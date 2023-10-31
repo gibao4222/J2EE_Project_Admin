@@ -93,15 +93,16 @@ public class cartDAL extends MyDatabaseManager{
         return ps;
         
     }
-       public int updatecart(int qty, int id) {
+       public int updatecart(int qty, int id, float pricetotal) {
            int result = 0 ;
            try{
-        String query = "Update cart SET quantity = ?"
+        String query = "Update cart SET quantity = ?,pricetotal= ?"
                 + " WHERE idCart   = ?";
         PreparedStatement p = cartDAL.getConnection().prepareStatement(query);
         p.setString(1, String.valueOf(qty));
+        p.setFloat(2, pricetotal);
         
-                p.setString(2, String.valueOf(id));
+                p.setString(3, String.valueOf(id));
 
 
          result = p.executeUpdate();
@@ -113,14 +114,15 @@ public class cartDAL extends MyDatabaseManager{
        public static void main(String[] args) {
         cart c = new cart();
         cartDAL cart = new cartDAL();
+            cart.updatecart(5, 5, 50000);
         List<cart> list= cart.readcart(3);
 //        c.setIdCustomer(1);
 //        c.setIdProduct(3);
 //        c.setQuantity("16");
 //        c.setPrice(123333);
 //        cart.insertcart(c);
-           System.out.println(list.get(1).pricePro);
-           cart.deletecart(4);
+           System.out.println(list.get(0).pricetotal);
+//           cart.deletecart(4);
 //           cart.deletecart(3);
 //        cart.updatecart(155, 2);
     }

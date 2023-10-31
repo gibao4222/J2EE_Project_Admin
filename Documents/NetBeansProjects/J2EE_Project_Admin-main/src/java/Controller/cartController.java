@@ -77,8 +77,16 @@ public class cartController extends HttpServlet {
   cartDAL cart = new cartDAL();
 int id = Integer.parseInt(request.getParameter("idCart"));
 int qty =Integer.parseInt(request.getParameter("quantity"));
-cart.updatecart(qty, id);
-  response.sendRedirect("show-cart");
+float pricePro= Float.parseFloat(request.getParameter("pricePro"));
+    float total = qty*pricePro;
+cart.updatecart(qty,id,total);
+
+        List<cart> list= cart.readcart(3);
+        request.setAttribute("data", list);
+
+        request.getRequestDispatcher("cart.jsp").forward(request, response);
+
+//  response.sendRedirect("show-cart");
 
 
 //        

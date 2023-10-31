@@ -1917,8 +1917,10 @@ ol {
 }
 
 .shoping__cart__table table tbody tr td.shoping__cart__item img {
-	display: inline-block;
-	margin-right: 25px;
+    display: inline-block;
+    width: 150px;
+    margin-right: 25px;
+    height: 100px;
 }
 
 .shoping__cart__table table tbody tr td.shoping__cart__item h5 {

@@ -43,7 +43,7 @@ public class productDAL extends MyDatabaseManager{
                  s.setPortray(rs.getString("portray"));
                 s.setId_category(rs.getInt("id_category"));
                 s.setPrice(rs.getInt("price"));
-
+                s.setColor(rs.getString("color"));
                  s.setQuantity(rs.getString("quantity"));
                  s.setSize(rs.getString("size"));
                  s.setStuff(rs.getString("stuff"));
@@ -75,6 +75,75 @@ public class productDAL extends MyDatabaseManager{
                 s.setNameProduct(rs.getString("nameProduct"));
                  s.setPortray(rs.getString("portray"));
                 s.setId_category(rs.getInt("id_category"));
+                s.setColor(rs.getString("color"));
+                s.setPrice(rs.getInt("price"));
+                 s.setId_category(rs.getInt("id_category"));
+                 s.setQuantity(rs.getString("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+
+                                                                
+                list.add(s);
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return list;
+    }
+     public ArrayList findproductbyName(String name)  {
+          ArrayList list = new ArrayList();
+         try {
+                 
+            
+        String query = "SELECT * FROM product WHERE nameProduct LIKE '%"+name+"%'";
+        ResultSet rs = productDAL.doReadQuery(query);
+       
+
+        if (rs != null) {
+            while (rs.next()) {
+                product s = new product();
+                s.setId(rs.getInt("IdProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setId_category(rs.getInt("id_category"));
+                s.setColor(rs.getString("color"));
+                s.setPrice(rs.getInt("price"));
+                 s.setId_category(rs.getInt("id_category"));
+                 s.setQuantity(rs.getString("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+
+                                                                
+                list.add(s);
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return list;
+    }
+     public ArrayList findproductbyColor(String color)  {
+          ArrayList list = new ArrayList();
+         try {
+                 
+            
+        String query = "SELECT * FROM product WHERE color LIKE '%"+color+"%'";
+        ResultSet rs = productDAL.doReadQuery(query);
+       
+
+        if (rs != null) {
+            while (rs.next()) {
+                product s = new product();
+                s.setId(rs.getInt("IdProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setId_category(rs.getInt("id_category"));
+                s.setColor(rs.getString("color"));
                 s.setPrice(rs.getInt("price"));
                  s.setId_category(rs.getInt("id_category"));
                  s.setQuantity(rs.getString("quantity"));
@@ -93,7 +162,7 @@ public class productDAL extends MyDatabaseManager{
       public int insertproduct(product ps){
           int result = 0;
           try{
-        String query = "Insert product (nameProduct, introduce, image,size,stuff,quantity,price,portray,id_category) VALUES (?,?,?,?,?,?,?,?,?)";
+        String query = "Insert product (nameProduct, introduce, image,size,stuff,quantity,price,portray,id_category,color) VALUES (?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement p = productDAL.getConnection().prepareStatement(query);
         p.setString(1, ps.getNameProduct());
         p.setString(2, ps.getIntroduce());
@@ -106,6 +175,7 @@ public class productDAL extends MyDatabaseManager{
          p.setFloat(7, ps.getPrice());
          p.setString(8, ps.getPortray());
          p.setInt(9, ps.getId_category());
+         p.setString(10, ps.getColor());
                                         
         result = p.executeUpdate();
         } catch (Exception e) {
@@ -135,10 +205,11 @@ public class productDAL extends MyDatabaseManager{
             while (rs.next()) {
                 ps.setId(rs.getInt("IdProduct"));
                 ps.setIntroduce(rs.getString("introduce"));
-                ps.setNameProduct(rs.getString("introduce"));
+                ps.setNameProduct(rs.getString("nameProduct"));
                 ps.setImage(rs.getString("image"));
                 ps.setSize(rs.getString("size"));
                 ps.setStuff(rs.getString("stuff"));
+                ps.setColor(rs.getString("color"));
                 ps.setQuantity(rs.getString("quantity"));
                 ps.setPrice(rs.getFloat("price"));
                 ps.setPortray(rs.getString("portray"));
@@ -154,7 +225,7 @@ public class productDAL extends MyDatabaseManager{
        public int updatePro(product ps, int id) {
            int result = 0 ;
            try{
-        String query = "Update product SET nameProduct = ? , introduce = ?, image =?,size = ?,stuff=? ,quantity=?,price=?,portray=?,id_category=?  "
+        String query = "Update product SET nameProduct = ? ,introduce = ?, image =?,size = ?,stuff=? ,quantity=?,price=?,portray=?,id_category=?,color= ?"
                 + " WHERE IdProduct  = ?";
         PreparedStatement p = productDAL.getConnection().prepareStatement(query);
         p.setString(1, ps.getNameProduct());
@@ -166,7 +237,8 @@ public class productDAL extends MyDatabaseManager{
         p.setFloat(7, ps.getPrice());
         p.setString(8, ps.getPortray());
         p.setInt(9, ps.getId_category());
-                p.setString(10, String.valueOf(id));
+        p.setString(10, ps.getColor());
+                p.setString(11, String.valueOf(id));
 
 
          result = p.executeUpdate();
@@ -177,9 +249,9 @@ public class productDAL extends MyDatabaseManager{
     }
       public static void main(String[] args) {
         productDAL p = new productDAL();
-        
-List<product> list  =  p.findproductbyId_category(2);         
-System.out.println(list.get(0).nameProduct);
+        product pr= new product();
+ pr  =  p.findProduct(45);         
+System.out.println(pr.nameProduct);
 //         List<product> list  =  p.readproduct();
 //         System.out.println(list.get(0).getId());
 ////         product pro = p.findProduct(24);

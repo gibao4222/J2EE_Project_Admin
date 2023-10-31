@@ -5,6 +5,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web bán thức ăn </title>
+    <title>Shop 4 anh em </title>
     <link rel="stylesheet" href="./resources/css/style1.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -60,7 +61,7 @@
                     <img src="./resources/image/user.png" alt="">
                 </div>
                 <div class="item">
-                    <img src="./resources/image/cart.png" alt="">
+                    <a href="show-cart"> <img src="./resources/image/cart.png" alt=""></a>
                 </div>
             </div>
         </div>
@@ -87,12 +88,33 @@
                 </a>
             </div>
         </div>
+        <div class="container mt-4">
+            <h2 class="text-center">Tìm kiếm Sản phẩm</h2>
+        <form action="timkiem" method="GET">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <select class="form-control" name="search_option">
+                        <option value="color">color</option>
+                        <option value="name">Name</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" name="keywords" placeholder="Nhập từ khóa">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                </div>
+            </div>
+        </form>
+    </div>
         <div id="wp-products">
             <h2>SẢN PHẨM CỦA CHÚNG TÔI</h2>
-            <ul id="list-products">
                 
+            <ul id="list-products">
+               
                 <c:forEach items="${data}" var="c">
-                <div class="item">
+                 <a href="details?idproduct=<c:out value="${c.id}"/>">
+                    <div class="item">
                     <img id="img-sp" src="./resources/image/<c:out value="${c.image}"/>">
                     <div class="stars">
                         <span>
@@ -111,13 +133,18 @@
                             <img src="./resources/image/star.png" alt="">
                         </span>
                     </div>
-
+                   <c:set var="newprice" value="${c.price}"/>
+                        
+                       
                     <div class="name">${c.nameProduct}</div>
-                    <div class="desc">${c.introduce}</div>
-                     <div class="name">Còn lại:${c.quantity}</div>
-                    <div class="price">${c.price}</div>
+<!--                    <div class="desc">${c.introduce}</div>-->
+                     <div class="name">Quantity:${c.quantity}</div>
+                     <div class="name">Color:${c.color}</div>
+                    <div class="price"> <fmt:formatNumber value="${c.price}" pattern="#,###" />
+                    VNĐ</div>
 
                 </div>
+                    </a>
  </c:forEach>
 
               

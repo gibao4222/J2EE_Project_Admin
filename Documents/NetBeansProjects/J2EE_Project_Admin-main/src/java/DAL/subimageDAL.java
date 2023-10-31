@@ -45,6 +45,33 @@ public class subimageDAL extends MyDatabaseManager{
              }
         return list;
     }
+     public ArrayList findsubByidpro(int id)  {
+          ArrayList list = new ArrayList();
+         try {
+                 
+            
+        String query = "SELECT * FROM subimage Where idProduct  = " + id + "  ";
+        ResultSet rs = subimageDAL.doReadQuery(query);
+       
+
+        if (rs != null) {
+            while (rs.next()) {
+                subimage s = new subimage();
+                s.setIdSubImage(rs.getInt("idSubImage"));
+                s.setIdProduct(rs.getString(    "idProduct"));
+
+                s.setSubImage(rs.getString("subImage"));
+                s.setNote(rs.getString("note"));
+
+                    
+                list.add(s);
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return list;
+    }
       public int insertsubimage(subimage ps){
           int result = 0;
           try{
@@ -72,13 +99,14 @@ public class subimageDAL extends MyDatabaseManager{
              }
         return result;
     }
-       public subimage findsubimage(int id)  {
-            subimage ps = new subimage();
+       public ArrayList findsubimage(int id)  {
+           ArrayList list = new ArrayList();
            try{
-        String query = "SELECT * FROM subimage WHERE idSubImage  = " + id + " ";
+        String query = "SELECT * FROM subimage WHERE idProduct  = " + id + " ";
         PreparedStatement p = subimageDAL.getConnection().prepareStatement(query);
         ResultSet rs = p.executeQuery();
         if (rs != null) {
+             subimage ps = new subimage();
             while (rs.next()) {
                              ps.setIdSubImage(rs.getInt("idSubImage"));
 
@@ -93,7 +121,7 @@ public class subimageDAL extends MyDatabaseManager{
          } catch (Exception e) {
              System.out.println(e);
              }
-        return ps;
+        return list;
         
     }
        public int updatesubimage(subimage ps, int id) {
@@ -120,16 +148,10 @@ public class subimageDAL extends MyDatabaseManager{
        public static void main(String[] args) {
            subimageDAL  s= new subimageDAL();
                 
-        List<subimage> list = s.readsubimage();
+        List<subimage> list = s.findsubByidpro(45);
            System.out.println(list.get(0).getIdSubImage());
            subimage sub = new subimage();
 //           sub.setIdProduct("1");
-           sub.setSubImage("c");
-           sub.setNote("c");
-                      sub.setIdProduct("3");
-
-           s.updatesubimage(sub, 1);
-           s.findsubimage(1);
-                   
+           
     }
 }

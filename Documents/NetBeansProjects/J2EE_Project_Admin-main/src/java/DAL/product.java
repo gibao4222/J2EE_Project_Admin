@@ -10,9 +10,24 @@ package DAL;
  */
 public class product {
     int id,id_category;
-    String portray,quantity,stuff,size,image,introduce,nameProduct;
+    String portray,quantity,stuff,size,image,introduce,nameProduct,color;
     float price;
+
     public product() {
+    }
+
+    public product(int id, int id_category, String portray, String quantity, String stuff, String size, String image, String introduce, String nameProduct, String color, float price) {
+        this.id = id;
+        this.id_category = id_category;
+        this.portray = portray;
+        this.quantity = quantity;
+        this.stuff = stuff;
+        this.size = size;
+        this.image = image;
+        this.introduce = introduce;
+        this.nameProduct = nameProduct;
+        this.color = color;
+        this.price = price;
     }
 
     public int getId() {
@@ -87,6 +102,14 @@ public class product {
         this.nameProduct = nameProduct;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public float getPrice() {
         return price;
     }
@@ -94,19 +117,6 @@ public class product {
     public void setPrice(float price) {
         this.price = price;
     }
-
-    public product(int id, int id_category, String portray, String quantity, String stuff, String size, String image, String introduce, String nameProduct, float price) {
-        this.id = id;
-        this.id_category = id_category;
-        this.portray = portray;
-        this.quantity = quantity;
-        this.stuff = stuff;
-        this.size = size;
-        this.image = image;
-        this.introduce = introduce;
-        this.nameProduct = nameProduct;
-        this.price = price;
-    }
-
+    
     
 }

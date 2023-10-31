@@ -5,6 +5,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="./resources/css/styleComponent.css">
 <link rel="stylesheet" href="./resources/css/sb-admin-2.css">
 <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -141,14 +142,14 @@
                                         <h5>${c.nameProduct}</h5>
                                     </td>
                                     <td class="shoping__cart__price">
-                                    ${c.pricePro}
-                                    </td>
+<fmt:formatNumber value="${c.pricePro}" pattern="#,###" />                                    </td>
                                    
                                     <td class="shoping__cart__quantity">
                                         <form action="update-cart">
                                         <div class="quantity">
                                             <div class="pro-qty">
                                                 <input type="hidden" name="idCart"min = 0 value="${c.idCart}"/>
+                                                <input type="hidden" name="pricePro" value="${c.pricePro}"/>
                                                 <input type="number" name="quantity"min = 0 value="${c.quantity}"/>
 
                                             </div>
@@ -159,7 +160,7 @@
                                     </td>
 
                                     <td class="shoping__cart__total">
-                                       ${c.pricetotal}
+                                      <fmt:formatNumber value="${c.pricePro*c.quantity}" pattern="#,###" />
                                     </td>
                                     <td class="shoping__cart__item__close">
                                         <!-- <span class="icon_close"></span> -->

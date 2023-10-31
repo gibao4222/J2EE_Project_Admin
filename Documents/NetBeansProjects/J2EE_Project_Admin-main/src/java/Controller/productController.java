@@ -8,6 +8,8 @@ import DAL.category;
 import DAL.categoryDAL;
 import DAL.product;
 import DAL.productDAL;
+import DAL.subimage;
+import DAL.subimageDAL;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,7 +23,7 @@ import java.util.List;
  *
  * @author Thanhchan
  */
-@WebServlet({"/show-product", "/add-product", "/update-poduct","/delete-product","/save-product","/home","/category"})
+@WebServlet({"/show-product","/details", "/add-product", "/update-poduct","/delete-product","/save-product","/home","/category","/timkiem"})
 public class productController extends HttpServlet {
 
     /**
@@ -78,7 +80,33 @@ public class productController extends HttpServlet {
 //        request.getRequestDispatcher("listCategory.jsp").forward(request, response);
         
 }
-else if(uri.contains("add-product")){ // [Tính chu vi].Click
+     else if(uri.contains("details")){
+         int id = Integer.parseInt(request.getParameter("idproduct"));
+     product p = new product();
+     productDAL pro = new productDAL();
+     List <product> list = pro.readproduct();
+        request.setAttribute("data", list);
+        p = pro.findProduct(id);
+        String nameproduct= p.getNameProduct();
+        float price=p.getPrice();
+        System.out.print(p.getNameProduct());
+        String quantity = p.getQuantity();
+        String img=p.getImage();
+        request.setAttribute("img", img);
+        request.setAttribute("nameproduct", nameproduct);
+        request.setAttribute("price", price);
+        request.setAttribute("quantity", quantity);
+        request.setAttribute("price", price);
+       request.setAttribute("details", p);
+       subimageDAL sub =new subimageDAL();
+       List<subimage> lists = sub.findsubByidpro(id);
+       request.setAttribute("sub", lists);
+             request.getRequestDispatcher("detailsproduct.jsp").forward(request, response);
+
+             
+     
+     
+     }else if(uri.contains("add-product")){ // [Tính chu vi].Click
 String nameProduct = request.getParameter("nameProduct");
             String introduce = request.getParameter("introduce");
 
@@ -111,6 +139,20 @@ String nameProduct = request.getParameter("nameProduct");
 //            request.getRequestDispatcher("listproduct.jsp").forward(request, response);
 
            response.sendRedirect("show-product");
+} if(uri.contains("timkiem")){
+    String option = request.getParameter("search_option");
+    String keywords = request.getParameter("keywords");
+    if(option.equals("name")){
+       productDAL p = new productDAL();
+        List <product> list = p.findproductbyName(keywords);
+        request.setAttribute("data", list);
+        request.getRequestDispatcher("homepage.jsp").forward(request, response);
+    }else{
+         productDAL p = new productDAL();
+        List <product> list = p.findproductbyColor(keywords);
+        request.setAttribute("data", list);
+        request.getRequestDispatcher("homepage.jsp").forward(request, response);
+    }
 }else if(uri.contains("update-product")){ // [Tính chu vi].Click
  
   int id =   Integer.parseInt( request.getParameter("id"));
@@ -174,7 +216,7 @@ request.setAttribute("proupdate", pro);
   String id = request.getParameter("id");
                 
                    productDAL p = new productDAL();
-                   p.deleteproduct( parseInt(id)  );
+                   p.deleteproduct( parseInt(id));
                    response.setContentType("text/html");
                    response.sendRedirect("show-product");
 }
