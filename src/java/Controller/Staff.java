@@ -101,7 +101,7 @@ public class Staff extends HttpServlet {
                String email = String.valueOf(request.getParameter("email"));
                String fullName = String.valueOf(request.getParameter("fullName"));
                String address = String.valueOf(request.getParameter("address"));
-               String phoneNumber = String.valueOf(request.getParameter(" phoneNumber"));
+               String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
                String bankAccount = String.valueOf(request.getParameter("bankAccount"));
                String accountNumber = String.valueOf(request.getParameter("accountNumber"));
                String idGroup = String.valueOf(request.getParameter("idGroup"));
@@ -125,7 +125,7 @@ public class Staff extends HttpServlet {
                String email = String.valueOf(request.getParameter("email"));
                String fullName = String.valueOf(request.getParameter("fullName"));
                String address = String.valueOf(request.getParameter("address"));
-               String phoneNumber = String.valueOf(request.getParameter(" phoneNumber"));
+               String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
                String bankAccount = String.valueOf(request.getParameter("bankAccount"));
                String accountNumber = String.valueOf(request.getParameter("accountNumber"));
                String idGroup = String.valueOf(request.getParameter("idGroup"));

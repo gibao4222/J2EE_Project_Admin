@@ -92,7 +92,7 @@ public class Customer extends HttpServlet {
                String email = String.valueOf(request.getParameter("email"));
                String fullName = String.valueOf(request.getParameter("fullName"));
                String address = String.valueOf(request.getParameter("address"));
-               String phoneNumber = String.valueOf(request.getParameter(" phoneNumber"));                            
+               String phoneNumber = String.valueOf(request.getParameter("numberPhone"));                            
                 CustomerModel cusModel = new CustomerModel(idCustomer, email, address, phoneNumber, fullName);
                 cusDAL.addCustomer(cusModel);
                 jsonResponse.addProperty("message", "Thêm  thành công rồi thk lòn");
@@ -107,7 +107,7 @@ public class Customer extends HttpServlet {
                String email = String.valueOf(request.getParameter("email"));
                String fullName = String.valueOf(request.getParameter("fullName"));
                String address = String.valueOf(request.getParameter("address"));
-               String phoneNumber = String.valueOf(request.getParameter(" phoneNumber"));
+               String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
                CustomerModel cusModel = new CustomerModel(idCustomer, email, address, phoneNumber, fullName);
                cusDAL.updateCustomer(cusModel);
         }

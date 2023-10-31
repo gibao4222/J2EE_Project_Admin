@@ -39,7 +39,7 @@ public class MyDatabaseManager {
             c = (Connection) DriverManager.getConnection(dbPath, dbUser, dbPassword);
             s = c.createStatement();
             
-            System.out.println("Connected");
+            System.out.println("Connectedd");
         } catch (Exception ex) {
             System.out.print(ex.getMessage());
         }

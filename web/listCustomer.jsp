@@ -1,31 +1,16 @@
 <%-- 
-    Document   : listCustomer
-    Created on : Oct 9, 2023, 9:36:39 PM
+    Document   : listadmin
+    Created on : Oct 7, 2023, 8:13:02 PM
     Author     : Admin
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<link rel="stylesheet" href="./resources/css/styleComponent.css">
-        <link rel="stylesheet" href="./resources/css/styleLogin.css">
-        <!--<link rel="stylesheet" href="./resources/css/sb-admin-2.css">-->
-        <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-        <style type="text/css">/* Chart.js */
-@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style>
-        <script src="chrome-extension://ajdpfmkffanmkhejnopjppegokpogffp/assets/prompt.js"></script>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="component/navbar.jsp" %>
 <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Thêm Khách Hàng </h5>
+        <h5 class="modal-title" id="exampleModalLabel">Thêm Khách hàng </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -35,15 +20,14 @@
 
         <div class="modal-body">
             <input type="hidden" name="delete_id" value="">
-            <div class="form-group">
+             <div class="form-group">
                 <label> Tên Người Dùng </label>
                 <input id="fullName" type="text" name="fullName" required class="form-control" placeholder="Enter Username">
             </div>            
             <div class="form-group">
                 <label>Email</label>
                 <input id="email" type="text" name="email" class="form-control" placeholder="Enter Email">
-            </div>
-            
+            </div>            
             <div class="form-group">
                 <label> Địa Chỉ</label>
                 <input id="address" type="text" name="address" class="form-control" value="" placeholder="Enter Address">
@@ -52,41 +36,25 @@
                 <label> Số điện thoại </label>
                 <input id="numberPhone" type="text" name="numberPhone" class="form-control" value="" placeholder="Enter Number Phone">
             </div>
+        </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" name="registerbtn" class="btn btn-primary">Save</button>
         </div>
       </form>
 
-
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <div class="container-fluid">
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Danh Sách Khách Hàng 
+    <h6 class="m-0 font-weight-bold text-primary">Danh Sách Khách Hàng
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
-              Thêm Khách hàng 
+              Thêm Khách Hàng
             </button>
     </h6>
   </div>
@@ -95,7 +63,7 @@
 
     <div class="table-responsive">
 
-       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
             <th> ID </th>
@@ -174,3 +142,4 @@
 
             });
 </script>
+<%@include file="component/footer.jsp" %>

@@ -49,7 +49,7 @@ public class PromotionDAL extends MyDatabaseManager{
         try {
             String query = "INSERT INTO promotion (idPromo,namePromo,code,dateStart,dateEnd,saleOff,reduceMax) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement p = PromotionDAL.getConnection().prepareStatement(query);
-            p.setString(1, (new CreateID("Pr")).create());
+            p.setString(1, pr.getIdPromo());
             p.setString(2, pr.getNamePromo());
             p.setString(3, pr.getCode());
             p.setString(4, pr.getDateStart());

@@ -40,7 +40,7 @@ public class CreateID extends MyDatabaseManager{
     
     
     public String create(){
-        int count=0;
+        int max=0;
         try {
             String query="";
         switch(headerID){
@@ -64,6 +64,9 @@ public class CreateID extends MyDatabaseManager{
                 break;
             case "TK":
                 query="SELECT * FROM account";
+            case "PD":
+                query = "SELECT * FROM promotiondetail";
+
                 break;
             case "CA":
                 
@@ -75,19 +78,31 @@ public class CreateID extends MyDatabaseManager{
         
         }
         ResultSet rs = CreateID.doReadQuery(query);
+        
+        
         if(rs!=null){
-            while(rs.next())
-                count++;
+            while(rs.next()){
+                String id = rs.getString(1);
+                String numbers = "";
+                for(int i = 0 ; i < id.length();i++){
+                    char c = id.charAt(i);
+                    if(Character.isDigit(c))
+                        numbers+=c;
+                }
+                if(Integer.parseInt(numbers) > max)
+                    max = Integer.parseInt(numbers); 
+            }
+                
         }
-        count++;
-        if(count<10)
-            return headerID+"00"+count;
-        else if(10<=count && count<100)
-            return headerID+"0"+count;
+        max++;
+        if(max<10)
+            return headerID+"00"+max;
+        else if(10<=max && max<100)
+            return headerID+"0"+max;
         
         } catch (Exception e) {
         }
-        return headerID+count;
+        return headerID+max;
     }
     
     public static void main(String[] args) {
