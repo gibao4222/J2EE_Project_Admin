@@ -7,20 +7,14 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="./resources/css/styleComponent.css">
-<link rel="stylesheet" href="./resources/css/sb-admin-2.css">
-<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<%@page import="DAL.PromotionDetailDAL" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="java.util.ArrayList" %>
+<%@include file="component/navbar.jsp" %>
 
-<div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-    <div class="modal-dialog" style="min-width: 750px" role="document">
+<div class="modal fade">
+    <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Thêm Mã Giảm Giá</h5>
@@ -115,11 +109,12 @@
                 
                 
             </div>
+            <input type="hidden" id="productStr" name="listProduct">
             
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-            <button type="submit" name="registerbtn" class="btn btn-primary">Lưu</button>
+            <button type="submit" name="registerbtn" class="btn btn-primary" id="btn-Save">Lưu</button>
         </div>
       </form>
 
@@ -141,7 +136,7 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">Danh Sách Khuyến Mãi 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile" id="add_btn">
               Thêm Chương Trình
             </button>
     </h6>
@@ -178,7 +173,12 @@
                     <input type="hidden" name="idPromo" id="idPromo" value="${c.idPromo}">
                   <button  type="submit" name="delete_btn" class="btn btn-danger">Xóa</button>
                 </form>
-                <button  type="button" name="edit_btn" id="edit_btn" class="btn btn-success" data-toggle="modal" data-target="#addadminprofile">ê đít</button>
+                  <form action="load" method="post">
+                      <button  type="button" name="edit_btn" id="edit_btn" class="btn btn-success" data-toggle="modal" data-target="#addadminprofile" data-idPromo="${c.idPromo}">ê đít</button>
+                  </form>
+                
+                
+                
             </td>
           </tr>
         </c:forEach>
@@ -192,29 +192,128 @@
 
 </div>
 <script>
-    //Cập nhật
+    //Hành động của table
+    table = document.getElementById("dataTable");
+    const listProduct = new Set();
+    table.addEventListener('click',function(e){
+       const targetRow = event.target.closest('tr');
+       const idProduct = targetRow.getAttribute("data-productid");
+       
+       if(targetRow){
+           const cell = targetRow.querySelector('td input');
+           if(cell.checked)
+               listProduct.add(idProduct);
+
+           
+       }
+    });
+    
+    //Lưu
+//    const btnSave = document.getElementById('btn-Save');
+//    btnSave.addEventListener('click',function(){
+//       let productList=Array.from(listProduct);
+//       let productStr="";
+//       for(var i=0;i<listProduct.size;i++){
+//           if(i<listProduct.size-1){
+//               productStr+=productList[i]+",";
+//           }
+//           else{
+//               productStr+=productList[i];
+//           }
+//       }
+//       
+//       document.getElementById("productStr").value = productStr;
+//    });
+
+    //Thêm và Cập nhật
                 document.addEventListener('click',function(e){
-                    if(e.target && e.target.id === 'edit_btn'){
+                        if(e.target && e.target.id ==='btn-Save'){
+                            
+                            let productList=Array.from(listProduct);
+                            let productStr="";
+                            for(var i=0;i<listProduct.size;i++){
+                                if(i<listProduct.size-1){
+                                    productStr+=productList[i]+",";
+                                }
+                                else{
+                                    productStr+=productList[i];
+                                }
+                            }
+       
+                            document.getElementById("productStr").value = productStr;
+                        }
+                        else if(e.target && e.target.id ==='edit_btn'){
+                            let form = document.getElementById('promotionForm');
+                            form.action='update-Promotion';
                         
-                        let form = document.getElementById('promotionForm');
-                        form.action='update-Promotion';
                         
+                            let row = e.target.closest('tr');
                         
-                        let row = e.target.closest('tr');
-                        
-                        document.getElementById("idPromo").value = row.cells[0].innerText;
-                        document.getElementById("namePromo").value = row.cells[2].innerText;
-                        document.getElementById("code").value = row.cells[1].innerText;
-                        let time = row.cells[3].innerText.split('->');
-                        document.getElementById("dateStart").value = time[0];
-                        document.getElementById("dateEnd").value = time[1];
-                        document.getElementById("saleOff").value = row.cells[4].innerText.slice(0,-1);
-                        let permissionCell = row.cells[4];
-                        let permissionInput = permissionCell.querySelector('input');
-                        let str = permissionInput ? permissionInput.value : '';
-                        document.getElementById("reduceMax").value = str;
-                    }});
+                            document.getElementById("idPromo").value = row.cells[0].innerText;
+                            document.getElementById("namePromo").value = row.cells[2].innerText;
+                            document.getElementById("code").value = row.cells[1].innerText;
+                            let time = row.cells[3].innerText.split('->');
+                            document.getElementById("dateStart").value = time[0];
+                            document.getElementById("dateEnd").value = time[1];
+                            document.getElementById("saleOff").value = row.cells[4].innerText.slice(0,-1);
+                            let permissionCell = row.cells[4];
+                            let permissionInput = permissionCell.querySelector('input');
+                            let str = permissionInput ? permissionInput.value : '';
+                            document.getElementById("reduceMax").value = str;
+                            
+                            
+//                            // Dữ liệu bạn muốn thêm vào URL
+//                            var dataToAdd = row.cells[0].innerText;
+//
+//                            // Hiện tại URL
+//                            var currentURL = window.location.href;
+//
+//                            // Xây dựng URL mới bằng cách thêm dữ liệu vào URL hiện tại
+//                            var newURL ="?data=" + dataToAdd;
+//
+//                            window.history.pushState({ path: currentURL+newURL }, '', newURL);                            
+                            
+                                  
+                            $.ajax({
+                                url: "/J2EE_Project_Admin/load",
+                                type: "get", //send it through get method
+                                data: {
+                                    
+                                },
+                                success: function (data) {
+//                                    var dataa = ${data};
+//                                    alert(dataa.length);
+                                },
+                                error: function (xhr) {
+                                    alert("kho load");
+                                    //Do Something to handle error
+                                }
+                            });
+                            
+                                                            
+                        }
+                        else if(e.target && e.target.id ==='add_btn'){
+                                    document.getElementById("idPromo").value = "";
+                            document.getElementById("namePromo").value = "";
+                            document.getElementById("code").value = "";
+                            document.getElementById("dateStart").value = "";
+                            document.getElementById("dateEnd").value = "";
+                            document.getElementById("saleOff").value = "";
+                            document.getElementById("reduceMax").value = "";
+                        }
+//                            };
+//                // Cập nhật modal với thông tin promotionDetail
+//                // Ví dụ: document.getElementById('promotionDetailField').value = promotionDetailData.field;
+//                            xhr.send();
+//                            
+//                        }
+                            
+                    });
+                    
+            
+                    
+ 
 </script>
 
-<!-- /.container-fluid -->
+<%@include file="component/footer.jsp" %>
 

@@ -3,14 +3,16 @@
     Created on : Oct 10, 2023, 9:27:36 AM
     Author     : Admin
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="component/navbar.jsp" %>
 <style type="text/css">
   .scroll{
   height: 700px;
   overflow: scroll;
 }
 </style>
+
 
 <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <?php 
@@ -31,80 +33,64 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registerbtn'])){
         
       </div>
      
-      <form action="" method="POST" enctype="multipart/form-data">
+        <form action="add-product" id="Productform">
 
         <div class="modal-body">
-
+            <input type="hidden" name="IdProduct" id="IdProduct">
             <div class="form-group">
 
-                <label> Tên Sản Phẩm </label>
-                <input type="text" name="productName" class="form-control" placeholder="Enter Product">
+                <label> Name Product </label>
+                <input type="text" name="nameProduct" id="nameProduct1" class="form-control" placeholder="Enter Product">
             </div>
              <div class="form-group">
-              <label >Thương Hiệu</label>
-                <select class="form-control" id="brand" name="brand">
-                  <?php
-                                $brand = new brand();
-                                $brandlist = $brand->show_brand();
-                                if($brandlist){
-                                    while ($result = $brandlist->fetch_assoc()) {
-                                        
-                            ?>
-                                 <option value="<?php echo $result['brandId']?>"><?php echo $result['brandName']?></option>
-                            <?php  
-                                }
-                            }
-                            ?>
 
+                 <div class="form-group">
+
+                <label>category </label>
+                <select name="id_category" id="id_category">
+                    <c:forEach items="${cate}" var="v">
+                        <option value="${v.idCategory }">${v.nameCategory}</option>
+                     </c:forEach>
                 </select>
+            </div>
             </div>
              <div class="form-group">
-              <label >Category</label>
-                <select id="category" name="category" class="form-control">
-                    <option>Chọn Danh Mục</option>
 
-                    <?php
-                                $cat = new category();
-                                $catlist = $cat->show_category();
-                                if($catlist){
-                                    while ($result = $catlist->fetch_assoc()) {
-                                        
-                            ?>
-                                 <option value="<?php echo $result['catId']?>" data-name="<?= $result['catName'] ?>"><?php echo $result['catName']?></option>
-                            <?php  
-                                }
-                            }
-                            ?>
-
-                </select>
+                <label> introduce </label>
+                <input type="text" name="introduce" id="introduce1" class="form-control" placeholder="Enter introduce">
             </div>
              <div class="form-group">
-              <label >Size</label>
-                <select id="size" name="size" class="form-control">
-                  
-                  <option>Select size</option>
-                </select>
-            </div>
-            <div class="form-group">
-
-                <label> Giá </label>
-                <input type="text" name="price" class="form-control" placeholder="Enter price">
-            </div>
-            <div class="form-group">
-
-                <label> Số Lượng </label>
-                <input type="text" name="quantity" class="form-control" placeholder="Enter quantity">
-            </div>
-            <div class="form-group">
-
-                <label> Mô Tả </label>
-                <input type="text" name="description" class="form-control" placeholder="Enter Description">
-            </div>
-            <div class="form-group">
 
                 <label> Ảnh </label>
-                <input type="file" name="image" class="form-control" >
+                <input type="file" name="image" id="image1" class="form-control" >
             </div>
+                 <div class="form-group">
+
+                <label> size </label>
+                <input type="text" name="size" id="size1" class="form-control" placeholder="Enter size">
+            </div>
+            
+            <label> stuff </label>
+            <input type="text" name="stuff" id="stuff1" class="form-control" placeholder="Enter stuff">
+          
+            <div class="form-group">
+
+                <label> Quantity </label>
+                <input type="text" name="quantity" id="quantity1" class="form-control" placeholder="Enter quantity">
+            </div>
+                <div class="form-group">
+
+                <label> Price </label>
+                <input type="text" name="price" id="price1" class="form-control" placeholder="Enter price">
+            </div>
+            
+            <div class="form-group">
+
+                <label> portray </label>
+                <input type="text" name="portray" id="portray1" class="form-control" placeholder="Enter portray">
+            </div>
+    </div>
+           
 <!--             <div class="form-group">
 
                 <label> Image Thumbnail </label>
@@ -113,16 +99,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registerbtn'])){
                 <input type="file" name="thumb3" class="form-control" >
                 <input type="file" name="thumb4" class="form-control" >
             </div> -->
-            <div class="form-group">
-              <label >Loại Sản Phẩm</label>
-                <select id="type" name="type" class="form-control">
-                            <option>Chọn loại sản phẩm</option>
-                            <option value="1">Nổi bật</option>
-                            <option value="0">Không nổi bật</option>
-                </select>
-            </div>
+            
         
-        </div>
+        
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             <button type="submit" name="registerbtn" class="btn btn-primary">Lưu</button>
@@ -157,58 +136,52 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registerbtn'])){
 
     <div class="table-responsive">
 
-     <form action="" method="POST">
+     <form action="" >
       <div class="scroll">
 
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
             <th> ID </th>
-            <th> Tên Sản Phẩm </th>
-            <th> Ảnh </th>
-            <th> Danh Mục </th>
-            <th> Thương Hiệu </th>
-            <th> Giá </th>
-           
-            <th> Chi Tiết </th>
-            <th> Thao tác </th>
+            
+            <th>category</th>
+            <th>nameProduct</th>  
+                    <th>introduce</th>
+                    <th>image</th>
+                    <th>size</th>
+                    <th>stuff</th>
+                    <th>quantity</th>
+                    <th>portray</th>
+                    <th>price</th>
+                    <th >Action</th>
           </tr>
         </thead>
         <tbody>
 
-          <tr>
-            <td> <?php echo $i; ?> </td>
-            <td> <?php echo $result['productName']; ?></td>
-            <td><img src="uploads/<?php echo $result['image']?>" width="70" ></td> 
-            <td> <?php echo $result['catName']; ?></td>
-            <td> <?php echo $result['brandName']; ?></td>
-           
-             <td>$<?php echo $fm->format_currency($result['price']) ?></td>
-             
-           
-
-            <td>
-                <form action="" method="post ">
-                   
-                    <a href="productdetails.php?name=<?php echo $result['productName']?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Chi Tiết </a>
+          <c:forEach items="${data}" var="c">
+                <tr>
+                    <td>  ${c.idProduct} </td>
+                   <td>  ${c.idCategory} </td>
+                    <td>  ${c.nameProduct} </td>
+                     
+                     <td>  ${c.introduce} </td>
+                     <td>  ${c.image} </td>
+                     <td>   ${c.size}  </td>
                     
-                </form>
-            </td>
-            <td>
-                <form action="" method="post">
-                  <input type="hidden" name="delete_id" value="<?php echo $result['productName']?>">
-                  <button  type="submit" name="delete_btn" class="btn btn-danger">Xóa</button>
-                </form>
-            </td>
-          </tr>
-        <?php
-          }
-            }
-            ?>  
+                     <td>  ${c.stuff}  </td>
+                     <td>   ${c.quantity}  </td>
+                     <td>   ${c.portray}  </td>
+                     <td>   ${c.price}  </td>
+                    </form>
+                     <td >  <button  type="button" name="edit_btn" id="edit_btn" class="btn btn-success" data-toggle="modal" data-target="#addadminprofile">update</button> <a href="delete-product?id=<c:out value="${c.idProduct}"/>"</a>delete</td>
+                    
+                </tr>
+           </c:forEach>
+                
         </tbody>
       </table>
       </div>
-       </form>
+       
 
     </div>
   </div>
@@ -217,22 +190,49 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registerbtn'])){
 </div>
 
 <script>
-    $(document).ready(function(){
-        $('#category').change(function(){
-            var catName = $('#category option:selected').text();
-            data = {
-                category:1,
-                catName:catName
-            };
-            $.ajax({
-                url:"size.php",
-                type:"POST",
-                data:data
-            }).done(function(result){
-                $('#size').html(result);
-                
-            })
-        })
+     //Cập nhật
+                document.addEventListener('click',function(e){
+                    if(e.target && e.target.id === 'edit_btn'){
+                        
+                        let form = document.getElementById('Productform');
+                        form.action='save-product';
+                        
+                        
+                        let row = e.target.closest('tr');
+                        document.getElementById("IdProduct").value = row.cells[0].innerText;
 
-    });
+                        document.getElementById("nameProduct1").value = row.cells[1].innerText;
+                        document.getElementById("introduce1").value = row.cells[2].innerText;
+//                        document.getElementById("image1"). = row.cells[3].innerText; 
+                        document.getElementById("size1").value = row.cells[4].innerText;
+                        document.getElementById("stuff1").value = row.cells[5].innerText;
+                        document.getElementById("quantity1").value = row.cells[6].innerText;
+                        document.getElementById("price1").value = row.cells[8].innerText;
+                        document.getElementById("portray1").value = row.cells[7].innerText;
+//                        document.getElementById("nameGroup").value = row.cells[1].innerText;
+//                        document.getElementById("portray").value = row.cells[2].innerText;
+                        
+//                        existingContent.clear();
+//                        list.forEach(function(id){
+//                            //Tìm dòng trong bảng table có mã tương tự
+//                            let sourceRow = table.querySelector('tr[data-permissionid="'+id+'"]');
+//                            
+//                            if (sourceRow) {
+//                                // Clone dòng đã tìm thấy
+//                                let clonedRow = sourceRow.cloneNode(true);
+//      
+//                                // Chèn vào bảng tableChoice
+//                                let a = clonedRow.closest('tr');
+//                                if(a){
+//                                    const cell = a.querySelector('td');
+//                                    const rowContent = cell.textContent;
+//                                    existingContent.add(rowContent);
+//                                    addRowToTableChoice(rowContent);
+//                                }
+//                            }
+//                        });
+                        
+                    }
+                });
 </script>
+<%@include file="component/footer.jsp" %>

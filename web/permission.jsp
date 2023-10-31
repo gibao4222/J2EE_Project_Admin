@@ -7,16 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" href="./resources/css/styleComponent.css">
-<link rel="stylesheet" href="./resources/css/sb-admin-2.css">
-<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<%@include file ="component/navbar.jsp" %>
  <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
      <div class="modal-dialog" style="min-width: 750px" role="document">
       <div class="modal-content" style="width: 750px; align-content: center">
@@ -40,9 +31,11 @@
                 <label>Mô Tả</label>
                 <input type="text" style="margin: auto; width: 90%" name="portray" id="portray" class="form-control" placeholder="Enter Portray for Group Permission">
             </div>
+            
             <div class="form-group">
+                <label>Quyền</label>
                 <div class="container-fluid" style="display: flex; justify-content: space-between; gap: 10px;">
-                    <div class="card shadow mb-4"style="max-width: 300px;">
+                    <div class="card shadow mb-4"style="max-width: 290px;min-width: 290px;max-height: 260px !important; overflow: auto !important">
                         <div class="card-body" >
                             <div class="table-responsive table-Cover">
                                 <table class="table table-bordered table-ScrollBar" id="dataTable" width="100%" cellspacing="0">
@@ -65,7 +58,7 @@
                         </div>
                     </div>
                     
-                    <div class="card shadow mb-4" style="max-width: 300px;">
+                    <div class="card shadow mb-4" style="max-width: 290px;min-width: 290px;max-height: 260px !important; overflow: auto !important">
                         <div class="card-body">
                             <div class="table-responsive table-Cover">
                                 <table class="table table-bordered table-ScrollBar" id="tableChoice" width="100%" cellspacing="0">
@@ -117,23 +110,23 @@
 
 
 
-<div class="container-fluid">
+<div class="container-fluid" style="padding-left: 5px !important">
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Danh Sách Nhóm Quyền
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
+      <h6 class="m-0 font-weight-bold text-primary">Danh Sách Nhóm Quyền<br>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile" style="margin-top: 5px">
               Thêm Nhóm Quyền
             </button>
     </h6>
   </div>
-
-  <div class="card-body">
+    
+  <div class="card-body" >
 
     <div class="table-responsive">
 
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
         <thead>
           <tr>
             <th> ID </th>
@@ -156,7 +149,7 @@
                 <button  type="button" name="edit_btn" id="edit_btn" class="btn btn-success" data-toggle="modal" data-target="#addadminprofile"> Chỉnh sửa</button>
                 <form action="delete-PermissionGroup" method="post">
                   <input type="hidden" name="idGroup" value="${pg.idGroup}">
-                  <button type="submit" name="delete_btn" class="btn btn-danger"> Xóa Nhóm Quyền</button>
+                  <button type="submit" name="delete_btn" class="btn btn-danger"> Xóa</button>
                 </form>
             </td>
           </tr>
@@ -169,6 +162,7 @@
 </div>
 
 </div>
+
 
         
         <script>
@@ -291,3 +285,4 @@
 //                }
             });
         </script>
+        <%@include file="component/footer.jsp" %>

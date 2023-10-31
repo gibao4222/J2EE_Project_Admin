@@ -5,9 +5,12 @@
 
 package Controller;
 
+import DAL.CreateID;
 import DAL.ProductDAL;
 import DAL.PromotionDAL;
+import DAL.PromotionDetailDAL;
 import Model.ProductModel;
+import Model.PromotionDetailModel;
 import Model.PromotionModel;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +20,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -82,9 +86,15 @@ public class Promotion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        //Khai báo
         PromotionDAL pgDAL = new PromotionDAL();
+        PromotionDetailDAL pdDAL = new PromotionDetailDAL();
         String url = request.getRequestURI();
+        
+        
+        
         if(url.contains("add-Promotion")){
+            String idPromo = (new CreateID("Pr").create());
             String namePromo = String.valueOf(request.getParameter("namePromo"));
             String code = String.valueOf(request.getParameter("code"));
             String introduce = String.valueOf(request.getParameter("introduce"));
@@ -93,11 +103,21 @@ public class Promotion extends HttpServlet {
             
             Float saleOff = Float.valueOf(request.getParameter("saleOff"));
             Float reduceMax = Float.valueOf(request.getParameter("reduceMax"));
-            PromotionModel pg = new PromotionModel(namePromo, code, dateStart, dateEnd, saleOff, reduceMax);
+            
+            //Lưu PromotionDetail
+            String[] productList = String.valueOf(request.getParameter("listProduct")).split(",");
+            for(String s : productList){
+                PromotionDetailModel pd = new PromotionDetailModel(new CreateID("PD").create(), idPromo, s);
+                pdDAL.addPromotionDetail(pd);
+            }
+            
+            
+            PromotionModel pg = new PromotionModel(idPromo,namePromo, code, dateStart, dateEnd, saleOff, reduceMax);
             pgDAL.addPromotionGroup(pg);
         }
         else if(url.contains("delete-Promotion")){
                 String idPromo = String.valueOf(request.getParameter("idPromo"));
+                pdDAL.deletePromotionDetail(idPromo);
                 pgDAL.deletePromotion(idPromo);
         }
         else{
