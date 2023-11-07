@@ -87,7 +87,7 @@ public class OrderDetailServlet extends HttpServlet {
                String idOrder = String.valueOf(request.getParameter("idOrder"));
                String idProduct = String.valueOf(request.getParameter("idProduct"));
                String dateCreated = String.valueOf(request.getParameter("dateCreated"));
-               String quantity = String.valueOf(request.getParameter(" quantity"));
+               String quantity = String.valueOf(request.getParameter("quantity"));
                String price = String.valueOf(request.getParameter("price"));
                String total = String.valueOf(request.getParameter("total"));
                String idSale = String.valueOf(request.getParameter("idSale"));
