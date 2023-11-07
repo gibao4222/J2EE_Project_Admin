@@ -48,7 +48,7 @@ public class cartDAL extends MyDatabaseManager{
       public int insertcart(cart ps){
           int result = 0;
           try{
-        String query = "Insert cart (idCustomer,idProduct,quantity,price) VALUES (?,?,?,?)";
+        String query = "Insert cart (idCustomer,idProduct,quantity,pricetotal) VALUES (?,?,?,?)";
         PreparedStatement p = cartDAL.getConnection().prepareStatement(query);
         p.setInt(1, ps.getIdCustomer());
         p.setInt(2, ps.getIdProduct());
@@ -93,6 +93,28 @@ public class cartDAL extends MyDatabaseManager{
         return ps;
         
     }
+        public cart findcartBYidCusAndidPro(int idProduct,int idCustomer)  {
+            cart ps = new cart();
+           try{
+        String query = "SELECT * FROM cart WHERE idProduct = "+ idProduct+ " AND idCustomer = "+ idCustomer+"  ";
+        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
+        ResultSet rs = p.executeQuery();
+        if (rs != null) {
+            while (rs.next()) {
+                ps.setIdCart(rs.getInt("idCart"));
+                ps.setIdCustomer(rs.getInt("idCustomer"));
+                ps.setIdProduct(rs.getInt("idProduct"));
+                ps.setQuantity(rs.getInt("quantity"));
+                ps.setPricetotal(rs.getFloat("pricetotal"));
+              
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return ps;
+    }
+      
        public int updatecart(int qty, int id, float pricetotal) {
            int result = 0 ;
            try{
@@ -114,14 +136,14 @@ public class cartDAL extends MyDatabaseManager{
        public static void main(String[] args) {
         cart c = new cart();
         cartDAL cart = new cartDAL();
-            cart.updatecart(5, 5, 50000);
-        List<cart> list= cart.readcart(3);
-//        c.setIdCustomer(1);
-//        c.setIdProduct(3);
-//        c.setQuantity("16");
-//        c.setPrice(123333);
-//        cart.insertcart(c);
-           System.out.println(list.get(0).pricetotal);
+            c=cart.findcartBYidCusAndidPro(45, 3);
+            System.out.println(c.pricetotal);
+        c.setIdCustomer(1);
+        c.setIdProduct(3);
+           c.setPricetotal(1333);
+        c.setPricetotal(123333);
+        cart.insertcart(c);
+       
 //           cart.deletecart(4);
 //           cart.deletecart(3);
 //        cart.updatecart(155, 2);

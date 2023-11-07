@@ -80,6 +80,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registerbtn'])){
                 <label> size </label>
                 <input type="text" name="size" id="size1" class="form-control" placeholder="Enter size">
             </div>
+             <div class="form-group">
+
+                <label> color </label>
+                <input type="text" name="corlor" id="size1" class="form-control" placeholder="Enter color">
+            </div>
             
             <label> stuff </label>
             <input type="text" name="stuff" id="stuff1" class="form-control" placeholder="Enter stuff">
@@ -159,6 +164,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registerbtn'])){
                     <th>introduce</th>
                     <th>image</th>
                     <th>size</th>
+                    <th>color</th>
                     <th>stuff</th>
                     <th>quantity</th>
                     <th>portray</th>
@@ -176,8 +182,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registerbtn'])){
                      <td>  ${c.id_category} </td>
                      <td>  ${c.introduce} </td>
                      <td>  ${c.image} </td>
-                     <td>   ${c.size}  </td>
                     
+                     <td>   ${c.size}  </td>
+                     <td> ${c.color}  </td>
                      <td>  ${c.stuff}  </td>
                      <td>   ${c.quantity}  </td>
                      <td>   ${c.portray}  </td>
@@ -214,11 +221,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['registerbtn'])){
                         document.getElementById("nameProduct1").value = row.cells[1].innerText;
                         document.getElementById("introduce1").value = row.cells[2].innerText;
 //                        document.getElementById("image1"). = row.cells[3].innerText; 
-                        document.getElementById("size1").value = row.cells[4].innerText;
-                        document.getElementById("stuff1").value = row.cells[5].innerText;
-                        document.getElementById("quantity1").value = row.cells[6].innerText;
-                        document.getElementById("price1").value = row.cells[8].innerText;
-                        document.getElementById("portray1").value = row.cells[7].innerText;
+                        document.getElementById("size1").value = row.cells[5].innerText;
+                          document.getElementById("color").value = row.cells[6].innerText;
+                        document.getElementById("stuff1").value = row.cells[6].innerText;
+                        document.getElementById("quantity1").value = row.cells[7].innerText;
+                        document.getElementById("price1").value = row.cells[9].innerText;
+                        document.getElementById("portray1").value = row.cells[8].innerText;
 //                        document.getElementById("nameGroup").value = row.cells[1].innerText;
 //                        document.getElementById("portray").value = row.cells[2].innerText;
                         

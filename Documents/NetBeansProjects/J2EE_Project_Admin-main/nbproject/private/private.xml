@@ -3,15 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/DAL/product.java</file>
-            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/web/listCategory1.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/Controller/productController.java</file>
-            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/DAL/cart.java</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/DAL/promotion.java</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/DAL/categoryDAL.java</file>
             <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/DAL/productDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/DAL/historyPromoDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/web/cart.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/DAL/promotionDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/web/add.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/Controller/productController.java</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/web/detailsproduct.jsp</file>
             <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/web/listSubimage1.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/web/homepage.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/web/listProduct.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/Controller/categoryController.java</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/Controller/checkoutController.java</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/web/confirm.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/DAL/historyPromo.java</file>
+            <file>file:/C:/Users/Thanhchan/Documents/NetBeansProjects/J2EE_Project_Admin-main/src/java/Controller/ShoppingCartServlet.java</file>
         </group>
     </open-files>
 </project-private>

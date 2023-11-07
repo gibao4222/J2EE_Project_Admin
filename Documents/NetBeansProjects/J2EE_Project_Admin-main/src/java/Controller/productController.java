@@ -4,17 +4,22 @@
  */
 package Controller;
 
+
+import DAL.cart;
+import DAL.cartDAL;
 import DAL.category;
 import DAL.categoryDAL;
 import DAL.product;
 import DAL.productDAL;
 import DAL.subimage;
 import DAL.subimageDAL;
+import com.sun.xml.fastinfoset.EncodingConstants;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Integer.parseInt;
@@ -23,7 +28,7 @@ import java.util.List;
  *
  * @author Thanhchan
  */
-@WebServlet({"/show-product","/details", "/add-product", "/update-poduct","/delete-product","/save-product","/home","/category","/timkiem"})
+@WebServlet({"/show-product","/details","/add-cart", "/add-product", "/update-poduct","/delete-product","/save-product","/home","/category","/timkiem"})
 public class productController extends HttpServlet {
 
     /**
@@ -91,7 +96,9 @@ public class productController extends HttpServlet {
         float price=p.getPrice();
         System.out.print(p.getNameProduct());
         String quantity = p.getQuantity();
+        int IdProduct = p.getId();
         String img=p.getImage();
+        request.setAttribute("IdProduct", IdProduct);
         request.setAttribute("img", img);
         request.setAttribute("nameproduct", nameproduct);
         request.setAttribute("price", price);
@@ -200,7 +207,7 @@ request.setAttribute("proupdate", pro);
         request.setAttribute("data", list);
         request.getRequestDispatcher("homepage.jsp").forward(request, response);
          
-}if(uri.contains("category")){ // [Tính chu vi].Click
+}else if(uri.contains("category")){ // [Tính chu vi].Click
     String id_category=request.getParameter("id_category");
          System.out.print(id_category);
         
@@ -208,15 +215,15 @@ request.setAttribute("proupdate", pro);
         List <category> listcate = c.readcategory();
         request.setAttribute("datacate", listcate);
  productDAL p = new productDAL();
-        List <product> list = p.findproductbyId_category(Integer.parseInt(id_category));
-        request.setAttribute("data", list);
-        request.getRequestDispatcher("homepage.jsp").forward(request, response);
-         
-}else {
+            List <product> list = p.findproductbyId_category(Integer.parseInt(id_category));
+            request.setAttribute("data", list);
+            request.getRequestDispatcher("homepage.jsp").forward(request, response);
+
+}else if(uri.contains("delete-product"))  {
   String id = request.getParameter("id");
                 
                    productDAL p = new productDAL();
-                   p.deleteproduct( parseInt(id));
+//                   p.deleteproduct( parseInt(id));
                    response.setContentType("text/html");
                    response.sendRedirect("show-product");
 }

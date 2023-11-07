@@ -135,22 +135,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               <c:forEach items="${data}" var="c">
+                                <c:forEach items="${cart.items}" var="item">
                                 <tr>
                                     <td class="shoping__cart__item">
-                                        <img src="./resources/image/cao.jpg" width="70"? alt="">
-                                        <h5>${c.nameProduct}</h5>
+                                        <img src="./resources/image/<c:out value="${item.image}" />" width="70"? alt="">
+                                        <h5>${item.tenSanPham}</h5>
                                     </td>
                                     <td class="shoping__cart__price">
-<fmt:formatNumber value="${c.pricePro}" pattern="#,###" />                                    </td>
+                                            <fmt:formatNumber value="${item.gia}" pattern="#,###" /> </td>
                                    
                                     <td class="shoping__cart__quantity">
-                                        <form action="update-cart">
+                                    <form action="ShoppingCartServlet">
+                                                    <input type="hidden" name="action" value="updateCart">
+                                                     <input type="hidden" name="maHang" value="${item.maHang}"><br>
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <input type="hidden" name="idCart"min = 0 value="${c.idCart}"/>
-                                                <input type="hidden" name="pricePro" value="${c.pricePro}"/>
-                                                <input type="number" name="quantity"min = 0 value="${c.quantity}"/>
+                                                
+<!--                                                <input type="hidden" name="pricePro" value="${c.pricePro}"/>-->
+                                                <input type="number" name="quantity"min = 0 value="${item.quantity}"/>
 
                                             </div>
 
@@ -160,14 +162,20 @@
                                     </td>
 
                                     <td class="shoping__cart__total">
-                                      <fmt:formatNumber value="${c.pricePro*c.quantity}" pattern="#,###" />
+                                      <fmt:formatNumber value="${item.gia*item.quantity}" pattern="#,###" /> VNĐ
                                     </td>
+                                    <c:set value="${cart.totalPrice}" var="p" />
+                                    <c:set value="<%=   request.getAttribute("saleOff") %>" var="s"/>
                                     <td class="shoping__cart__item__close">
                                         <!-- <span class="icon_close"></span> -->
-                                        <td><a onclick ="return confirm('Bạn có muốn xóa?')" href="delete-cart?id=<c:out value="${c.idCart}"/>">X</a></td>
+                                        <form action="ShoppingCartServlet" method="get">
+                                    <input type="hidden" name="action" value="Remove">
+                                    <input type="hidden" name="maHang" value="${item.maHang}"><br>
+                                    <input type="submit" value="X">
+                            </form>
                                     </td>
                                 </tr>
-                                </c:forEach>
+                               </c:forEach>
 
                             </tbody>
                         </table>
@@ -175,23 +183,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="shoping__cart__btns">
-                        <a href="index.php" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                            Upadate Cart</a>
-                    </div>
-                </div>
+                
                 <div class="col-lg-6">
                     <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="" method="post">
-                                <input type="text" name="codediscount" placeholder="Enter your coupon code">
-                                <button type="submit" name="discount" class="site-btn">APPLY COUPON</button>
-                                <!-- <button type="submit" name="undiscount" class="site-btn">APPLY COUPON</button> -->
-                            </form>
-                        </div>
+                       
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -199,26 +194,15 @@
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Subtotal <span></span></li>
+                            <li>Tổng tiền <span> <fmt:formatNumber value="${p}" pattern="#,###" />  VNĐ</span></li>
                            
                                  
-                            <li>Discount () 
-
-                                <span></span>
-                                
-                                <button type="submit" name="undiscount" class="stylinggg">remove</button>
-                               
-                            </li>
-
-                            <li>Total <span></td></span></li>
-                              
-                                    <li>Total <span></td></span></li>
-                                  
+                            
                            
 
                         </ul>
                         
-                        <a href="checkout.php" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a href="checkout" class="primary-btn">Thanh toán</a>
                         
                         
                       

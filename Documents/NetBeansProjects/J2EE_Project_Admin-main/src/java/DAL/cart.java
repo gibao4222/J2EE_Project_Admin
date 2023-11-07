@@ -28,12 +28,12 @@ public class cart {
     public cart() {
     }
 
-    public cart(int idCart, int idCustomer, int idProduct, int quantity, String nameProduct, float pricetotal) {
+    public cart(int idCart, int idCustomer, int idProduct, int quantity, float pricetotal) {
         this.idCart = idCart;
         this.idCustomer = idCustomer;
         this.idProduct = idProduct;
         this.quantity = quantity;
-        this.nameProduct = nameProduct;
+        
         this.pricetotal = pricetotal;
     }
 

@@ -115,8 +115,8 @@ img.sub-galerry {
 <body>
     <div class="container">
         <h1>Chi tiết sản phẩm</h1>
-        
-        <div class="product">
+       <form action="ShoppingCartServlet" method="GET">
+         <div class="product">
             <div class="product-image">
                 <img src="./resources/image/<%=   request.getAttribute("img") %>" alt="Product Image">
             </div>
@@ -124,7 +124,7 @@ img.sub-galerry {
                 <h2 class="product-title">Tên sản phẩm: <%=   request.getAttribute("nameproduct") %> </h2>
                 <p class="product-price">Giá sản phẩm:<fmt:formatNumber value="<%=   request.getAttribute("price") %>" pattern="#,###" /> VNĐ </p>
                 
-                <p class="product-quantity">Số lượng:<%=   request.getAttribute("quantity") %></p>
+                <p class="product-quantity">Số lượng:1 <input name="quantity" type="hidden" min="1" value="1" /></p>
                
             </div>
         </div>
@@ -135,8 +135,15 @@ img.sub-galerry {
             </c:forEach>
             <!-- Thêm các hình ảnh phụ khác -->
         </div>
-         <a href="#" class="buy-button">Mua hàng</a>
-         
+                <input type="hidden" name="action" value="AddCart">
+                                <input type="hidden" name="price" value="<%=   request.getAttribute("price") %>" />    
+                                <input type="hidden" name="image" value="<%=   request.getAttribute("img") %>" />    
+
+                <input type="hidden" name="nameproduct" value="<%=   request.getAttribute("nameproduct") %>" />    
+           <input type="hidden" name="action" value="add" />
+            <input type="hidden" name="idProduct" value="<%=   request.getAttribute("IdProduct") %>"/>
+                <input  type="submit" class="buy-button" value="Mua hàng" />
+         </form>
     </div>
 </body>
 </html>

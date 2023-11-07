@@ -4,8 +4,7 @@
  */
 package Controller;
 
-import DAL.cart;
-import DAL.cartDAL;
+import DAL.ShoppingCart;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,15 +12,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.time.Clock.system;
-import java.util.List;
 
 /**
  *
  * @author Thanhchan
  */
-@WebServlet({"/show-cart","/delete-cart","/update-cart"})
-public class cartController extends HttpServlet {
+@WebServlet({"/checkout"})
+public class checkoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +37,10 @@ public class cartController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet showcart</title>");            
+            out.println("<title>Servlet checkoutController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet showcart at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet checkoutController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,22 +58,12 @@ public class cartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       String uri = request.getRequestURI();
+     if(uri.contains("checkout")) { // [Tính diện tích].Click
+         ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
         
-        String uri = request.getRequestURI();
-     if(uri.contains("show-cart")) { // [Tính diện tích].Click
+                request.getRequestDispatcher("confirm.jsp").forward(request, response);
 
-  cartDAL cart = new cartDAL();
-        List<cart> list= cart.readcart(3);
-        request.setAttribute("data", list);
-        request.getRequestDispatcher("cart.jsp").forward(request, response);
-//        
-//        request.getRequestDispatcher("listCategory.jsp").forward(request, response);
-        
-}else{
-  cartDAL c = new cartDAL();
-             int id = Integer.parseInt(request.getParameter("id"));
-             c.deletecart(id);
-               response.sendRedirect("show-cart");
 }
     }
 
