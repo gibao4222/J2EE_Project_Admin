@@ -6,8 +6,10 @@ package Controller;
 
 import DAL.AccountDAL;
 import DAL.CreateID;
+import DAL.PermissionGroupDAL;
 import DAL.StaffDAL;
 import Model.AccountModel;
+import Model.PermissionGroupModel;
 import Model.StaffModel;
 import com.google.gson.JsonObject;
 import jakarta.servlet.RequestDispatcher;
@@ -74,8 +76,11 @@ public class Staff extends HttpServlet {
         StaffDAL staffDAL = new StaffDAL();
            ArrayList<StaffModel> st = staffDAL.readStaff();
            request.setAttribute("listStaff", st);
-           request.getRequestDispatcher("listStaff.jsp").forward(request, response);
-          
+         PermissionGroupDAL permissionGroupDAL = new PermissionGroupDAL();
+         ArrayList<PermissionGroupModel> permissionGroupModels = permissionGroupDAL.readPermissionGroup();
+         request.setAttribute("listPermissionGroup", permissionGroupModels);
+         request.getRequestDispatcher("listStaff.jsp").forward(request, response);
+
     }
 
     /**
@@ -105,6 +110,7 @@ public class Staff extends HttpServlet {
                String bankAccount = String.valueOf(request.getParameter("bankAccount"));
                String accountNumber = String.valueOf(request.getParameter("accountNumber"));
                String idGroup = String.valueOf(request.getParameter("idGroup"));
+               System.out.println(idGroup);
 //               add-Account 
                 String idACcount = new CreateID("TK").create();               
                 String password = String.valueOf(request.getParameter("password"));

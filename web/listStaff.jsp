@@ -50,8 +50,12 @@
             </div>
             <div class="form-group">
                 <label>Nhóm quyền</label>
-                <input id="idGroup" type="text" name="idGroup" class="form-control" value="" placeholder="Enter Account Number">
-
+                <!--<input id="idGroup" type="text" name="idGroup" class="form-control" value="" placeholder="Enter Account Number">-->
+                <select id="idGroup" name="idGroup" class="form-control" >
+                    <c:forEach items="${listPermissionGroup}" var = "PrG" >
+                         <option value="${PrG.idGroup}">${PrG.nameGroup}</option>
+                    </c:forEach>                   
+                </select>
             </div>
         </div>
         <div class="modal-footer">
@@ -159,7 +163,17 @@
                         document.getElementById("numberPhone").value = row.cells[4].innerText;
                         document.getElementById("bankAccount").value = row.cells[5].innerText;
                         document.getElementById("accountNumber").value = row.cells[6].innerText;
-                        document.getElementById("idGroup").value = row.cells[7].innerText;
+//                        document.getElementById("idGroup").value = row.cells[7].innerText;
+                    var selectElement = document.getElementById("idGroup");
+                        for (var i = 0; i < selectElement.options.length; i++) {
+                           var option = selectElement.options[i];
+                          
+                            if (option.value === row.cells[7].innerText) {
+                                 console.log("option được chọn"+option.value);
+                            option.selected = true;
+                            break;  // Nếu đã tìm thấy giá trị, thoát khỏi vòng lặp
+                           }
+                          }
                         existingContent.clear();
                                                 
                     }

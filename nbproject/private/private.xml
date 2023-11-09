@@ -2,16 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/src/java/DAL/ProductDAL.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/src/java/Model/ProductModel.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/web/listProduct.jsp</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/src/java/Controller/productController.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/web/permission.jsp</file>
+            <file>file:/D:/J2EE_Project_Admin/src/java/DAL/PermissionDAL.java</file>
+            <file>file:/D:/J2EE_Project_Admin/web/resources/css/main.css</file>
+            <file>file:/D:/J2EE_Project_Admin/src/java/Controller/Staff.java</file>
+            <file>file:/D:/J2EE_Project_Admin/src/java/DAL/CustomerDAL.java</file>
+            <file>file:/D:/J2EE_Project_Admin/src/java/DAL/StaffDAL.java</file>
+            <file>file:/D:/J2EE_Project_Admin/src/java/Controller/Permission.java</file>
+            <file>file:/D:/J2EE_Project_Admin/web/listStaff.jsp</file>
+            <file>file:/D:/J2EE_Project_Admin/src/java/Model/PermissionGroupModel.java</file>
+            <file>file:/D:/J2EE_Project_Admin/src/java/DAL/ProductDAL.java</file>
+            <file>file:/D:/J2EE_Project_Admin/src/java/DAL/CreateID.java</file>
         </group>
->>>>>>> 740f49f9b8547d9f89973869d8d18c74047c01c0
     </open-files>
 </project-private>
