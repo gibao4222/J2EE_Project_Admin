@@ -5,6 +5,7 @@
 
 package Controller;
 
+import DAL.CreateID;
 import Model.category;
 import DAL.categoryDAL;
 import Model.ProductModel;
@@ -22,7 +23,7 @@ import java.util.List;
  *
  * @author Thanhchan
  */
-@WebServlet({"/product", "/add-product", "/update-poduct","/delete-product","/save-product","/home","/category"})
+@WebServlet({"/product", "/add-product", "/update-poduct","/delete-Product","/save-product","/home","/category"})
 public class productController extends HttpServlet {
 
     /**
@@ -63,7 +64,7 @@ public class productController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//       String uri = request.getRequestURI();
+       String uri = request.getRequestURI();
        ProductDAL p = new ProductDAL();
         List <ProductModel> list = p.readProduct();
         System.out.println(list.get(0).getNameProduct());
@@ -71,6 +72,7 @@ public class productController extends HttpServlet {
         categoryDAL c = new categoryDAL();
          List<category> cate = c.readcategory();
          request.setAttribute("cate", cate);
+         
         request.getRequestDispatcher("listProduct.jsp").forward(request, response);
 //     if(uri.contains("show-product")) { // [Tính diện tích].Click
 //         String id_category=request.getParameter("id_category");
@@ -84,40 +86,7 @@ public class productController extends HttpServlet {
 //
 //        
 //}
-//        else if(uri.contains("add-product")){ // [Tính chu vi].Click
-//            String nameProduct = request.getParameter("nameProduct");
-//            String introduce = request.getParameter("introduce");
-//
-//            String image = request.getParameter("image");
-//
-//            String size = request.getParameter("size");
-//            String stuff = request.getParameter("stuff");
-//            int quantity = Integer.parseInt(request.getParameter("quantity"));
-//            String portray = request.getParameter("portray");
-//
-//
-//
-//
-//        
-//            float price = Float.parseFloat(request.getParameter("price"));
-//              
-//
-//            ProductDAL product = new ProductDAL();
-//            ProductModel pro= new ProductModel();
-//            pro.setNameProduct(nameProduct);
-//            pro.setIntroduce(introduce);
-//            pro.setImage(image);
-//            pro.setSize(size);
-//            pro.setStuff(stuff);
-//            pro.setQuantity(quantity);
-//            pro.setPrice(price);
-//            pro.setPortray(portray);
-//            product.addProduct(pro);
-//            request.setAttribute("mess", "add thành công");
-////            request.getRequestDispatcher("listproduct.jsp").forward(request, response);
-//
-//           response.sendRedirect("show-product");
-//}else if(uri.contains("update-product")){ // [Tính chu vi].Click
+//        else if(uri.contains("update-product")){ // [Tính chu vi].Click
 // 
 //  int id =   Integer.parseInt( request.getParameter("id"));
 //        
@@ -176,13 +145,16 @@ public class productController extends HttpServlet {
 //        request.setAttribute("data", list);
 //        request.getRequestDispatcher("homepage.jsp").forward(request, response);
          
-//}else {
+// if(uri.contains("delete-product")) {
 //  String id = request.getParameter("id");
 //                
-//                   ProductDAL p = new ProductDAL();
+//                   
 //                   p.deleteproduct( id  );
 //                   response.setContentType("text/html");
-//                   response.sendRedirect("show-product");
+//                   request.setAttribute("ji", "ji");
+//                   response.sendRedirect("product");
+//        request.getRequestDispatcher("listProduct.jsp").forward(request, response);
+
 //}
     }
 
@@ -197,8 +169,87 @@ public class productController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String uri = request.getRequestURI();
+        ProductDAL product = new ProductDAL();
+        if(uri.contains("add-product")){ // [Tính chu vi].Click
+            String nameProduct = request.getParameter("nameProduct");
+            String introduce = request.getParameter("introduce");
+
+            String image = request.getParameter("image");
+            String idCategory = request.getParameter("id_category");
+            String size = request.getParameter("size");
+            String stuff = request.getParameter("stuff");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            String portray = request.getParameter("portray");
+
+
+
+
+        
+            float price = Float.parseFloat(request.getParameter("price"));
+              
+
+            
+            ProductModel pro= new ProductModel();
+            pro.setIdProduct(new CreateID("PR").create());
+            pro.setIdCategory(idCategory);
+            pro.setNameProduct(nameProduct);
+            pro.setIntroduce(introduce);
+            pro.setImage(image);
+            pro.setSize(size);
+            pro.setStuff(stuff);
+            pro.setQuantity(quantity);
+            pro.setPrice(price);
+            pro.setPortray(portray);
+            product.addProduct(pro);
+//            request.setAttribute("mess", "add thành công");
+//            request.getRequestDispatcher("listproduct.jsp").forward(request, response);
+//
+//           response.sendRedirect("product");
+}
+//                 else if(uri.contains("delete-product")) {
+//  String id = request.getParameter("id");
+//                     System.out.println(id);
+//                   ProductDAL p = new ProductDAL();
+//                   p.deleteproduct( id  );
+//                   response.setContentType("text/html");
+////                   response.sendRedirect("product");
+//}
+    else if(uri.contains("delete-Product")){
+        String idProduct = String.valueOf(request.getParameter("idProduct"));
+            System.out.println(idProduct);
+        product.deleteproduct(idProduct);
     }
+        else if(uri.contains("save-product")){ // [Tính chu vi].Click
+            String id =request.getParameter("IdProduct");
+            String nameProduct = request.getParameter("nameProduct");
+            String introduce = request.getParameter("introduce");
+            String image = request.getParameter("image");
+            System.out.println(image);
+            String size = request.getParameter("size");
+            String stuff = request.getParameter("stuff");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            float price	 = Float.parseFloat(request.getParameter("price"));
+            String portray = request.getParameter("portray");
+            String idCategory = request.getParameter("id_category");
+         
+            ProductModel pro = new ProductModel();
+            pro.setNameProduct(nameProduct);
+            pro.setIntroduce(introduce);
+            pro.setImage(image);
+            pro.setSize(size);
+            pro.setStuff(stuff);
+            pro.setQuantity(quantity);
+            pro.setPrice(price);
+            pro.setPortray(portray);
+           pro.setIdCategory(idCategory);
+            ProductDAL p = new ProductDAL();
+            p.updatePro(pro,id);
+           request.setAttribute("message", "update thành công");
+                      response.sendRedirect("product");
+}
+    }
+  
 
     /**
      * Returns a short description of the servlet.

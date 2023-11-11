@@ -5,7 +5,9 @@
 
 package Controller;
 
-import DAL.PromotionDetailDAL;
+import DAL.CreateID;
+import DAL.CustomerDAL;
+import Model.CustomerModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,8 +21,8 @@ import java.util.ArrayList;
  *
  * @author Admin
  */
-@WebServlet(name="Load", urlPatterns={"/load"})
-public class Load extends HttpServlet {
+@WebServlet({"/customer" ,"/add-Customer","/delete-Customer","/update-Customer"})
+public class Customer extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +39,10 @@ public class Load extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Load</title>");  
+            out.println("<title>Servlet Customer</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Load at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet Customer at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,7 +59,10 @@ public class Load extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        CustomerDAL cusDAL = new CustomerDAL();
+           ArrayList<CustomerModel> st = cusDAL.readCustomer();
+           request.setAttribute("listCustomer", st);
+           request.getRequestDispatcher("listCustomer.jsp").forward(request, response);
     } 
 
     /** 
@@ -70,13 +75,39 @@ public class Load extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String idPromotion = request.getParameter("data");
-        PromotionDetailDAL pd = new PromotionDetailDAL();
-        ArrayList<String> list = pd.getIdProductByIdPromo(idPromotion);
+        CustomerDAL cusDAL = new CustomerDAL();
+           String url = request.getRequestURI();
+           if (request.getCharacterEncoding()== null) {
+            request.setCharacterEncoding("UTF-8");
+            }
+           if (url.contains("add-Customer")) {
+               String idCustomer = new CreateID("CT").create();
+               String email = String.valueOf(request.getParameter("email"));
+               String fullName = String.valueOf(request.getParameter("fullName"));
+               String address = String.valueOf(request.getParameter("address"));
+               String phoneNumber = String.valueOf(request.getParameter("numberPhone"));                            
+                CustomerModel cusModel = new CustomerModel(idCustomer, email, address, phoneNumber, fullName);
+                cusDAL.addCustomer(cusModel);
+                
+           }
+           else if(url.contains("delete-Customer")){
+                String idCustomer = String.valueOf(request.getParameter("idCustomer"));
+                cusDAL.deleteCustomer(idCustomer);
+                
+              }
+           else if (url.contains("update-Customer")) {
+               String idCustomer = String.valueOf(request.getParameter("idCustomer"));
+               String email = String.valueOf(request.getParameter("email"));
+               String fullName = String.valueOf(request.getParameter("fullName"));
+               String address = String.valueOf(request.getParameter("address"));
+               String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
+               CustomerModel cusModel = new CustomerModel(idCustomer, email, address, phoneNumber, fullName);
+               cusDAL.updateCustomer(cusModel);
+        }
+        response.setContentType("application/json");
         
-        request.setAttribute("data", list);
-        request.getRequestDispatcher("promotion.jsp").forward(request, response);
-        
+        response.sendRedirect("customer");
+    
     }
 
     /** 

@@ -26,6 +26,7 @@
     <!-- Custom styles for this template-->
     <link href="./resources/css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 
@@ -74,7 +75,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Phân quyền:</h6>
                         <a class="collapse-item" href="permission" id="btn_PermissionGroup">Nhóm quyền</a>
-                        <a class="collapse-item" href="permission">Quyền</a>
+<!--                        <a class="collapse-item" href="permission">Quyền</a>-->
                     </div>
                 </div>
             </li>
@@ -90,10 +91,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Đơn hàng:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Danh sách đơn hàng</a>
+                        <a class="collapse-item" href="order">Danh sách đơn hàng</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Nhập hàng:</h6>
-                        <a class="collapse-item" href="utilities-border.html">Danh sách nhập hàng</a>
+                        <a class="collapse-item" href="import">Danh sách nhập hàng</a>
                     </div>
                 </div>
             </li>
@@ -116,9 +117,9 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Thông tin</h6>
-                        <a class="collapse-item" href="login.html">Nhà Sản Xuất</a>
-                        <a class="collapse-item" href="register.html">Danh Sách Sản Phẩm</a>
-                        <a class="collapse-item" href="forgot-password.html">Danh Mục Sản Phẩm</a>
+                        <a class="collapse-item" href="supplier">Nhà Sản Xuất</a>
+                        <a class="collapse-item" href="product">Danh Sách Sản Phẩm</a>
+                        <a class="collapse-item" href="category">Danh Mục Sản Phẩm</a>
                         <a class="collapse-item" href="promotion">Chương Trình Khuyến Mãi</a>
                     </div>
                 </div>
@@ -126,14 +127,14 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="staff">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Danh Sách Nhân Sự</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+                <a class="nav-link" href="customer">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh Sách Khách Hàng</span></a>
             </li>

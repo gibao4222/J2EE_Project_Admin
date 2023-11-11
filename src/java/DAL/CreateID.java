@@ -56,14 +56,35 @@ public class CreateID extends MyDatabaseManager{
             case "PR":
                 query = "SELECT * FROM product";
                 break;
+            case "ST":
+                query = "SELECT * FROM staff";
+                break;
+            case "CT":
+                 query = "SELECT * FROM customer";
+                break;
+            case "TK":
+                query="SELECT * FROM account";
             case "PD":
                 query = "SELECT * FROM promotiondetail";
+
                 break;
             case "CA":
-                
+                query = "SELECT * FROM category";
                 break;
             case "SU":
-                
+                query = "SELECT * FROM supplier";
+                break;
+            case "OD":
+                query = "SELECT * FROM orders";
+                break;
+            case "DT":
+                query = "SELECT * FROM orderdetail";
+                break;
+            case "IP":
+                query = "SELECT * FROM import";
+                break;
+            case "ID":
+                query = "SELECT * FROM importdetail";
                 break;
             default:
         
@@ -73,7 +94,7 @@ public class CreateID extends MyDatabaseManager{
         
         if(rs!=null){
             while(rs.next()){
-                String id = rs.getString("idGroup");
+                String id = rs.getString(1);
                 String numbers = "";
                 for(int i = 0 ; i < id.length();i++){
                     char c = id.charAt(i);

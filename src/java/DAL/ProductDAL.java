@@ -142,7 +142,7 @@ public class ProductDAL extends MyDatabaseManager{
         return ps;
     }
        
-       public int updatePro(ProductModel ps, int id) {
+       public int updatePro(ProductModel ps, String id) {
            int result = 0 ;
            try{
         String query = "Update product SET nameProduct = ? , introduce = ?, image =?,size = ?,stuff=? ,quantity=?,price=?,portray=?,idCategory=?  "
