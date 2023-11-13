@@ -205,7 +205,7 @@ public class productController extends HttpServlet {
 //            request.setAttribute("mess", "add thành công");
 //            request.getRequestDispatcher("listproduct.jsp").forward(request, response);
 //
-//           response.sendRedirect("product");
+           response.sendRedirect("product");
 }
 //                 else if(uri.contains("delete-product")) {
 //  String id = request.getParameter("id");
@@ -217,8 +217,8 @@ public class productController extends HttpServlet {
 //}
     else if(uri.contains("delete-Product")){
         String idProduct = String.valueOf(request.getParameter("idProduct"));
-            System.out.println(idProduct);
         product.deleteproduct(idProduct);
+        response.sendRedirect("product");
     }
         else if(uri.contains("save-product")){ // [Tính chu vi].Click
             String id =request.getParameter("IdProduct");

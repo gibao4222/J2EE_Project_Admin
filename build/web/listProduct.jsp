@@ -103,7 +103,7 @@
              <div class="form-group">
 
                 <label> Ảnh </label>
-                <input type="text" name="image" id="image1" class="form-control" style="display: none">
+                <!--<input type="text" name="image1" id="image1" class="form-control" style="display: none">-->
                 <div class="image-input">
                     <input type="file" accept="image/*" id="image" name="image">
                     <label for="image" class="image-button"><i class="far fa-image"></i> Choose image</label>
@@ -257,7 +257,7 @@
 
             document.getElementById("nameProduct1").value = row.cells[2].innerText;
             document.getElementById("introduce1").value = row.cells[3].innerText;
-            document.getElementById("image1").value = row.cells[4].innerText; 
+//            document.getElementById("image1").value = row.cells[4].innerText; 
             document.getElementById("size1").value = row.cells[5].innerText;
             document.getElementById("stuff1").value = row.cells[6].innerText;
             document.getElementById("quantity1").value = row.cells[7].innerText;
@@ -294,22 +294,23 @@
 
             var action =form.action.split("/")[4];
             if(action==='save-product'){
-                var img1 = document.getElementById("image1").value;
+//                var img1 = document.getElementById("image1").value;
                 let img = document.getElementById("image");
                 let name = document.getElementById("nameImg").src.split("/")[6];
-                var fileInput = document.getElementById('img');
+                var fileInput = document.getElementById('image');
 
             // Kiểm tra xem có tệp tin được chọn hay không
             if (fileInput.files.length > 0) {
                 // Lấy đối tượng File đầu tiên trong danh sách files
-//                var file = fileInput.files[0];
+                var file = fileInput.files[0];
 //
 //                // Hiển thị tên của tệp tin
-//                alert('File Name: ' + file.name);
-//alert("đã đổi");
-                document.getElementById("image1").style.display='none';
+                alert('File Name: ' + file.name);
+
+//                document.getElementById("image1").style.display='none';
             } else {
-                document.getElementById("image").style.display='none';
+                alert("chưa đổi");
+//                document.getElementById("image").style.display='none';
             }
         }
         }

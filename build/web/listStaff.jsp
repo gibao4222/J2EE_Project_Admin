@@ -50,6 +50,9 @@
             </div>
             <div class="form-group">
                 <label>Nhóm quyền</label>
+                <select>
+                    
+                </select>
                 <input id="idGroup" type="text" name="idGroup" class="form-control" value="" placeholder="Enter Account Number">
 
             </div>
