@@ -4,9 +4,8 @@
  */
 package Controller;
 
-import DAL.category;
+import model.category;
 import DAL.categoryDAL;
-import DAL.product;
 import DAL.productDAL;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -63,6 +62,8 @@ public class categoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    response.setContentType("text/html; charset=UTF-8");
+    response.setCharacterEncoding("UTF-8");
          String uri = request.getRequestURI();
      if(uri.contains("show-category")) { // [Tính diện tích].Click
 

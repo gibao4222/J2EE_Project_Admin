@@ -47,7 +47,7 @@
                 <label>Product </label>
                 <select name="idProduct" id="idProduct">
                     <c:forEach items="${pro}" var="c">
-                        <option value="${c.id}">${c.nameProduct}</option>
+                        <option value="${c.idProduct}">${c.nameProduct}</option>
                      </c:forEach>
                 </select>
             </div>

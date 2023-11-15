@@ -4,8 +4,9 @@
     Author     : LENOVO
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -187,63 +188,23 @@
             </div>
          </div>
          <div class="container-fluid">
+             
             <div class="row">
+                                <c:forEach items="${data}" var="c">
+                                    <a  href="details?idproduct=<c:out value="${c.idProduct}"/>">         
                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
                   <div class="glasses_box">
-                     <figure><img src="./resources/images/glass1.png" alt="#"/></figure>
-                     <h3><span class="blu">$</span>50</h3>
-                     <p>Sunglasses</p>
+                     <figure><img style="height: 300px;width: 250px;" src="./resources/image/<c:out value="${c.image}"/>"</figure>
+                     <h3><fmt:formatNumber value="${c.price}" pattern="#,###" />
+                    VNĐ</h3>
+                     <h2>color: ${c.color}</h2>
+                     <div class="name">Quantity:${c.quantity}</div>
+                     <p>${c.nameProduct}</p>
                   </div>
                </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                  <div class="glasses_box">
-                     <figure><img src="./resources/images/glass2.png" alt="#"/></figure>
-                     <h3><span class="blu">$</span>50</h3>
-                     <p>Sunglasses</p>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                  <div class="glasses_box">
-                     <figure><img src="./resources/images/glass3.png" alt="#"/></figure>
-                     <h3><span class="blu">$</span>50</h3>
-                     <p>Sunglasses</p>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                  <div class="glasses_box">
-                     <figure><img src="./resources/images/glass4.png" alt="#"/></figure>
-                     <h3><span class="blu">$</span>50</h3>
-                     <p>Sunglasses</p>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                  <div class="glasses_box">
-                     <figure><img src="./resources/images/glass5.png" alt="#"/></figure>
-                     <h3><span class="blu">$</span>50</h3>
-                     <p>Sunglasses</p>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                  <div class="glasses_box">
-                     <figure><img src="./resources/images/glass6.png" alt="#"/></figure>
-                     <h3><span class="blu">$</span>50</h3>
-                     <p>Sunglasses</p>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                  <div class="glasses_box">
-                     <figure><img src="./resources/images/glass7.png" alt="#"/></figure>
-                     <h3><span class="blu">$</span>50</h3>
-                     <p>Sunglasses</p>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                  <div class="glasses_box">
-                     <figure><img src="./resources/images/glass8.png" alt="#"/></figure>
-                     <h3><span class="blu">$</span>50</h3>
-                     <p>Sunglasses</p>
-                  </div>
-               </div>
+                  </a>    
+               </c:forEach>
+
                <div class="col-md-12">
                   <a class="read_more" href="#">Read More</a>
                </div>

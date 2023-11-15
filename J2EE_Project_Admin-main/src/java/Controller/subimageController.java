@@ -4,9 +4,8 @@
  */
 package Controller;
 
-import DAL.category;
+import model.category;
 import DAL.categoryDAL;
-import DAL.product;
 import DAL.productDAL;
 import DAL.subimage;
 import DAL.subimageDAL;
@@ -19,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.util.List;
+import model.ProductModel;
 
 /**
  *
@@ -68,7 +68,7 @@ public class subimageController extends HttpServlet {
        String uri = request.getRequestURI();
      if(uri.contains("show-subimage")) { // [Tính diện tích].Click
  productDAL p = new productDAL();
-        List <product> list1 = p.readproduct();
+        List <ProductModel> list1 = p.readproduct();
         request.setAttribute("pro", list1);
   subimageDAL s = new subimageDAL();
         List <subimage> list = s.readsubimage();
@@ -101,8 +101,8 @@ out.print(id);
         
 subimageDAL s = new subimageDAL();
 subimage sub = new subimage();
-sub = s.findsubimage(id);
-request.setAttribute("subupdate", sub);      
+List<subimage> sub1 = s.findsubByidpro(String.valueOf(id));
+request.setAttribute("subupdate", sub1);      
 request.getRequestDispatcher("updateSubimage.jsp").forward(request, response);    
 }else if(uri.contains("save-subimage")){ // [Tính chu vi].Click
  int id =Integer.parseInt(request.getParameter("idSubImage"));

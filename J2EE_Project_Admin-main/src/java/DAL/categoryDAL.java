@@ -4,6 +4,7 @@
  */
 package DAL;
 
+import model.category;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;

@@ -3,6 +3,8 @@ package DAL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import model.OrderDetail;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -32,7 +34,31 @@ public class ShoppingCart {
             items.add(item);
         }
     }
+public void addItemToData(  String idOrder, String date){
+       
+        for (Item cartItem : items) {
+             Random random = new Random();
+             int idOrderdetail = random.nextInt(10000) + 1;
 
+             OrderDetailDAL oo = new OrderDetailDAL();
+         OrderDetail o = new OrderDetail();
+            o.setPrice(String.valueOf(cartItem.getGia()));
+            o.setIdProduct(cartItem.getMaHang());
+            o.setQuantity(String.valueOf(cartItem.getQuantity()));
+            double total = cartItem.getTotalPricePro();
+            o.setTotal(String.valueOf(total));
+           
+            o.setDateCreated(date);
+            o.setIdOrder(idOrder);
+            o.setIdOrderDetail(String.valueOf(idOrderdetail));
+            o.setIdSale("1");
+           
+            oo.addOrderDetail(o);
+                
+        }
+            
+        clearCart();
+    }
     public void removeItem(String maHang) {
         Item itemToRemove = null;
 

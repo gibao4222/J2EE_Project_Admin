@@ -88,11 +88,9 @@
         }
 
         .product-image img {
-    max-width: 100%;
-  
+    width: 150px;
     height: 200px;
     margin-left: 333px;
-   
     border-radius: 15px;
 }
 img.sub-galerry {

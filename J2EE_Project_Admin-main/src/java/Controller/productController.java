@@ -2,33 +2,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package Controller;
 
-
-import DAL.cart;
-import DAL.cartDAL;
-import DAL.category;
+import DAL.CreateID;
 import DAL.categoryDAL;
-import DAL.product;
 import DAL.productDAL;
 import DAL.subimage;
 import DAL.subimageDAL;
-import com.sun.xml.fastinfoset.EncodingConstants;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Integer.parseInt;
+import java.util.ArrayList;
 import java.util.List;
+import model.ProductModel;
+import model.category;
 /**
  *
  * @author Thanhchan
  */
-@WebServlet({"/show-product","/details","/add-cart", "/add-product", "/update-poduct","/delete-product","/save-product","/home","/category","/timkiem"})
+@WebServlet({"/product","/details", "/add-product", "/update-poduct","/delete-Product","/save-product","/home","/category"})
 public class productController extends HttpServlet {
 
     /**
@@ -70,33 +68,41 @@ public class productController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        String uri = request.getRequestURI();
-     if(uri.contains("show-product")) { // [Tính diện tích].Click
-         String id_category=request.getParameter("id_category");
-         
-         categoryDAL c = new categoryDAL();
+        if(uri.contains("product")) {
+        productDAL p = new productDAL();
+       List<ProductModel> l = p.readproduct();
+      
+        request.setAttribute("data", l);
+        categoryDAL c = new categoryDAL();
          List<category> cate = c.readcategory();
          request.setAttribute("cate", cate);
-              
- productDAL p = new productDAL();
-        List <product> list = p.readproduct();
-        request.setAttribute("data", list);
+         
         request.getRequestDispatcher("listProduct.jsp").forward(request, response);
-//        
-//        request.getRequestDispatcher("listCategory.jsp").forward(request, response);
-        
-}
-     else if(uri.contains("details")){
-         int id = Integer.parseInt(request.getParameter("idproduct"));
-     product p = new product();
+        }
+     if(uri.contains("home")) {
+ productDAL p = new productDAL();
+       List<ProductModel> l = p.readproduct();
+      
+          
+        request.setAttribute("data", l);
+        categoryDAL c = new categoryDAL();
+         List<category> cate = c.readcategory();
+                   
+         request.setAttribute("cate", cate);
+                 request.getRequestDispatcher("homepages1.jsp").forward(request, response);
+
+         
+     }else if(uri.contains("details")){
+         String id = request.getParameter("idproduct");
+     ProductModel p = new ProductModel();
      productDAL pro = new productDAL();
-     List <product> list = pro.readproduct();
-        request.setAttribute("data", list);
+    
         p = pro.findProduct(id);
         String nameproduct= p.getNameProduct();
         float price=p.getPrice();
         System.out.print(p.getNameProduct());
-        String quantity = p.getQuantity();
-        int IdProduct = p.getId();
+        int quantity = p.getQuantity();
+        String IdProduct = p.getIdProduct();
         String img=p.getImage();
         request.setAttribute("IdProduct", IdProduct);
         request.setAttribute("img", img);
@@ -113,120 +119,88 @@ public class productController extends HttpServlet {
              
      
      
-     }else if(uri.contains("add-product")){ // [Tính chu vi].Click
-String nameProduct = request.getParameter("nameProduct");
-            String introduce = request.getParameter("introduce");
-
-            String image = request.getParameter("image");
-
-            String size = request.getParameter("size");
-            String stuff = request.getParameter("stuff");
-            String quantity = request.getParameter("quantity");
-            String portray = request.getParameter("portray");
-
-
-
-
-        
-            float price = Float.parseFloat(request.getParameter("price"));
-              
-
-            productDAL product = new productDAL();
-            product pro= new product();
-            pro.setNameProduct(nameProduct);
-            pro.setIntroduce(introduce);
-            pro.setImage(image);
-            pro.setSize(size);
-            pro.setStuff(stuff);
-            pro.setQuantity(quantity);
-            pro.setPrice(price);
-            pro.setPortray(portray);
-            product.insertproduct(pro);
-            request.setAttribute("mess", "add thành công");
-//            request.getRequestDispatcher("listproduct.jsp").forward(request, response);
-
-           response.sendRedirect("show-product");
-} if(uri.contains("timkiem")){
-    String option = request.getParameter("search_option");
-    String keywords = request.getParameter("keywords");
-    if(option.equals("name")){
-       productDAL p = new productDAL();
-        List <product> list = p.findproductbyName(keywords);
-        request.setAttribute("data", list);
-        request.getRequestDispatcher("homepage.jsp").forward(request, response);
-    }else{
-         productDAL p = new productDAL();
-        List <product> list = p.findproductbyColor(keywords);
-        request.setAttribute("data", list);
-        request.getRequestDispatcher("homepage.jsp").forward(request, response);
-    }
-}else if(uri.contains("update-product")){ // [Tính chu vi].Click
- 
-  int id =   Integer.parseInt( request.getParameter("id"));
-        
-productDAL p = new productDAL();
-product pro = new product();
-pro = p.findProduct(id);
-request.setAttribute("proupdate", pro);
-                                request.getRequestDispatcher("updatePro.jsp").forward(request, response);     
-}else if(uri.contains("save-product")){ // [Tính chu vi].Click
- int id =Integer.parseInt(request.getParameter("IdProduct"));
-         String nameProduct = request.getParameter("nameProduct");
-         String introduce = request.getParameter("introduce");
-         String image = request.getParameter("image");
-         String size = request.getParameter("size");
-         String stuff = request.getParameter("stuff");
-         String quantity = request.getParameter("quantity");
-         float price	 = Float.parseFloat(request.getParameter("price"));
-         String portray = request.getParameter("portray");
-
+     }// [Tính diện tích].Click
+//         String id_category=request.getParameter("id_category");
+//         
          
-            product pro = new product();
-            pro.setNameProduct(nameProduct);
-            pro.setIntroduce(introduce);
-            pro.setImage(image);
-            pro.setSize(size);
-            pro.setStuff(stuff);
-            pro.setQuantity(quantity);
-            pro.setPrice(price);
-            pro.setPortray(portray);
-           
-            productDAL p = new productDAL();
-            p.updatePro(pro,id);
-           request.setAttribute("message", "update thành công");
-                      response.sendRedirect("show-product");
-}else if(uri.contains("home")){ // [Tính chu vi].Click
-    String id_category=request.getParameter("id_category");
-         System.out.print(id_category);
-        
-    categoryDAL c = new categoryDAL();
-        List <category> listcate = c.readcategory();
-        request.setAttribute("datacate", listcate);
- productDAL p = new productDAL();
-        List <product> list = p.readproduct();
-        request.setAttribute("data", list);
-        request.getRequestDispatcher("homepage.jsp").forward(request, response);
+//              
+//        ProductDAL p = new ProductDAL();
+//        List <ProductModel> list = p.readProduct();
+//        request.setAttribute("data", list);
+//        request.getRequestDispatcher("listProduct.jsp").forward(request, response);
+//
+//        
+//}
+//        else if(uri.contains("update-product")){ // [Tính chu vi].Click
+// 
+//  int id =   Integer.parseInt( request.getParameter("id"));
+//        
+//ProductDAL p = new ProductDAL();
+//ProductModel pro = new ProductModel();
+//pro = p.findProduct(id);
+//request.setAttribute("proupdate", pro);
+//                                request.getRequestDispatcher("updatePro.jsp").forward(request, response);     
+//}else if(uri.contains("save-product")){ // [Tính chu vi].Click
+// int id =Integer.parseInt(request.getParameter("IdProduct"));
+//         String nameProduct = request.getParameter("nameProduct");
+//         String introduce = request.getParameter("introduce");
+//         String image = request.getParameter("image");
+//         String size = request.getParameter("size");
+//         String stuff = request.getParameter("stuff");
+//         int quantity = Integer.parseInt(request.getParameter("quantity"));
+//         float price	 = Float.parseFloat(request.getParameter("price"));
+//         String portray = request.getParameter("portray");
+//
+//         
+//            ProductModel pro = new ProductModel();
+//            pro.setNameProduct(nameProduct);
+//            pro.setIntroduce(introduce);
+//            pro.setImage(image);
+//            pro.setSize(size);
+//            pro.setStuff(stuff);
+//            pro.setQuantity(quantity);
+//            pro.setPrice(price);
+//            pro.setPortray(portray);
+//           
+//            ProductDAL p = new ProductDAL();
+//            p.updatePro(pro,id);
+//           request.setAttribute("message", "update thành công");
+//                      response.sendRedirect("show-product");
+//}else if(uri.contains("home")){ // [Tính chu vi].Click
+//    String id_category=request.getParameter("id_category");
+//         System.out.print(id_category);
+//        
+//    categoryDAL c = new categoryDAL();
+//        List <category> listcate = c.readcategory();
+//        request.setAttribute("datacate", listcate);
+// ProductDAL p = new ProductDAL();
+//        List <ProductModel> list = p.readProduct();
+//        request.setAttribute("data", list);
+//        request.getRequestDispatcher("homepage.jsp").forward(request, response);
+//         
+//}if(uri.contains("category")){ // [Tính chu vi].Click
+//    String id_category=request.getParameter("id_category");
+//         System.out.print(id_category);
+//        
+//    categoryDAL c = new categoryDAL();
+//        List <category> listcate = c.readcategory();
+//        request.setAttribute("datacate", listcate);
+// ProductDAL p = new ProductDAL();
+//        List <ProductModel> list = p.findproductbyId_category(Integer.parseInt(id_category));
+//        request.setAttribute("data", list);
+//        request.getRequestDispatcher("homepage.jsp").forward(request, response);
          
-}else if(uri.contains("category")){ // [Tính chu vi].Click
-    String id_category=request.getParameter("id_category");
-         System.out.print(id_category);
-        
-    categoryDAL c = new categoryDAL();
-        List <category> listcate = c.readcategory();
-        request.setAttribute("datacate", listcate);
- productDAL p = new productDAL();
-            List <product> list = p.findproductbyId_category(Integer.parseInt(id_category));
-            request.setAttribute("data", list);
-            request.getRequestDispatcher("homepage.jsp").forward(request, response);
+// if(uri.contains("delete-product")) {
+//  String id = request.getParameter("id");
+//                
+//                   
+//                   p.deleteproduct( id  );
+//                   response.setContentType("text/html");
+//                   request.setAttribute("ji", "ji");
+//                   response.sendRedirect("product");
+//        request.getRequestDispatcher("listProduct.jsp").forward(request, response);
 
-}else if(uri.contains("delete-product"))  {
-  String id = request.getParameter("id");
-                
-                   productDAL p = new productDAL();
-//                   p.deleteproduct( parseInt(id));
-                   response.setContentType("text/html");
-                   response.sendRedirect("show-product");
-}
+//}
     }
 
     /**
@@ -240,8 +214,87 @@ request.setAttribute("proupdate", pro);
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String uri = request.getRequestURI();
+//        ProductDAL product = new ProductDAL();
+        if(uri.contains("add-product")){ // [Tính chu vi].Click
+            String nameProduct = request.getParameter("nameProduct");
+            String introduce = request.getParameter("introduce");
+
+            String image = request.getParameter("image");
+            String idCategory = request.getParameter("id_category");
+            String size = request.getParameter("size");
+            String stuff = request.getParameter("stuff");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            String portray = request.getParameter("portray");
+
+
+
+
+        
+            float price = Float.parseFloat(request.getParameter("price"));
+              
+
+            
+            ProductModel pro= new ProductModel();
+            pro.setIdProduct(new CreateID("PR").create());
+            pro.setIdCategory(idCategory);
+            pro.setNameProduct(nameProduct);
+            pro.setIntroduce(introduce);
+            pro.setImage(image);
+            pro.setSize(size);
+            pro.setStuff(stuff);
+            pro.setQuantity(quantity);
+            pro.setPrice(price);
+            pro.setPortray(portray);
+//            product.addProduct(pro);
+//            request.setAttribute("mess", "add thành công");
+//            request.getRequestDispatcher("listproduct.jsp").forward(request, response);
+//
+           response.sendRedirect("product");
+}
+//                 else if(uri.contains("delete-product")) {
+//  String id = request.getParameter("id");
+//                     System.out.println(id);
+//                   ProductDAL p = new ProductDAL();
+//                   p.deleteproduct( id  );
+//                   response.setContentType("text/html");
+////                   response.sendRedirect("product");
+//}
+    else if(uri.contains("delete-Product")){
+        String idProduct = String.valueOf(request.getParameter("idProduct"));
+//        product.deleteproduct(idProduct);
+        response.sendRedirect("product");
     }
+        else if(uri.contains("save-product")){ // [Tính chu vi].Click
+            String id =request.getParameter("IdProduct");
+            String nameProduct = request.getParameter("nameProduct");
+            String introduce = request.getParameter("introduce");
+            String image = request.getParameter("image");
+            System.out.println(image);
+            String size = request.getParameter("size");
+            String stuff = request.getParameter("stuff");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            float price	 = Float.parseFloat(request.getParameter("price"));
+            String portray = request.getParameter("portray");
+            String idCategory = request.getParameter("id_category");
+         
+            ProductModel pro = new ProductModel();
+            pro.setNameProduct(nameProduct);
+            pro.setIntroduce(introduce);
+            pro.setImage(image);
+            pro.setSize(size);
+            pro.setStuff(stuff);
+            pro.setQuantity(quantity);
+            pro.setPrice(price);
+            pro.setPortray(portray);
+           pro.setIdCategory(idCategory);
+//            ProductDAL p = new ProductDAL();
+//            p.updatePro(pro,id);
+           request.setAttribute("message", "update thành công");
+                      response.sendRedirect("product");
+}
+    }
+  
 
     /**
      * Returns a short description of the servlet.

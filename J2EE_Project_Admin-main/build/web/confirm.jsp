@@ -61,6 +61,7 @@
     }
 
     .product-image {
+     margin-top:60px;
       width: 80px;
       height: 80px;
       margin-right: 10px;
@@ -89,15 +90,14 @@
     <div class="row">
       <div class="col-md-6 customer-info">
         <h2>Thông tin khách hàng</h2>
-        <p><strong>Họ và tên:</strong> John Doe</p>
-        <p><strong>Số điện thoại:</strong> 0123456789</p>
-        <p><strong>Địa chỉ:</strong> 123 ABC Street, XYZ City</p>
-        <p><strong>Email:</strong> john.doe@example.com</p>
+        <p><strong>Họ và tên:</strong>${fullname}</p>
+        <p><strong>Số điện thoại:</strong> ${phone}</p>
+        <p><strong>Địa chỉ:</strong>${address}</p>
+        <p><strong>Email:</strong>${email}</p>
         
                     <div class="shoping__cart__btns">
                         <a href="show-cart" class="primary-btn cart-btn">Quay lại</a>
-                        <a href="confirm-order" class="primary-btn cart-btn">Xác nhận đơn hàng</a>
-                       
+                        
                     </div>
       </div>
       <div class="col-md-6 cart">
@@ -132,6 +132,14 @@
                                 <h5 style="color: red">${note}</h5>
                         </div>
         <div class="total-price">Giá sau khi giảm giá:  <fmt:formatNumber value="${p-s}" pattern="#,###" />VNĐ</div>
+        <form action="checkout" method="POST"
+                            <input type="hidden" name="total" value="${p-s}"/>
+                             <input type="hidden" name="idCustomer" value="3"/>
+                        <input type="hidden" name="total" value="${p-s}"/>
+                             <input type="hidden" name="action" value="confirm"/>
+
+                        <input type="submit" class="primary-btn cart-btn" value="xác nhận đơn hàng"/>
+                        </form>
       </div>
     </div>
   </div>

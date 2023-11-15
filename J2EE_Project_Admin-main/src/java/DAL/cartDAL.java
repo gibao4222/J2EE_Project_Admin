@@ -4,6 +4,7 @@
  */
 package DAL;
 
+import model.category;
 import jakarta.persistence.IdClass;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

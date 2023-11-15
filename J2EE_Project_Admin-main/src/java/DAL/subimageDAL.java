@@ -45,12 +45,12 @@ public class subimageDAL extends MyDatabaseManager{
              }
         return list;
     }
-     public ArrayList findsubByidpro(int id)  {
+     public ArrayList findsubByidpro(String id)  {
           ArrayList list = new ArrayList();
          try {
                  
             
-        String query = "SELECT * FROM subimage Where idProduct  = " + id + "  ";
+        String query = "SELECT * FROM subimage Where idProduct  LIKE '%"+id+"%'";
         ResultSet rs = subimageDAL.doReadQuery(query);
        
 
@@ -148,7 +148,7 @@ public class subimageDAL extends MyDatabaseManager{
        public static void main(String[] args) {
            subimageDAL  s= new subimageDAL();
                 
-        List<subimage> list = s.findsubByidpro(45);
+        List<subimage> list = s.findsubByidpro("45");
            System.out.println(list.get(0).getIdSubImage());
            subimage sub = new subimage();
 //           sub.setIdProduct("1");

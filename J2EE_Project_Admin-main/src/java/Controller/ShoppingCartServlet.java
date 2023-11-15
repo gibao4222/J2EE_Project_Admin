@@ -5,6 +5,7 @@ package Controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
+import DAL.CustomerDAL;
 import DAL.Item;
 import DAL.ShoppingCart;
 import DAL.historyPromo;
@@ -19,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import model.CustomerModel;
 
 /**
  *
@@ -67,6 +69,19 @@ public class ShoppingCartServlet extends HttpServlet {
             throws ServletException, IOException {
           String action = request.getParameter("action");
         ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
+        CustomerModel cus = new CustomerModel();
+        CustomerDAL cu  = new CustomerDAL();
+        cus = cu.findCustomer("3");
+         String fullname = cus.getFullName();
+         String address = cus.getAddress();
+         String phone = cus.getNumberPhone();
+         String email = cus.getEmail();
+         
+        
+            request.setAttribute("fullname", fullname);
+            request.setAttribute("address" , address);
+            request.setAttribute("phone", phone);
+            request.setAttribute("email", email);
 
         if (cart == null) {
             cart = new ShoppingCart();
