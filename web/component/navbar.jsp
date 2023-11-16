@@ -25,7 +25,9 @@
 
     <!-- Custom styles for this template-->
     <link href="./resources/css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!--<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>-->
+   <script src="https://kit.fontawesome.com/4a8ccdbc24.js" crossorigin="anonymous"></script>
+
 
 </head>
 

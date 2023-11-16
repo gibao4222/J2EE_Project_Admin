@@ -16,7 +16,7 @@ public class ProductModel {
     public ProductModel() {
     }
 
-    public ProductModel(String idProduct,String idCategory, String nameProduct, String introduce, String image, String size, String stuff, String portray, int quantity, float price) {
+      public ProductModel(String idProduct,String idCategory, String nameProduct, String introduce, String image, String size, String stuff, String portray, int quantity, float price) {
         this.idProduct = idProduct;
         this.idCategory = idCategory;
         this.nameProduct = nameProduct;

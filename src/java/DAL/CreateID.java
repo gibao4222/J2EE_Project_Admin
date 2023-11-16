@@ -75,8 +75,16 @@ public class CreateID extends MyDatabaseManager{
             case "SU":
                 query = "SELECT * FROM supplier";
                 break;
-            default:
-        
+            case "DT":
+                query = "SELECT * FROM orderdetail";
+                break;
+           case "IP":
+                query = "SELECT * FROM import";
+                break;
+            case "ID":
+                query = "SELECT * FROM importdetail";
+                break;
+                 default:
         }
         ResultSet rs = CreateID.doReadQuery(query);
         
