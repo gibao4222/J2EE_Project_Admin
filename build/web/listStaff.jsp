@@ -26,8 +26,15 @@
             </div>            
             <div class="form-group">
                 <label>Email</label>
-                <input id="email" type="text" name="email" class="form-control" placeholder="Enter Email">
+                <input id="email" type="text" name="email" class="form-control" placeholder="Enter Email"> 
+            <div class="alert-danger" id="alert-danger" role="alert">
+                
             </div>
+            <div class="alert-success" id="alert-success" role="alert">
+                
+            </div>
+            </div>
+            
              <div class="form-group">
                 <label>Mật khẩu </label>
                 <input id="password" type="password" name="password" class="form-control" placeholder="Enter Password">
@@ -39,14 +46,21 @@
             <div class="form-group">
                 <label> Số điện thoại </label>
                 <input id="numberPhone" type="text" name="numberPhone" class="form-control" value="" placeholder="Enter Number Phone">
+                <div class="alert-danger" id="alert-danger1" role="alert">
+                
+            </div>
+            <div class="alert-success" id="alert-success1" role="alert">
+                
+            </div>
             </div>
             <div class="form-group">
                 <label> Tài Khoản Ngân Hàng </label>
-                <input id="bankAccount" type="text" name="bankAccount" class="form-control" value="" placeholder="Enter Bank Account">
-                <div class="form-group">
-                <select id="bankSelect" class="form-control">
+                <!--<input id="bankAccount" type="text" name="bankAccount" class="form-control" value="" placeholder="Enter Bank Account">-->
+                <select id="bankSelect" class="form-control" name="bankAccount">
                 
                 </select>
+                <div class="form-group">
+                
             </div>
             </div>
             <div class="form-group">
@@ -55,7 +69,7 @@
             </div>
             <div class="form-group">
                 <label>Nhóm quyền</label>
-                <select id="idGroup" name="idGroup" class="form-control">
+                <select id="idGroup" name="position" class="form-control">
                         <option value="admin">Admin</option>
                         <option value="staff">Nhân viên bán hàng</option>
                 </select>
@@ -99,6 +113,7 @@
             <th>NumberPhone </th>
             <th>BankAccount </th>
             <th>AccountNumber</th>
+            <th>Position</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -113,6 +128,7 @@
                     <td>${staff.numberPhone}</td>
                     <td>${staff.bankAccount}</td>
                     <td>${staff.accountNumber}</td>
+                    <td>${staff.position}</td>
                     <td>
                         <form action="" method="post">
                             <!--<input type="hidden" name="edit_user" value="<?php echo $result['admin_User']; ?>">-->
@@ -141,6 +157,61 @@
 
 </div>
 <script>
+        function isValidEmail(email) {
+            // Biểu thức chính quy để kiểm tra định dạng email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Sử dụng test() để kiểm tra xem email có khớp với biểu thức chính quy hay không
+            return emailRegex.test(email);
+        }
+        const emailtxt = document.getElementById("email");
+        
+        emailtxt.addEventListener('input',function (){
+//            alert(emailtxt.value);
+            const note = document.getElementById("alert-danger");
+            const note1 = document.getElementById("alert-success");
+                    if(emailtxt.value===""){
+                        note.style.display ='none';
+                        note1.style.display ='none';
+                    }
+                    else if (isValidEmail(emailtxt.value)) {
+                        note1.innerHTML ='Email hợp lệ';
+                        note.style.display ='none';
+                        note1.style.display ='block';
+                    } else {
+                        note.innerHTML ='Email không hợp lệ';
+                        note1.style.display ='none';
+                        note.style.display ='block';
+                    }
+        });
+        
+        function isValidPhoneNumber(phoneNumber) {
+            // Biểu thức chính quy kiểm tra số điện thoại
+            var phoneRegex = /^\d{10,12}$/;
+
+            // Sử dụng test() để kiểm tra xem số điện thoại có khớp với biểu thức chính quy hay không
+            return phoneRegex.test(phoneNumber);
+        }
+        const phonetxt = document.getElementById("numberPhone");
+        phonetxt.addEventListener('input',function (){
+//            alert(emailtxt.value);
+            const note = document.getElementById("alert-danger1");
+            const note1 = document.getElementById("alert-success1");
+                    if(phonetxt.value===""){
+                        note.style.display ='none';
+                        note1.style.display ='none';
+                    }
+                    else if (isValidPhoneNumber(phonetxt.value)) {
+                        note1.innerHTML ='Số điện thoại hợp lệ';
+                        note.style.display ='none';
+                        note1.style.display ='block';
+                    } else {
+                        note.innerHTML ='Số điện thoại không hợp lệ';
+                        note1.style.display ='none';
+                        note.style.display ='block';
+                    }
+        });
+        
                  document.addEventListener('DOMContentLoaded', function() {
                 var table = document.getElementById('dataTable');
             

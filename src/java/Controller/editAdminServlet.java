@@ -83,7 +83,8 @@ public class editAdminServlet extends HttpServlet {
                String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
                String bankAccount = String.valueOf(request.getParameter("bankAccount"));
                String accountNumber = String.valueOf(request.getParameter("accountNumber"));
-                StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber);
+               String position =String.valueOf(request.getParameter("position"));
+                StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber,position);
                staffDAL.updateStaff(staffModel);
     }
 

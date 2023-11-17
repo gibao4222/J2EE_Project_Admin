@@ -31,6 +31,7 @@ public class StaffDAL extends MyDatabaseManager{
                    staff.setNumberPhone(rs.getString("numberPhone"));
                    staff.setBankAccount(rs.getString("bankAccount"));
                    staff.setAccountNumber(rs.getString("accountNumber"));
+                   staff.setPosition(rs.getString("position"));
                    list.add(staff);
                  }
              }

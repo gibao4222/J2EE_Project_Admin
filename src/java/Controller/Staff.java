@@ -97,8 +97,10 @@ public class Staff extends HttpServlet {
                String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
                String bankAccount = String.valueOf(request.getParameter("bankAccount"));
                String accountNumber = String.valueOf(request.getParameter("accountNumber"));
-               String position = String.valueOf(request.getParameter("positon"));
-//               add-Account 
+               String position = String.valueOf(request.getParameter("position"));
+               StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber,position);
+               if(staffDAL.addStaff(staffModel)!=0){
+//                   add-Account 
                 String idACcount = new CreateID("TK").create();               
                 String password = String.valueOf(request.getParameter("password"));
                 String status;
@@ -110,13 +112,17 @@ public class Staff extends HttpServlet {
                 }
                 AccountModel accountModel= new AccountModel(idACcount, idStaff, email, password, status);
                 accountDAL.addAccount(accountModel);
-                StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber);
-               staffDAL.addStaff(staffModel);
+               }
+//               
+                
                 
            }
            else if(url.contains("delete-Staff")){
                 String idStaff = String.valueOf(request.getParameter("idStaff"));
-                staffDAL.deleteStaff(idStaff);
+                if(staffDAL.deleteStaff(idStaff)!=0){
+                    accountDAL.deleteAccountByIdStaff(idStaff);
+                }
+                
                 
               }
            else if (url.contains("update-Staff")) {
@@ -127,7 +133,8 @@ public class Staff extends HttpServlet {
                String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
                String bankAccount = String.valueOf(request.getParameter("bankAccount"));
                String accountNumber = String.valueOf(request.getParameter("accountNumber"));
-                StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber);
+               String position =String.valueOf(request.getParameter("position"));
+                StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber,position);
                staffDAL.updateStaff(staffModel);
     }
     }

@@ -89,6 +89,18 @@ public class AccountDAL extends MyDatabaseManager{
         }
         return rs;
     }
+        public int deleteAccountByIdStaff(String idStaff){
+        int rs = 0;
+        try {
+            String query = "DELETE FROM account WHERE idPerson = ?";
+            PreparedStatement p = AccountDAL.getConnection().prepareStatement(query);
+            p.setString(1, idStaff);
+            rs = p.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
          public static void main(String[] args) {
         AccountDAL st = new AccountDAL();
         ArrayList<AccountModel> ls = st.readAccount();

@@ -36,7 +36,7 @@
               <input type="text" name="email" value="" id="email" placeholder="Email" />
             </div>
             <style>
-                .alert-danger mark{
+                .alert-danger{
                     color: #FF6347;
                 }
             </style>
@@ -158,23 +158,6 @@
                     } else {
                         note.innerHTML ='Email không hợp lệ';
                     }
-//            $.ajax({
-//                url: "J2EE_Project_Admin/login",
-//                type: "get",
-//                success: function(data){
-//                    const note = document.getElementById("alert-danger");
-//                    if (isValidEmail(emailToCheck)) {
-//                        note.innerHTML ='Email hợp lệ';
-//                        console.log('Email hợp lệ');
-//                    } else {
-//                        note.innerHTML ='Email không hợp lệ';
-//                        console.log('Email không hợp lệ');
-//                    }
-//                },
-//                error: function(xhr){
-//                    
-//                }
-//            });
         });
         
         $("#login").submit(function (event) {
