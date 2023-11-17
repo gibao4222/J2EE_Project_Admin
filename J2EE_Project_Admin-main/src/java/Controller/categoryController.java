@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import DAL.OrderDAL;
 import model.category;
 import DAL.categoryDAL;
 import DAL.productDAL;
@@ -15,11 +16,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import model.Order;
 /**
  *
  * @author Thanhchan
  */
-@WebServlet({"/show-category", "/add-category", "/edit-category","/delete-category","/save-category"})
+@WebServlet({"/show-category", "/add-category", "/edit-category","/delete-category","/save-category","/order-customer"})
 public class categoryController extends HttpServlet {
 
     /**
@@ -105,11 +107,16 @@ request.getRequestDispatcher("updateCategory.jsp").forward(request, response);
                      
 
 response.sendRedirect("show-category");
-}else {
+}else  if(uri.contains("delete-category")){
   categoryDAL c = new categoryDAL();
              int id = Integer.parseInt(request.getParameter("id"));
              c.deletecategory(id);
                response.sendRedirect("show-category");
+}else  if(uri.contains("order-customer")){
+     OrderDAL or = new OrderDAL();
+         List<Order> orr = or.findOrder("3");
+        request.setAttribute("Order", orr);
+                request.getRequestDispatcher("historyOrder.jsp").forward(request, response);
 }
     }
 
