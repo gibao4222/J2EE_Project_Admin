@@ -223,31 +223,42 @@ public class productDAL extends MyDatabaseManager{
         return ps;
     }
 //       
-//       public int updatePro(product ps, int id) {
-//           int result = 0 ;
-//           try{
-//        String query = "Update product SET nameProduct = ? ,introduce = ?, image =?,size = ?,stuff=? ,quantity=?,price=?,portray=?,id_category=?,color= ?"
-//                + " WHERE IdProduct  = ?";
-//        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
-//        p.setString(1, ps.getNameProduct());
-//        p.setString(2, ps.getIntroduce());
-//        p.setString(3, ps.getImage());
-//        p.setString(4, ps.getSize());
-//        p.setString(5, ps.getStuff());
-//        p.setString(6, ps.getQuantity());
-//        p.setFloat(7, ps.getPrice());
-//        p.setString(8, ps.getPortray());
-//        p.setInt(9, ps.getId_category());
-//        p.setString(10, ps.getColor());
-//                p.setString(11, String.valueOf(id));
-//
-//
-//         result = p.executeUpdate();
-//        } catch (Exception e) {
-//             System.out.println(e);
-//             }
-//        return result;
-//    }
+       public int trusoluong(int quantity, String IdProduct) {
+           int result = 0 ;
+           try{
+                String query1 = "SELECT quantity FROM product WHERE IdProduct = ?";
+        PreparedStatement p1 = productDAL.getConnection().prepareStatement(query1);
+        p1.setString(1, IdProduct);
+       ResultSet rs = p1.executeQuery();
+       if (rs.next()) {
+                int updatedQuantity = rs.getInt("quantity");
+                System.out.print(updatedQuantity);
+                if (updatedQuantity > 0) {
+                    // Nếu số lượng sản phẩm âm, hủy bỏ giao dịch và xuất thông báo
+                   String query = "UPDATE product SET quantity = quantity - ? WHERE IdProduct = ?";
+        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
+        p.setInt(1, quantity);
+        p.setString(2, IdProduct);
+         result = p.executeUpdate();
+         result=1;
+                }else{
+            result= 0 ; 
+                }
+                
+            }
+        
+         
+              
+
+
+        
+         
+        } catch (Exception e) {
+             System.out.println(e);
+             }
+        return result;
+       
+    }
       public static void main(String[] args) {
         productDAL p = new productDAL();
 
@@ -255,6 +266,8 @@ public class productDAL extends MyDatabaseManager{
          
          ProductModel po = p.findProduct("47");
           System.err.println(po.getNameProduct());
+          int re = p.trusoluong(1, "45");
+          System.out.print(re);
 ////         product pro = p.findProduct(24);
 //            product pro = new product();
 //         pro.setNameProduct("adadad");

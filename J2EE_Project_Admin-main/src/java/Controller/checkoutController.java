@@ -129,11 +129,17 @@ public class checkoutController extends HttpServlet {
           ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
 
         
-         cart.addItemToData(String.valueOf(idOrder),formattedDate);
+          int kq =cart.addItemToData(String.valueOf(idOrder),formattedDate);
+          if(kq==1){
+              request.setAttribute("mess", "số lượng sản phẩm vượt quá số lượng sản phẩm còn lại");
+                            request.getRequestDispatcher("cart.jsp").forward(request, response);
+          }else{
+       System.out.print(kq);
          OrderDAL or = new OrderDAL();
          List<Order> orr = or.findOrder("3");
         request.setAttribute("Order", orr);
                 request.getRequestDispatcher("historyOrder.jsp").forward(request, response);
+          }
 
 //        
         } else if ("detailsOrder".equals(action)) {

@@ -98,7 +98,7 @@
         </div>
     </section>
     <!-- Hero Section End -->
-
+   
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="img/background.jpg">
         <div class="container">
@@ -116,7 +116,7 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
-
+    <div style="color: red; font-size: 30px;">${mess}</div>
     <!-- Shoping Cart Section Begin -->
     <section class="shoping-cart spad">
         <div class="container">

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import model.OrderDetail;
+import model.ProductModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -34,12 +35,27 @@ public class ShoppingCart {
             items.add(item);
         }
     }
-public void addItemToData(  String idOrder, String date){
-       
-        for (Item cartItem : items) {
+public int addItemToData(  String idOrder, String date){
+       int kq = 0 ;
+        for (Item cartItem1 : items) {
+            productDAL p = new productDAL();
+            ProductModel pro = new ProductModel();
+            pro = p.findProduct(cartItem1.getMaHang());
+            int quantPro = pro.getQuantity();
+            int quant = cartItem1.getQuantity();
+            if (quantPro<quant){
+                 kq = 1;
+                break;
+        }}
+            if(kq==0){
+                
+                kq=0;
+                 for (Item cartItem : items) {
+                
              Random random = new Random();
              int idOrderdetail = random.nextInt(10000) + 1;
-
+             productDAL p1 = new productDAL();
+             p1.trusoluong(cartItem.getQuantity(), cartItem.getMaHang());
              OrderDetailDAL oo = new OrderDetailDAL();
          OrderDetail o = new OrderDetail();
             o.setPrice(String.valueOf(cartItem.getGia()));
@@ -56,9 +72,13 @@ public void addItemToData(  String idOrder, String date){
             oo.addOrderDetail(o);
                 
         }
+             clearCart();
+            }
+       return kq;
             
-        clearCart();
-    }
+       
+    } 
+
     public void removeItem(String maHang) {
         Item itemToRemove = null;
 

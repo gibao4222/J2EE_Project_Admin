@@ -6,27 +6,41 @@
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/checkoutController.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/CustomerModel.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/Order.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/subimageDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/categoryController.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/cart.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/Item.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listProduct.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/homepages1.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/productDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/category.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/CreateID.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/resources/image/alaska3.jpg</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/OrderDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/resources/image/alaska2.jpg</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/OrderDetail.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/detailsproduct.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listSubimage1.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/CustomerDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/detailsOrder.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/resources/image/alaskaxinh.jpg</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/resources/image/product_2.png</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/resources/css1/style.css</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/OrderDetailDAL.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/ShoppingCart.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/subimageDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/subimageController.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/resources/image/alaska1.jpg</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/productController.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/cart.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/resources/image/cop3.jpg</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/resources/image/cao.jpg</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/ShoppingCartServlet.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/homepages1.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/productDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/resources/image/avatar_1.png</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/ProductModel.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/resources/image/cart.png</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listCategory1.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/homepage.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/category.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/CreateID.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/OrderDAL.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/confirm.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/resources/image/alaska2.jpg</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/OrderDetail.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/categoryDAL.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/detailsproduct.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/CustomerDAL.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/detailsOrder.jsp</file>
         </group>
     </open-files>
 </project-private>
