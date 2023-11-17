@@ -43,6 +43,11 @@
             <div class="form-group">
                 <label> Tài Khoản Ngân Hàng </label>
                 <input id="bankAccount" type="text" name="bankAccount" class="form-control" value="" placeholder="Enter Bank Account">
+                <div class="form-group">
+                <select id="bankSelect" class="form-control">
+                
+                </select>
+            </div>
             </div>
             <div class="form-group">
                 <label> Số Tài Khoản </label>
@@ -50,10 +55,11 @@
             </div>
             <div class="form-group">
                 <label>Nhóm quyền</label>
-                <select>
-                    
+                <select id="idGroup" name="idGroup" class="form-control">
+                        <option value="admin">Admin</option>
+                        <option value="staff">Nhân viên bán hàng</option>
                 </select>
-                <input id="idGroup" type="text" name="idGroup" class="form-control" value="" placeholder="Enter Account Number">
+                <!--<input id="idGroup" type="text" name="idGroup" class="form-control" value="" placeholder="Enter Account Number">-->
 
             </div>
         </div>
@@ -93,7 +99,6 @@
             <th>NumberPhone </th>
             <th>BankAccount </th>
             <th>AccountNumber</th>
-            <th>IdGroup</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -108,7 +113,6 @@
                     <td>${staff.numberPhone}</td>
                     <td>${staff.bankAccount}</td>
                     <td>${staff.accountNumber}</td>
-                    <td>${staff.idGroup}</td>
                     <td>
                         <form action="" method="post">
                             <!--<input type="hidden" name="edit_user" value="<?php echo $result['admin_User']; ?>">-->
@@ -169,6 +173,27 @@
                 });
 
             });
+            
+            const apiURL = "https://api.vietqr.io/v2/banks";
+            fetch(apiURL)
+            .then(response => response.json())
+            .then(data=>{
+                data.data.forEach(bank =>{
+                    const option = document.createElement('option');
+                    option.value = bank.code;
+                    option.text = bank.name+' ('+bank.shortName+')';
+                    
+                    const logoImg = document.createElement('img');
+                    logoImg.src = bank.logo;
+                    logoImg.alt = 'Logo ${bank.name}';
+                    logoImg.classList.add('bank-logo');
+                    
+                    option.prepend(logoImg);
+                    
+                    bankSelect.appendChild(option);
+                });
+    })
+    .catch(error => console.error('Error fetching data:', error));
             
 </script>
 <%@include file="component/footer.jsp" %>

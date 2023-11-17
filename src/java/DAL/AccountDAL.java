@@ -42,7 +42,7 @@ public class AccountDAL extends MyDatabaseManager{
          int rs = 0;
          try {
               String query = "INSERT INTO account ( idAccount ,idPerson , email , password , status) "
-                 + " VALUES (?,? , ?,?, ?);";
+                 + " VALUES (?,?,?,?,?);";
                 PreparedStatement p = AccountDAL.getConnection().prepareStatement(query);
                 p.setString(1, account.getIdAccount());
                 p.setString(2, account.getIdPerson());

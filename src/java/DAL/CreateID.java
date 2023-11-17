@@ -64,6 +64,7 @@ public class CreateID extends MyDatabaseManager{
                 break;
             case "TK":
                 query="SELECT * FROM account";
+                break;
             case "PD":
                 query = "SELECT * FROM promotiondetail";
 
@@ -91,10 +92,11 @@ public class CreateID extends MyDatabaseManager{
         }
         ResultSet rs = CreateID.doReadQuery(query);
         
-        
+            if(rs== null)System.out.println("null");
         if(rs!=null){
             while(rs.next()){
                 String id = rs.getString(1);
+                System.out.println(id);
                 String numbers = "";
                 for(int i = 0 ; i < id.length();i++){
                     char c = id.charAt(i);
@@ -118,7 +120,7 @@ public class CreateID extends MyDatabaseManager{
     }
     
     public static void main(String[] args) {
-        CreateID cre = new CreateID("PE");
+        CreateID cre = new CreateID("TK");
         System.out.println(cre.create());
     }
 }

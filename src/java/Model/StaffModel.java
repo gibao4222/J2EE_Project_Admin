@@ -9,11 +9,11 @@ package Model;
  * @author Admin
  */
 public class StaffModel {
-    String idStaff ,email , fullName, address, numberPhone, bankAccount, accountNumber, idGroup;
+    String idStaff ,email , fullName, address, numberPhone, bankAccount, accountNumber, position;
 
     public StaffModel(){
     }
-    public StaffModel(String idStaff, String email, String fullName, String address, String numberPhone, String bankAccount, String accountNumber, String idGroup) {
+    public StaffModel(String idStaff, String email, String fullName, String address, String numberPhone, String bankAccount, String accountNumber, String position) {
         this.idStaff = idStaff;
         this.email = email ;
         this.fullName = fullName;
@@ -21,7 +21,7 @@ public class StaffModel {
         this.numberPhone = numberPhone;
         this.bankAccount = bankAccount;
         this.accountNumber = accountNumber;
-        this.idGroup = idGroup;
+        this.position = position;
     }
 
     public String getEmail() {
@@ -80,12 +80,13 @@ public class StaffModel {
         this.accountNumber = accountNumber;
     }
 
-    public String getIdGroup() {
-        return idGroup;
+    public String getPosition() {
+        return position;
     }
 
-    public void setIdGroup(String idGroup) {
-        this.idGroup = idGroup;
+    public void setPosition(String position) {
+        this.position = position;
     }
+
    
 }

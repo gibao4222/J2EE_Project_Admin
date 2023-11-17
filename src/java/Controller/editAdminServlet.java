@@ -6,11 +6,7 @@
 package Controller;
 
 import DAL.AccountDAL;
-import DAL.CreateID;
-import DAL.PermissionGroupDAL;
 import DAL.StaffDAL;
-import Model.AccountModel;
-import Model.PermissionGroupModel;
 import Model.StaffModel;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,14 +15,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-@WebServlet({"/staff" ,"/add-Staff","/delete-Staff","/update-Staff"})
-public class Staff extends HttpServlet {
+@WebServlet(name="editAdminServlet", urlPatterns={"/editAdmin"})
+public class editAdminServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -43,10 +39,10 @@ public class Staff extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Staff</title>");  
+            out.println("<title>Servlet editAdminServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Staff at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet editAdminServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,14 +59,9 @@ public class Staff extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        StaffDAL staffDAL = new StaffDAL();
-           ArrayList<StaffModel> st = staffDAL.readStaff();
-           request.setAttribute("listStaff", st);
-           
-        PermissionGroupDAL per = new PermissionGroupDAL();
-        ArrayList<PermissionGroupModel> ls = per.readPermissionGroup();
-        request.setAttribute("listPermission", ls);
-        request.getRequestDispatcher("listStaff.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        StaffModel staff = (StaffModel) session.getAttribute("staff");
+        request.getRequestDispatcher("editAdmin.jsp").forward(request, response);
     } 
 
     /** 
@@ -84,43 +75,8 @@ public class Staff extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         StaffDAL staffDAL = new StaffDAL();
-           AccountDAL accountDAL = new AccountDAL();
-           String url = request.getRequestURI();
-           if (request.getCharacterEncoding()== null) {
-            request.setCharacterEncoding("UTF-8");
-            }
-           if (url.contains("add-Staff")) {
-               String idStaff = new CreateID("ST").create();
-               String email = String.valueOf(request.getParameter("email"));
-               String fullName = String.valueOf(request.getParameter("fullName"));
-               String address = String.valueOf(request.getParameter("address"));
-               String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
-               String bankAccount = String.valueOf(request.getParameter("bankAccount"));
-               String accountNumber = String.valueOf(request.getParameter("accountNumber"));
-               String position = String.valueOf(request.getParameter("positon"));
-//               add-Account 
-                String idACcount = new CreateID("TK").create();               
-                String password = String.valueOf(request.getParameter("password"));
-                String status;
-                if(position.equals("admin")){
-                    status = "0";
-                }
-                else{
-                    status = "1";
-                }
-                AccountModel accountModel= new AccountModel(idACcount, idStaff, email, password, status);
-                accountDAL.addAccount(accountModel);
-                StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber);
-               staffDAL.addStaff(staffModel);
-                
-           }
-           else if(url.contains("delete-Staff")){
-                String idStaff = String.valueOf(request.getParameter("idStaff"));
-                staffDAL.deleteStaff(idStaff);
-                
-              }
-           else if (url.contains("update-Staff")) {
-               String idStaff = String.valueOf(request.getParameter("idStaff"));
+        AccountDAL accountDAL = new AccountDAL();
+        String idStaff = String.valueOf(request.getParameter("idStaff"));
                String email = String.valueOf(request.getParameter("email"));
                String fullName = String.valueOf(request.getParameter("fullName"));
                String address = String.valueOf(request.getParameter("address"));
@@ -130,7 +86,7 @@ public class Staff extends HttpServlet {
                 StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber);
                staffDAL.updateStaff(staffModel);
     }
-    }
+
     /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description
