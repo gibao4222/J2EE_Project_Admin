@@ -25,7 +25,7 @@ import java.util.ArrayList;
  *
  * @author Admin
  */
-@WebServlet({"/staff" ,"/add-Staff","/delete-Staff","/update-Staff"})
+@WebServlet({"/staff" ,"/add-Staff","/delete-Staff","/update-Staff","/loadPassword"})
 public class Staff extends HttpServlet {
    
     /** 
@@ -135,8 +135,30 @@ public class Staff extends HttpServlet {
                String accountNumber = String.valueOf(request.getParameter("accountNumber"));
                String position =String.valueOf(request.getParameter("position"));
                 StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber,position);
-               staffDAL.updateStaff(staffModel);
-    }
+               
+               if(staffDAL.updateStaff(staffModel)!=0){
+                   String idACcount = accountDAL.searchAccount(idStaff).getIdAccount();
+                    String password = String.valueOf(request.getParameter("password"));
+                    String status;
+                    if(position.equals("admin")){
+                        status = "0";
+                    }
+                    else{
+                        status = "1";
+                    }
+                    AccountModel accountModel= new AccountModel(idACcount, idStaff, email, password, status);
+                    accountDAL.updateAccount(accountModel);
+               }}
+               else if(url.contains("loadPassword")){
+                   String idStaff = String.valueOf(request.getParameter("idStaff"));
+                   System.out.println(idStaff);
+                   String password = accountDAL.searchAccount(idStaff).getPassword();
+                   System.out.println(password);
+                   response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                   response.getWriter().write("{\"pass\": \""+password+"\"}");
+               }
+    
     }
     /** 
      * Returns a short description of the servlet.

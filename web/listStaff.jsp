@@ -6,6 +6,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="component/navbar.jsp" %>
+<%@page import="Model.AccountModel" %>
+<%@page import="java.io.IOException" %>
+<%@page import="DAL.AccountDAL" %>
 <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -37,7 +40,7 @@
             
              <div class="form-group">
                 <label>Mật khẩu </label>
-                <input id="password" type="password" name="password" class="form-control" placeholder="Enter Password">
+                <input id="password" type="text" name="password" class="form-control" placeholder="Enter Password">
             </div>             
             <div class="form-group">
                 <label> Địa Chỉ</label>
@@ -78,7 +81,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="exit-btn">Close</button>
             <button type="submit" name="registerbtn" class="btn btn-primary">Save</button>
         </div>
       </form>
@@ -217,16 +220,16 @@
             
                 const existingContent = new Set();
                 
-               
-              
+                let defaultAction = 'add-Staff';
                 
+                var clickButtonEdit = false;
                 //Cập nhật
                 document.addEventListener('click',function(e){
+                    
                     if(e.target && e.target.id === 'edit_btn'){
-                        
                         let form = document.getElementById('StaffForm');
                         form.action='update-Staff';
-                        
+                        clickButtonEdit = true;
                         
                         let row = e.target.closest('tr');
                         
@@ -235,16 +238,70 @@
                         document.getElementById("fullName").value = row.cells[2].innerText;
                         document.getElementById("address").value = row.cells[3].innerText;
                         document.getElementById("numberPhone").value = row.cells[4].innerText;
-                        document.getElementById("bankAccount").value = row.cells[5].innerText;
+                        var idStaff = document.getElementById("idStaff").value;
+                $.ajax({
+                url: "/J2EE_Project_Admin/loadPassword",  // Đường dẫn tương đối hoặc đầy đủ đến tài nguyên xử lý đăng nhập
+                type: "post",  // Phương thức HTTP là POST để bảo mật thông tin đăng nhập
+                
+                data: {
+                    idStaff : idStaff
+                },  // Sử dụng serialize để lấy dữ liệu từ form
+                success: function (data) {
+                     try {
+
+                // Xử lý phản hồi từ server
+                    if (data.pass !== "") {
+                        // Nếu đăng nhập thành công, thực hiện chuyển hướng hoặc các hành động khác
+                        document.getElementById("password").value = data.pass;
+                    } else {
+                        // Nếu đăng nhập không thành công, hiển thị thông báo lỗi
+                        alert("không thành công");
+                    }
+                    } catch (error) {
+            console.error("Lỗi phân tích JSON:", error);
+        }
+                },
+                error: function (xhr) {
+                    // Xử lý lỗi nếu có
+                }
+            });             
+                        document.getElementById("bankSelect").value = row.cells[5].innerText;
                         document.getElementById("accountNumber").value = row.cells[6].innerText;
                         document.getElementById("idGroup").value = row.cells[7].innerText;
                         existingContent.clear();
                                                 
                     }
+                    else if(e.target && e.target.id === 'exit-btn'){
+                        let form = document.getElementById('StaffForm');
+                        form.action=defaultAction;
+                    }
+                });
+                document.addEventListener('click', function (e) {
+                    // Kiểm tra xem phần tử được click có thuộc modal không
+                    let isModalClick = isDescendant(document.getElementById('addadminprofile'),e.target);
+                    if ((isModalClick===false && clickButtonEdit === false)) {
+                        let form = document.getElementById('StaffForm');
+                        // Khôi phục giá trị mặc định của action khi click ra ngoài modal
+                        form.action = defaultAction;
+                    }
+
+                    clickButtonEdit = false;
+ 
                 });
 
             });
-            
+            function isDescendant(parent, child) {
+                let node = child.parentNode;
+
+                while (node !== null) {
+                    if (node === parent) {
+                        return true;
+                    }
+                    node = node.parentNode;
+                }
+
+                return false;
+            }
             const apiURL = "https://api.vietqr.io/v2/banks";
             fetch(apiURL)
             .then(response => response.json())
