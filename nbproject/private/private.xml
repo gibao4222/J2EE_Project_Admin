@@ -5,12 +5,7 @@
         <group>
             <file>file:/D:/J2EE_Project_Admin/src/java/DAL/ImportDetailDAL.java</file>
             <file>file:/D:/J2EE_Project_Admin/web/listImport.jsp</file>
-            <file>file:/D:/J2EE_Project_Admin/web/permission.jsp</file>
             <file>file:/D:/J2EE_Project_Admin/src/java/Controller/ImportServlet.java</file>
-            <file>file:/D:/J2EE_Project_Admin/src/java/Controller/Permission.java</file>
-            <file>file:/D:/J2EE_Project_Admin/web/component/navbar.jsp</file>
-            <file>file:/D:/J2EE_Project_Admin/src/java/Model/ImportDetailModel.java</file>
-            <file>file:/D:/J2EE_Project_Admin/src/java/DAL/CreateID.java</file>
         </group>
     </open-files>
 </project-private>

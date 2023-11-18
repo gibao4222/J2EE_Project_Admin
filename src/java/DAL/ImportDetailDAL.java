@@ -119,7 +119,7 @@ public class ImportDetailDAL extends MyDatabaseManager{
         public int deleteImportDetail(String idImportDetail){
         int rs = 0;
         try {
-            String query = "DELETE FROM importdetail WHERE idImportDetail = ?";
+            String query = "DELETE FROM importdetail WHERE idImport= ?";
             PreparedStatement p = ImportDetailDAL.getConnection().prepareStatement(query);
             p.setString(1, idImportDetail);
             rs = p.executeUpdate();

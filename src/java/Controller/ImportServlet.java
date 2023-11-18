@@ -135,6 +135,7 @@ public class ImportServlet extends HttpServlet {
         } else if (url.contains("delete-Import")) {
             String idImport = String.valueOf(request.getParameter("idImport"));
             importDAL.deleteImport(idImport);
+            importDetailDAL.deleteImportDetail(idImport);
 //                jsonResponse.addProperty("message", "Xóa nhóm quyền thành công");
         } else if (url.contains("update-Import")) {
             String idImport = String.valueOf(request.getParameter("idImport"));

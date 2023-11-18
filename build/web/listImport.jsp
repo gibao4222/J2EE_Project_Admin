@@ -142,7 +142,7 @@
                                 <td>
                                     <form action="" method="post">
                                         <!--<input type="hidden" name="edit_user" value="<?php echo $result['admin_User']; ?>">-->
-                                        <button  id="edit_btn" type="button" name="edit_btn" class="btn btn-success"data-toggle="modal" data-target="#addadminprofile"> Sửa </button>
+                                        <button  id="edit_btn" type="button" name="edit_btn" class="btn btn-success"data-toggle="modal" data-target="#addadminprofile" > Sửa </button>
                                         <!--<a href="editStaff.jsp" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">EDIT</a>--> 
                                     </form>
                                 </td>
@@ -303,7 +303,26 @@
             document.getElementById("chosenProducts").value = listProductString;
         });
     });
+//    update-import
+    //Cập nhật
+    document.addEventListener('click', function (e) {
+        if (e.target && e.target.id === 'edit_btn') {
 
+            let form = document.getElementById('ImportForm');
+            form.action = 'update-Import';
+            
+            // Lấy giá trị từ hàng tương ứng
+             let row = e.target.closest('tr');
+            const idImport = row.cells[0].textContent.trim(); // Thay thế 0 bằng vị trí cột ID
+            const idSupplier = row.cells[1].textContent.trim(); // Thay thế 1 bằng vị trí cột ID Supplier
+            const dateCreated = row.cells[2].textContent.trim(); // Thay thế 2 bằng vị trí cột Date Created
+
+            // Điền các giá trị vào form
+            document.getElementById('idImport').value = idImport;
+            document.querySelector('select[name="idSupplier"]').value = idSupplier;
+            document.getElementById('dateCreated').value = dateCreated;
+        }
+    });
 
 </script>
 <style>
