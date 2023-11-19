@@ -37,6 +37,64 @@
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+      <style>
+    /* Thanh tìm kiếm */
+    #productFilter {
+        margin-bottom: 20px;
+    }
+
+    #searchInput {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 200px;
+    }
+
+    #filterOption {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-left: 10px;
+    }
+
+    /* Danh sách sản phẩm */
+    #productList {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .product {
+        background-color: #f4f4f4;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 10px;
+        width: 200px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+button.btn.btn-primary {
+    margin-left: 15px;
+}
+    /* Màu sắc sản phẩm */
+    .red {
+        color: red;
+    }
+.mt-4 {
+            margin-top: 1rem;
+        }
+    .blue {
+        color: blue;
+    }
+
+    .green {
+        color: green;
+    }
+    div#productFilter {
+    text-align: center;
+}
+
+    /* Thêm các lớp màu sắc khác tại đây */
+</style>
    </head>
    <!-- body -->
    <body class="main-layout">
@@ -187,6 +245,49 @@
                </div>
             </div>
          </div>
+           <div class="container mt-4">
+        <h2>lọc sản phẩm</h2>
+        
+        <form style="text-align: center;    margin-bottom: 20px;" action="FilterServlet" method="POST">
+            <div class="form-group">
+                <label for="filterOption">Lọc theo:</label>
+                <select class="form-control" id="filterOption" name="filterOption" onchange="showHideFields()">
+                    <option value="low_to_high">Giá thấp - cao</option>
+                    <option value="high_to_low">Giá cao - thấp</option>
+                    <option value="less_than_a">Bé hơn a</option>
+                    <option value="greater_than_a">Lớn hơn a</option>
+                    <option value="range_a_b">Từ a đến b</option>
+                </select>
+            </div>
+            
+            <div class="form-group" id="rangeAField" style="display: none;">
+                <label for="rangeA">a:</label>
+                <input type="text" class="form-control" id="rangeA" name="rangeA">
+            </div>
+            
+            <div class="form-group" id="rangeBField" style="display: none;">
+                <label for="rangeB">b:</label>
+                <input type="text" class="form-control" id="rangeB" name="rangeB">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Lọc</button>
+        </form>
+    </div>
+           <div id="productFilter">
+        <form action="searchProductServlet" method="POST">
+        <div class="input-group">
+            <input type="text" id="searchInput" name="searchValue" class="form-control" placeholder="Tìm kiếm...">
+            <select id="filterOption" name="filterOption" class="form-control">
+                <option value="name">Tìm kiếm theo tên</option>
+                <option value="color">Tìm kiếm theo màu sắc</option>
+            </select>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </div>
+        </div>
+    </form> 
+    </div>
+          
          <div class="container-fluid">
              
             <div class="row">
@@ -401,6 +502,22 @@
              icon: image
            });
          }
+         function showHideFields() {
+            var filterOption = document.getElementById("filterOption").value;
+            var rangeAField = document.getElementById("rangeAField");
+            var rangeBField = document.getElementById("rangeBField");
+            
+            if (filterOption === "less_than_a" || filterOption === "greater_than_a") {
+                rangeAField.style.display = "block";
+                rangeBField.style.display = "none";
+            } else if (filterOption === "range_a_b") {
+                rangeAField.style.display = "block";
+                rangeBField.style.display = "block";
+            } else {
+                rangeAField.style.display = "none";
+                rangeBField.style.display = "none";
+            }
+        }
       </script>
       <!-- google map js -->
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap"></script>

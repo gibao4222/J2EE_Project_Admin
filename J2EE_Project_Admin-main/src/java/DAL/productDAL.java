@@ -43,7 +43,7 @@ public class productDAL extends MyDatabaseManager{
                 s.setNameProduct(rs.getString("nameProduct"));
                  s.setPortray(rs.getString("portray"));
                 s.setIdCategory(rs.getString("idCategory"));
-                s.setPrice(rs.getInt("price"));
+                s.setPrice(rs.getFloat("price"));
                 s.setColor(rs.getString("color"));
                  s.setQuantity(rs.getInt("quantity"));
                  s.setSize(rs.getString("size"));
@@ -92,74 +92,71 @@ public class productDAL extends MyDatabaseManager{
 //             }
 //        return list;
 //    }
-//     public ArrayList findproductbyName(String name)  {
-//          ArrayList list = new ArrayList();
-//         try {
-//                 
-//            
-//        String query = "SELECT * FROM product WHERE nameProduct LIKE '%"+name+"%'";
-//        ResultSet rs = productDAL.doReadQuery(query);
-//       
-//
-//        if (rs != null) {
-//            while (rs.next()) {
-//                product s = new product();
-//                s.setId(rs.getInt("IdProduct"));
-//                s.setIntroduce(rs.getString("introduce"));
-//                s.setImage(rs.getString("image"));
-//                s.setNameProduct(rs.getString("nameProduct"));
-//                 s.setPortray(rs.getString("portray"));
-//                s.setId_category(rs.getInt("id_category"));
-//                s.setColor(rs.getString("color"));
-//                s.setPrice(rs.getInt("price"));
-//                 s.setId_category(rs.getInt("id_category"));
-//                 s.setQuantity(rs.getString("quantity"));
-//                 s.setSize(rs.getString("size"));
-//                 s.setStuff(rs.getString("stuff"));
-//
-//                                                                
-//                list.add(s);
-//            }
-//        }
-//         } catch (Exception e) {
-//             System.out.println(e);
-//             }
-//        return list;
-//    }
-//     public ArrayList findproductbyColor(String color)  {
-//          ArrayList list = new ArrayList();
-//         try {
-//                 
-//            
-//        String query = "SELECT * FROM product WHERE color LIKE '%"+color+"%'";
-//        ResultSet rs = productDAL.doReadQuery(query);
-//       
-//'%"+color+"%'
-//        if (rs != null) {
-//            while (rs.next()) {
-//                product s = new product();
-//                s.setId(rs.getInt("IdProduct"));
-//                s.setIntroduce(rs.getString("introduce"));
-//                s.setImage(rs.getString("image"));
-//                s.setNameProduct(rs.getString("nameProduct"));
-//                 s.setPortray(rs.getString("portray"));
-//                s.setId_category(rs.getInt("id_category"));
-//                s.setColor(rs.getString("color"));
-//                s.setPrice(rs.getInt("price"));
-//                 s.setId_category(rs.getInt("id_category"));
-//                 s.setQuantity(rs.getString("quantity"));
-//                 s.setSize(rs.getString("size"));
-//                 s.setStuff(rs.getString("stuff"));
-//
-//                                                                
-//                list.add(s);
-//            }
-//        }
-//         } catch (Exception e) {
-//             System.out.println(e);
-//             }
-//        return list;
-//    }
+     public ArrayList findproductbyName(String name)  {
+          ArrayList list = new ArrayList();
+         try {
+                 
+            
+        String query = "SELECT * FROM product WHERE nameProduct LIKE '%"+name+"%'";
+        ResultSet rs = productDAL.doReadQuery(query);
+       
+
+        if (rs != null) {
+            while (rs.next()) {
+                ProductModel s = new ProductModel();
+               s.setIdProduct(rs.getString("IdProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setIdCategory(rs.getString("idCategory"));
+                s.setPrice(rs.getFloat("price"));
+                s.setColor(rs.getString("color"));
+                 s.setQuantity(rs.getInt("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+
+                                                                
+                list.add(s);
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return list;
+    }
+     public ArrayList findproductbyColor(String color)  {
+          ArrayList list = new ArrayList();
+         try {
+                 
+            
+        String query = "SELECT * FROM product WHERE color LIKE '%"+color+"%'";
+        ResultSet rs = productDAL.doReadQuery(query);
+       
+
+        if (rs != null) {
+            while (rs.next()) {
+               ProductModel s = new ProductModel();
+               s.setIdProduct(rs.getString("IdProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setIdCategory(rs.getString("idCategory"));
+                s.setPrice(rs.getFloat("price"));
+                s.setColor(rs.getString("color"));
+                 s.setQuantity(rs.getInt("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+                                                                
+                list.add(s);
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return list;
+    }
 //      public int insertproduct(product ps){
 //          int result = 0;
 //          try{
@@ -222,6 +219,156 @@ public class productDAL extends MyDatabaseManager{
              }
         return ps;
     }
+        public ArrayList filterFormAtoB(int a,int b)  {
+            ArrayList list = new ArrayList();
+            
+           try{
+        String query = "SELECT * FROM Product WHERE Price BETWEEN "+a+" AND "+b+"";
+        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
+        ResultSet rs = p.executeQuery();
+        if (rs != null) {
+            while (rs.next()) {
+              ProductModel s = new ProductModel();
+               s.setIdProduct(rs.getString("IdProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setIdCategory(rs.getString("idCategory"));
+                s.setPrice(rs.getFloat("price"));
+                s.setColor(rs.getString("color"));
+                 s.setQuantity(rs.getInt("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+                                                                
+                list.add(s);
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return list;
+    }
+          public ArrayList filterUnderA(int a)  {
+            ArrayList list = new ArrayList();
+            
+           try{
+        String query = "SELECT * FROM Product WHERE Price < "+a+"";
+        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
+        ResultSet rs = p.executeQuery();
+        if (rs != null) {
+            while (rs.next()) {
+              ProductModel s = new ProductModel();
+               s.setIdProduct(rs.getString("IdProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setIdCategory(rs.getString("idCategory"));
+                s.setPrice(rs.getFloat("price"));
+                s.setColor(rs.getString("color"));
+                 s.setQuantity(rs.getInt("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+                                                                
+                list.add(s);
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return list;
+    }
+          public ArrayList filterAboveA(int a)  {
+            ArrayList list = new ArrayList();
+            
+           try{
+        String query = "SELECT * FROM Product WHERE Price > "+a+"";
+        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
+        ResultSet rs = p.executeQuery();
+        if (rs != null) {
+            while (rs.next()) {
+              ProductModel s = new ProductModel();
+               s.setIdProduct(rs.getString("IdProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setIdCategory(rs.getString("idCategory"));
+                s.setPrice(rs.getFloat("price"));
+                s.setColor(rs.getString("color"));
+                 s.setQuantity(rs.getInt("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+                                                                
+                list.add(s);
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return list;
+    }
+          public ArrayList filterMin()  {
+            ArrayList list = new ArrayList();
+            
+           try{
+        String query = "SELECT * FROM Product ORDER BY Price ASC";
+        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
+        ResultSet rs = p.executeQuery();
+        if (rs != null) {
+            while (rs.next()) {
+              ProductModel s = new ProductModel();
+               s.setIdProduct(rs.getString("IdProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setIdCategory(rs.getString("idCategory"));
+                s.setPrice(rs.getFloat("price"));
+                s.setColor(rs.getString("color"));
+                 s.setQuantity(rs.getInt("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+                                                                
+                list.add(s);
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return list;
+    }
+           public ArrayList filterMax()  {
+            ArrayList list = new ArrayList();
+            
+           try{
+        String query = "SELECT * FROM Product ORDER BY Price DESC;";
+        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
+        ResultSet rs = p.executeQuery();
+        if (rs != null) {
+            while (rs.next()) {
+              ProductModel s = new ProductModel();
+               s.setIdProduct(rs.getString("IdProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setIdCategory(rs.getString("idCategory"));
+                s.setPrice(rs.getFloat("price"));
+                s.setColor(rs.getString("color"));
+                 s.setQuantity(rs.getInt("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+                                                                
+                list.add(s);
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return list;
+    }
 //       
        public int trusoluong(int quantity, String IdProduct) {
            int result = 0 ;
@@ -264,10 +411,8 @@ public class productDAL extends MyDatabaseManager{
 
          List<ProductModel> list  =  p.readproduct();
          
-         ProductModel po = p.findProduct("47");
-          System.err.println(po.getNameProduct());
-          int re = p.trusoluong(1, "45");
-          System.out.print(re);
+          List<ProductModel> l= p.filterMax();
+          System.err.println(l.get(0).getPrice());
 ////         product pro = p.findProduct(24);
 //            product pro = new product();
 //         pro.setNameProduct("adadad");
