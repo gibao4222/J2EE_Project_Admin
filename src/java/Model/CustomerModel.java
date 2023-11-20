@@ -6,10 +6,10 @@ package Model;
 
 /**
  *
+<<<<<<< HEAD
  * @author LENOVO
  */
 public class CustomerModel {
-    
     String idCustomer, email,	address, numberPhone, fullName ;	
     public CustomerModel(){
     }
@@ -60,5 +60,5 @@ public class CustomerModel {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-    
+
 }

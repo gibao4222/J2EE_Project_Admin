@@ -7,10 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
-
+    
         <%@include file ="component/navbar.jsp" %>
-
-
+        
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 

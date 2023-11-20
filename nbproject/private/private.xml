@@ -6,6 +6,9 @@
             <file>file:/D:/J2EE_Project_Admin/src/java/DAL/ImportDetailDAL.java</file>
             <file>file:/D:/J2EE_Project_Admin/web/listImport.jsp</file>
             <file>file:/D:/J2EE_Project_Admin/src/java/Controller/ImportServlet.java</file>
+            <file>file:/D:/J2EE_Project_Admin/src/java/Controller/Login.java</file>
+            <file>file:/D:/J2EE_Project_Admin/src/java/Controller/Permission.java</file>
+            <file>file:/D:/J2EE_Project_Admin/web/listStaff.jsp</file>
         </group>
     </open-files>
 </project-private>

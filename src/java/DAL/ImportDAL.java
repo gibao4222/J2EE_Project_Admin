@@ -18,21 +18,7 @@ public class ImportDAL extends MyDatabaseManager{
     public ImportDAL (){
         ImportDAL.connectDB();
     }
-//           public ArrayList<String> getAllSuppliers() {
-//        ArrayList<String> suppliers = new ArrayList<>();
-//        try {
-//            String query = "SELECT idSupplier FROM supplier";
-//            ResultSet rs = doReadQuery(query);
-//            if (rs != null) {
-//                while (rs.next()) {
-//                    suppliers.add(rs.getString("idSupplier"));
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return suppliers;
-//    }
+
      public ArrayList readImport(){
         ArrayList<ImportModel> list = new ArrayList<>();
         try {

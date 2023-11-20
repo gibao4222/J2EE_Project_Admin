@@ -8,7 +8,6 @@ import Model.CustomerModel;
 import java.sql.ResultSet ;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
-
 /**
  *
  * @author LENOVO

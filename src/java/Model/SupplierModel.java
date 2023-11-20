@@ -6,7 +6,9 @@ package Model;
 
 /**
  *
- * @author LENOVO
+
+ * @author Admin
+
  */
 public class SupplierModel {
     String idSupplier, nameSuppiler, address, numberPhone;

@@ -5,7 +5,9 @@
 
 package Controller;
 
-import DAL.PromotionDetailDAL;
+import DAL.AccountDAL;
+import DAL.StaffDAL;
+import Model.StaffModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +15,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name="Load", urlPatterns={"/load"})
-public class Load extends HttpServlet {
+@WebServlet(name="editAdminServlet", urlPatterns={"/editAdmin"})
+public class editAdminServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +39,10 @@ public class Load extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Load</title>");  
+            out.println("<title>Servlet editAdminServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Load at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet editAdminServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,7 +59,9 @@ public class Load extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        StaffModel staff = (StaffModel) session.getAttribute("staff");
+        request.getRequestDispatcher("editAdmin.jsp").forward(request, response);
     } 
 
     /** 
@@ -70,13 +74,18 @@ public class Load extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String idPromotion = request.getParameter("data");
-        PromotionDetailDAL pd = new PromotionDetailDAL();
-        ArrayList<String> list = pd.getIdProductByIdPromo(idPromotion);
-        
-        request.setAttribute("data", list);
-        request.getRequestDispatcher("promotion.jsp").forward(request, response);
-        
+        StaffDAL staffDAL = new StaffDAL();
+        AccountDAL accountDAL = new AccountDAL();
+        String idStaff = String.valueOf(request.getParameter("idStaff"));
+               String email = String.valueOf(request.getParameter("email"));
+               String fullName = String.valueOf(request.getParameter("fullName"));
+               String address = String.valueOf(request.getParameter("address"));
+               String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
+               String bankAccount = String.valueOf(request.getParameter("bankAccount"));
+               String accountNumber = String.valueOf(request.getParameter("accountNumber"));
+               String position =String.valueOf(request.getParameter("position"));
+                StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber,position);
+               staffDAL.updateStaff(staffModel);
     }
 
     /** 

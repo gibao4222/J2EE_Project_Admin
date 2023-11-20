@@ -142,4 +142,6 @@
 
             });
 </script>
+
 <%@include file="component/footer.jsp" %>
+

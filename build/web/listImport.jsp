@@ -26,6 +26,7 @@
             </div>
             <form id= "ImportForm" action="add-Import" method="POST">
                 <input type="hidden" name="idImport" id="idImport" >
+                <input type="hidden" name="idImportDetails" id="idImportDetails" >
                 <input type="hidden" name="chosenProducts" id="chosenProducts">
                 <div class="modal-body">
                     <input type="hidden" name="delete_id" value="">
@@ -142,7 +143,7 @@
                                 <td>
                                     <form action="" method="post">
                                         <!--<input type="hidden" name="edit_user" value="<?php echo $result['admin_User']; ?>">-->
-                                        <button  id="edit_btn" type="button" name="edit_btn" class="btn btn-success"data-toggle="modal" data-target="#addadminprofile" > Sửa </button>
+                                        <button  id="edit_btn" type="button" name="edit_btn" class="btn btn-success"data-toggle="modal" data-target="#addadminprofile"> Sửa </button>
                                         <!--<a href="editStaff.jsp" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">EDIT</a>--> 
                                     </form>
                                 </td>
@@ -167,68 +168,71 @@
 
 </div>
 <script>
-    document.getElementById('dataProduct').addEventListener('click', function (event) {
-        if (event.target.tagName === 'A') {
-            var row = event.target.parentElement.parentElement;
-            // Lấy giá trị từ các ô trong hàng
-            var idProduct = row.cells[0].textContent.trim();
-            var nameProduct = row.cells[1].textContent.trim();
-            var price = parseFloat(row.cells[2].textContent.trim());
-            var datacheckProduct = document.getElementById('datacheckProduct');
-            var newRow = datacheckProduct.insertRow();
-            var existingRow = null;
-            Array.from(datacheckProduct.rows).forEach(function (checkRow) {
-                if (checkRow.cells.length >= 1) {
-                    var checkIdProduct = checkRow.cells[0].textContent.trim();
-                    if (checkIdProduct === idProduct) {
-                        existingRow = checkRow;
-                    }
+    function addProduct() {
+        var row = event.target.parentElement.parentElement;
+        // Lấy giá trị từ các ô trong hàng
+        var idProduct = row.cells[0].textContent.trim();
+        var nameProduct = row.cells[1].textContent.trim();
+        var price = parseFloat(row.cells[2].textContent.trim());
+        var datacheckProduct = document.getElementById('datacheckProduct');
+        var newRow = datacheckProduct.insertRow();
+        var existingRow = null;
+        Array.from(datacheckProduct.rows).forEach(function (checkRow) {
+            if (checkRow.cells.length >= 1) {
+                var checkIdProduct = checkRow.cells[0].textContent.trim();
+                if (checkIdProduct === idProduct) {
+                    existingRow = checkRow;
                 }
-            });
-            if (existingRow) {
-                var quantityInput = existingRow.cells[3].querySelector('input[type="number"]');
-                quantityInput.value = parseInt(quantityInput.value) + 1;
+            }
+        });
+        if (existingRow) {
+            var quantityInput = existingRow.cells[3].querySelector('input[type="number"]');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+            var quantity = parseInt(quantityInput.value);
+            var totalCell = existingRow.cells[4];
+            var total = price * quantity;
+            totalCell.textContent = total.toFixed(2);
+        } else {
+            var newRow = datacheckProduct.insertRow();
+            var idCell = newRow.insertCell(0);
+            var nameCell = newRow.insertCell(1);
+            var priceCell = newRow.insertCell(2);
+            var quantityCell = newRow.insertCell(3);
+            var totalCell = newRow.insertCell(4);
+            var deleteCell = newRow.insertCell(5);
+            idCell.textContent = idProduct;
+            nameCell.textContent = nameProduct;
+            priceCell.textContent = price;
+            var quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.id = 'quantity_' + idProduct;
+            quantityInput.value = 1;
+            quantityInput.min = 1;
+            quantityCell.appendChild(quantityInput);
+            quantityInput.addEventListener('change', function () {
                 var quantity = parseInt(quantityInput.value);
-                var totalCell = existingRow.cells[4];
                 var total = price * quantity;
                 totalCell.textContent = total.toFixed(2);
-            } else {
-                var newRow = datacheckProduct.insertRow();
-                var idCell = newRow.insertCell(0);
-                var nameCell = newRow.insertCell(1);
-                var priceCell = newRow.insertCell(2);
-                var quantityCell = newRow.insertCell(3);
-                var totalCell = newRow.insertCell(4);
-                var deleteCell = newRow.insertCell(5);
-                idCell.textContent = idProduct;
-                nameCell.textContent = nameProduct;
-                priceCell.textContent = price;
-                var quantityInput = document.createElement('input');
-                quantityInput.type = 'number';
-                quantityInput.id = 'quantity_' + idProduct;
-                quantityInput.value = 1;
-                quantityInput.min = 1;
-                quantityCell.appendChild(quantityInput);
-                quantityInput.addEventListener('change', function () {
-                    var quantity = parseInt(quantityInput.value);
-                    var total = price * quantity;
-                    totalCell.textContent = total.toFixed(2);
-                    updateTotal(); // Cập nhật tổng khi có thay đổi số lượng sản phẩm
-                });
+                updateTotal(); // Cập nhật tổng khi có thay đổi số lượng sản phẩm
+            });
 
-                var deleteButton = document.createElement('a');
-                deleteButton.textContent = 'Xóa';
-                deleteButton.addEventListener('click', function () {
-                    deleteRow(newRow);
+            var deleteButton = document.createElement('a');
+            deleteButton.textContent = 'Xóa';
+            deleteButton.addEventListener('click', function () {
+                deleteRow(newRow);
 //                    updateTotal(); // Cập nhật tổng khi xóa sản phẩm
-                });
-                deleteCell.appendChild(deleteButton);
+            });
+            deleteCell.appendChild(deleteButton);
 
-                var initialQuantity = parseInt(quantityInput.value);
-                var initialTotal = price * initialQuantity;
-                totalCell.textContent = initialTotal.toFixed(2);
-            }
-            updateTotal(); // Cập nhật tổng khi thêm sản phẩm mới
+            var initialQuantity = parseInt(quantityInput.value);
+            var initialTotal = price * initialQuantity;
+            totalCell.textContent = initialTotal.toFixed(2);
+        }
+        updateTotal();
+    }
+    document.getElementById('dataProduct').addEventListener('click', function (event) {
+        if (event.target.tagName === 'A') {
+            addProduct();
         }
     });
 
@@ -301,28 +305,88 @@
             console.log("list product" + listProductString);
 
             document.getElementById("chosenProducts").value = listProductString;
+            window.location.href = "/J2EE_Project_Admin/Import";
         });
     });
+
 //    update-import
     //Cập nhật
     document.addEventListener('click', function (e) {
         if (e.target && e.target.id === 'edit_btn') {
 
-            let form = document.getElementById('ImportForm');
+           let form = document.getElementById('ImportForm');
             form.action = 'update-Import';
             
             // Lấy giá trị từ hàng tương ứng
-             let row = e.target.closest('tr');
+            let row = e.target.closest('tr');
             const idImport = row.cells[0].textContent.trim(); // Thay thế 0 bằng vị trí cột ID
             const idSupplier = row.cells[1].textContent.trim(); // Thay thế 1 bằng vị trí cột ID Supplier
             const dateCreated = row.cells[2].textContent.trim(); // Thay thế 2 bằng vị trí cột Date Created
-
+            const totalbill = row.cells[3].textContent.trim();
             // Điền các giá trị vào form
             document.getElementById('idImport').value = idImport;
             document.querySelector('select[name="idSupplier"]').value = idSupplier;
             document.getElementById('dateCreated').value = dateCreated;
+            document.getElementById('totalBill').value = totalbill;
+//            ajax 
+            $.ajax({
+                    url: "/J2EE_Project_Admin/load_datacheckproduct",
+                    type: "POST",
+                    data: {
+                        idImport: idImport
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        var importDetails = response.dataImportdetails;
+                        var dataProduct = response.dataProduct;
+                        if (importDetails && dataProduct && Array.isArray(importDetails) && Array.isArray(dataProduct)) {
+                            updateProductDetails(importDetails, dataProduct);
+                        } else {
+                            console.error("Dữ liệu không tồn tại hoặc không đầy đủ!");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Lỗi phân tích JSON:", error);
+                    }
+                });
+        }
+
+    });
+
+    function updateProductDetails(importDetails, dataProduct) {
+    var datacheckProduct = document.getElementById('datacheckProduct');
+    importDetails.forEach(function (importDetail) {
+        var existingProduct = dataProduct.find(function (product) {
+            return product.idProduct === importDetail.idProduct;
+        });
+        if (existingProduct) {
+            var newRow = datacheckProduct.insertRow();
+            newRow.innerHTML = '<td>' + importDetail.idProduct + '</td>' +
+                '<td>' + existingProduct.nameProduct + '</td>' +
+                '<td>' + existingProduct.price + '</td>' +
+                '<td><input type="number" value="' + importDetail.quantity + '" min="1" /></td>' +
+                '<td>' + importDetail.price * importDetail.quantity + '</td>';
+            var deleteCell = newRow.insertCell(5);
+            var deleteButton = document.createElement('a');
+            deleteButton.textContent = 'Xóa';
+            deleteButton.addEventListener('click', function () {
+                deleteRow(newRow);
+            });
+            deleteCell.appendChild(deleteButton);
+
+            var quantityInput = newRow.querySelector('input[type="number"]');
+            quantityInput.addEventListener('change', function () {
+                var quantity = parseInt(quantityInput.value);
+                var total = existingProduct.price * quantity;
+                newRow.cells[4].textContent = total.toFixed(2);
+                updateTotal();
+            });
         }
     });
+    updateTotal();
+}
+
+
 
 </script>
 <style>

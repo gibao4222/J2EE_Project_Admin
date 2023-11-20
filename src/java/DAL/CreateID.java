@@ -61,37 +61,42 @@ public class CreateID extends MyDatabaseManager{
                 break;
             case "CT":
                  query = "SELECT * FROM customer";
-             break;
+                break;
             case "TK":
                 query="SELECT * FROM account";
-                   break;
+                break;
+
             case "PD":
                 query = "SELECT * FROM promotiondetail";
 
                 break;
             case "CA":
-                
+                query = "SELECT * FROM category";
                 break;
             case "SU":
                 query = "SELECT * FROM supplier";
                 break;
+            case "OD":
+                query = "SELECT * FROM orders";
+                break;
             case "DT":
                 query = "SELECT * FROM orderdetail";
                 break;
-           case "IP":
+            case "IP":
                 query = "SELECT * FROM import";
                 break;
             case "ID":
                 query = "SELECT * FROM importdetail";
                 break;
-                 default:
+            default:
         }
         ResultSet rs = CreateID.doReadQuery(query);
         
-        
+            if(rs== null)System.out.println("null");
         if(rs!=null){
             while(rs.next()){
                 String id = rs.getString(1);
+                System.out.println(id);
                 String numbers = "";
                 for(int i = 0 ; i < id.length();i++){
                     char c = id.charAt(i);

@@ -191,6 +191,7 @@
 </div>
 
 </div>
+
 <script>
     //Hành động của table
     table = document.getElementById("dataTable");

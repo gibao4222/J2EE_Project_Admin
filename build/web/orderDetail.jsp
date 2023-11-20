@@ -33,6 +33,7 @@
             <div class="form-group">
                 <label> Ngày tạo</label>
                 <input id="dateCreated" type="date" name="dateCreated" class="form-control" placeholder="Enter Date" value="">
+
             </div>
             <div class="form-group">
                 <label> Quantity </label>
@@ -169,6 +170,38 @@ function formatDate(inputDate) {
     var day = date.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
+                 document.addEventListener('DOMContentLoaded', function() {
+                var table = document.getElementById('dataTable');
+            
+                const existingContent = new Set();
+                
+               
+              
+                
+                //Cập nhật
+                document.addEventListener('click',function(e){
+                    if(e.target && e.target.id === 'edit_btn'){
+                        
+                        let form = document.getElementById('OrderDetailForm');
+                        form.action='update-OrderDetail';
+                        
+                        
+                        let row = e.target.closest('tr');
+                        
+                        document.getElementById("idOrderDetail").value = row.cells[0].innerText;
+                        document.getElementById("idOrder").value = row.cells[1].innerText;
+                        document.getElementById("idProduct").value = row.cells[2].innerText;
+                        document.getElementById("dateCreated").value = row.cells[3].innerText;
+                        document.getElementById("quantity").value = row.cells[4].innerText;
+                        document.getElementById("price").value = row.cells[5].innerText;
+                        document.getElementById("total").value = row.cells[6].innerText;
+                        document.getElementById("idSale").value = row.cells[7].innerText;
+                        existingContent.clear();
+                                                
+                    }
+                });
+
+            });
 
 </script>
 <%@include file ="component/footer.jsp" %>

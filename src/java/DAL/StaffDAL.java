@@ -1,21 +1,16 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package DAL;
-
-
-import DAL.MyDatabaseManager;
 import Model.StaffModel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /**
  *
- * @author LENOVO
+ * @author Admin
  */
 public class StaffDAL extends MyDatabaseManager{
     public StaffDAL (){
@@ -36,7 +31,7 @@ public class StaffDAL extends MyDatabaseManager{
                    staff.setNumberPhone(rs.getString("numberPhone"));
                    staff.setBankAccount(rs.getString("bankAccount"));
                    staff.setAccountNumber(rs.getString("accountNumber"));
-                   staff.setIdGroup(rs.getString("idGroup"));
+                   staff.setPosition(rs.getString("position"));
                    list.add(staff);
                  }
              }
@@ -49,7 +44,7 @@ public class StaffDAL extends MyDatabaseManager{
      public int addStaff(StaffModel staff) {
          int rs = 0;
          try {
-              String query = "INSERT INTO staff ( idStaff ,email , fullName, address, numberPhone, bankAccount, accountNumber, idGroup) "
+              String query = "INSERT INTO staff ( idStaff ,email , fullName, address, numberPhone, bankAccount, accountNumber, position) "
                  + " VALUES (?,? , ?,?, ?, ?, ?,?);";
                 PreparedStatement p = StaffDAL.getConnection().prepareStatement(query);
                 p.setString(1, staff.getIdStaff());
@@ -59,7 +54,7 @@ public class StaffDAL extends MyDatabaseManager{
                 p.setString(5,staff.getNumberPhone());
                 p.setString(6, staff.getBankAccount());
                 p.setString(7, staff.getAccountNumber());
-                p.setString(8, staff.getIdGroup());
+                p.setString(8, staff.getPosition());
                 rs = p.executeUpdate();
          } catch (Exception e) {
              e.printStackTrace();
@@ -74,7 +69,7 @@ public class StaffDAL extends MyDatabaseManager{
         try {
             String query = "UPDATE staff  "
                     + "SET email =?, fullName = ?, address = ?,"
-                    + " numberPhone = ?, bankAccount = ?, accountNumber = ?, idGroup = ? "
+                    + " numberPhone = ?, bankAccount = ?, accountNumber = ?, position = ? "
                     + "WHERE staff.idStaff = ?;";
               PreparedStatement p = StaffDAL.getConnection().prepareStatement(query);
                 p.setString(1, staff.getEmail());
@@ -83,7 +78,7 @@ public class StaffDAL extends MyDatabaseManager{
                 p.setString(4,staff.getNumberPhone());
                 p.setString(5, staff.getBankAccount());
                 p.setString(6, staff.getAccountNumber());
-                p.setString(7, staff.getIdGroup());
+                p.setString(7, staff.getPosition());
                 p.setString(8, staff.getIdStaff());
 
             rs = p.executeUpdate();
@@ -105,5 +100,32 @@ public class StaffDAL extends MyDatabaseManager{
         }
         return rs;
     }
-        
+        public StaffModel searchStaff(String idStaff){
+            StaffModel st = new StaffModel();
+            try {
+                String query = "SELECT * FROM staff WHERE idStaff ='"+idStaff+"'";
+                ResultSet rs =StaffDAL.doReadQuery(query);
+                if(rs!=null){
+                    while(rs.next()){
+                        st.setIdStaff(rs.getString("idStaff"));
+                        st.setEmail(rs.getString("email"));
+                        st.setFullName(rs.getString("fullName"));
+                        st.setAddress(rs.getString("address"));
+                        st.setNumberPhone(rs.getString("numberPhone"));
+                        st.setBankAccount(rs.getString("bankAccount"));
+                        st.setAccountNumber(rs.getString("accountNumber"));
+                    }
+                }
+                else{
+                    System.out.println("ko co gi ca");
+                }
+            } catch (Exception e) {
+            }
+            return st;
+        }
+        public static void main(String[] args) {
+        StaffDAL stDAL = new StaffDAL();
+        StaffModel st = stDAL.searchStaff("ST001");
+            System.out.println(st.getFullName());
+    }
 }

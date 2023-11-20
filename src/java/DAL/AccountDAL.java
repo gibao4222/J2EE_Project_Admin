@@ -12,6 +12,7 @@ import java.util.ArrayList;
 /**
  *
  * @author LENOVO
+
  */
 public class AccountDAL extends MyDatabaseManager{
     public AccountDAL(){
@@ -44,6 +45,7 @@ public class AccountDAL extends MyDatabaseManager{
          try {
               String query = "INSERT INTO account ( idAccount ,idPerson , email , password , status) "
                  + " VALUES (?,? , ?,?, ?);";
+
                 PreparedStatement p = AccountDAL.getConnection().prepareStatement(query);
                 p.setString(1, account.getIdAccount());
                 p.setString(2, account.getIdPerson());
@@ -83,6 +85,18 @@ public class AccountDAL extends MyDatabaseManager{
             String query = "DELETE FROM account WHERE idAccount = ?";
             PreparedStatement p = AccountDAL.getConnection().prepareStatement(query);
             p.setString(1, idAccount);
+            rs = p.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+        public int deleteAccountByIdStaff(String idStaff){
+        int rs = 0;
+        try {
+            String query = "DELETE FROM account WHERE idPerson = ?";
+            PreparedStatement p = AccountDAL.getConnection().prepareStatement(query);
+            p.setString(1, idStaff);
             rs = p.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

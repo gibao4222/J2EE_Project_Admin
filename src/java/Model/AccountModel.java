@@ -6,6 +6,7 @@ package Model;
 
 /**
  *
+<<<<<<< HEAD
  * @author LENOVO
  */
 public class AccountModel {
@@ -60,6 +61,6 @@ public class AccountModel {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
 
 }

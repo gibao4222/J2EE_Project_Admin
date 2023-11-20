@@ -3,8 +3,19 @@
     Created on : Oct 11, 2023, 8:40:27 PM
     Author     : Admin
 --%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.*" %>
 
+<%@ page session="true" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    String email = (String)session.getAttribute("email");
+
+    if(email == null || email.isEmpty()){
+        response.sendRedirect("login");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -25,8 +36,12 @@
 
     <!-- Custom styles for this template-->
     <link href="./resources/css/sb-admin-2.min.css" rel="stylesheet">
+
     <!--<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>-->
    <script src="https://kit.fontawesome.com/4a8ccdbc24.js" crossorigin="anonymous"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 </head>
@@ -39,7 +54,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                     
@@ -51,8 +66,8 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item active" id="dashboardMenu">
+                <a class="nav-link" href="">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -66,7 +81,7 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+<!--            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
@@ -79,7 +94,7 @@
                         <a class="collapse-item" href="permission">Quyền</a>
                     </div>
                 </div>
-            </li>
+            </li>-->
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -92,10 +107,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Đơn hàng:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Danh sách đơn hàng</a>
-                        <div class="collapse-divider"></div>
+                        <a class="collapse-item" href="order">Danh sách đơn hàng</a>
+                        <div class="collapse-divider" id="importMenu"></div>
                         <h6 class="collapse-header">Nhập hàng:</h6>
-                        <a class="collapse-item" href="utilities-border.html">Danh sách nhập hàng</a>
+                        <a class="collapse-item" href="import">Danh sách nhập hàng</a>
                     </div>
                 </div>
             </li>
@@ -118,24 +133,24 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Thông tin</h6>
-                        <a class="collapse-item" href="login.html">Nhà Sản Xuất</a>
-                        <a class="collapse-item" href="register.html">Danh Sách Sản Phẩm</a>
-                        <a class="collapse-item" href="forgot-password.html">Danh Mục Sản Phẩm</a>
+                        <a class="collapse-item" href="supplier">Nhà Sản Xuất</a>
+                        <a class="collapse-item" href="product">Danh Sách Sản Phẩm</a>
+                        <a class="collapse-item" href="category">Danh Mục Sản Phẩm</a>
                         <a class="collapse-item" href="promotion">Chương Trình Khuyến Mãi</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+            <li class="nav-item" id="staffMenu">
+                <a class="nav-link" href="staff">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Danh Sách Nhân Sự</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
+            <li class="nav-item" id="customerMenu">
+                <a class="nav-link" href="customer">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh Sách Khách Hàng</span></a>
             </li>
@@ -334,14 +349,14 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${staff.fullName}</span>
                                 <img class="img-profile rounded-circle"
                                     src="./resources/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="editAdmin">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>

@@ -17,6 +17,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import Model.ImportModel;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -24,15 +27,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author Admin
  */
-@WebServlet({"/Import", "/add-Import", "/delete-Import", "/update-Import"})
+@WebServlet({"/Import", "/add-Import", "/delete-Import", "/update-Import","/load_datacheckproduct"})
 public class ImportServlet extends HttpServlet {
 
     /**
@@ -52,6 +58,7 @@ public class ImportServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
+
             out.println("<title>Servlet ImportServlet</title>");
             out.println("</head>");
             out.println("<body>");
@@ -61,15 +68,6 @@ public class ImportServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -81,11 +79,13 @@ public class ImportServlet extends HttpServlet {
 
         SupplierDAL sl = new SupplierDAL();
         ArrayList<SupplierModel> list = sl.readSupplier();
+
         request.setAttribute("datasuppliers", list);
 
         request.setAttribute("dataImport", ip);
 
         request.getRequestDispatcher("listImport.jsp").forward(request, response);
+
     }
 
     /**
@@ -101,6 +101,7 @@ public class ImportServlet extends HttpServlet {
             throws ServletException, IOException {
         ImportDAL importDAL = new ImportDAL();
         ImportDetailDAL importDetailDAL = new ImportDetailDAL();
+        ProductDAL pr = new ProductDAL();
         String url = request.getRequestURI();
         JsonObject jsonResponse = new JsonObject();
         if (url.contains("add-Import")) {
@@ -122,7 +123,7 @@ public class ImportServlet extends HttpServlet {
                 String idProduct = jsonObject.get("idProduct").getAsString();
                 String quantity = jsonObject.get("quantity").getAsString();
                 String price = jsonObject.get("price").getAsString();
-                String total = String.valueOf(Integer.parseInt(quantity)*Integer.parseInt(price));
+                String total = String.valueOf(Integer.parseInt(quantity) * Integer.parseInt(price));
                 // In ra giá trị
                 System.out.println("idProduct: " + idProduct);
                 System.out.println("quantity: " + quantity);
@@ -131,30 +132,68 @@ public class ImportServlet extends HttpServlet {
                 ImportDetailModel importDetailModel = new ImportDetailModel(idImportDetails, idImport, idProduct, dateCreated, Integer.parseInt(quantity), price, total);
                 importDetailDAL.addImportDetail(importDetailModel);
             }
+            response.sendRedirect("Import");
 //                jsonResponse.addProperty("message", "Thêm  thành công rồi thk lòn");
         } else if (url.contains("delete-Import")) {
             String idImport = String.valueOf(request.getParameter("idImport"));
+            String idSupplier = String.valueOf(request.getParameter("idSupplier"));
+            String dateCreated = String.valueOf(request.getParameter("dateCreated"));
+            String totalBill = String.valueOf(request.getParameter("totalBill"));
             importDAL.deleteImport(idImport);
             importDetailDAL.deleteImportDetail(idImport);
+            response.sendRedirect("Import");
+
 //                jsonResponse.addProperty("message", "Xóa nhóm quyền thành công");
         } else if (url.contains("update-Import")) {
             String idImport = String.valueOf(request.getParameter("idImport"));
             String idSupplier = String.valueOf(request.getParameter("idSupplier"));
             String dateCreated = String.valueOf(request.getParameter("dateCreated"));
             String totalBill = String.valueOf(request.getParameter("totalBill"));
+            System.out.println("hllo");
             ImportModel importModel = new ImportModel(idImport, idSupplier, dateCreated, totalBill);
             importDAL.updateImport(importModel);
+//               lấy dữ liệu product 
+            String listProduct = String.valueOf(request.getParameter("chosenProducts"));
+            System.out.println("listproduct" + listProduct);
+            // Sử dụng Gson để chuyển đổi chuỗi JSON thành JsonObject
+            JsonArray jsonArray = JsonParser.parseString(listProduct).getAsJsonArray();
+            // Duyệt qua mảng JSON và lấy giá trị từ các đối tượng JSON
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                String idProduct = jsonObject.get("idProduct").getAsString();
+                String quantity = jsonObject.get("quantity").getAsString();
+                String price = jsonObject.get("price").getAsString();
+                String total = String.valueOf(Integer.parseInt(quantity) * Integer.parseInt(price));
+                // In ra giá trị
+                System.out.println("idProduct: " + idProduct);
+                System.out.println("quantity: " + quantity);
+                System.out.println("price: " + price);
+                String idImportDetails = new CreateID("ID").create();
+                importDetailDAL.deleteImportDetail(idImport);
+                ImportDetailModel importDetailModel = new ImportDetailModel(idImportDetails, idImport, idProduct, dateCreated, Integer.parseInt(quantity), price, total);
+                importDetailDAL.addImportDetail(importDetailModel);
+            }
+            response.sendRedirect("Import");
+        }
+         else if (url.contains("load_datacheckproduct")) {
+            String idImport = String.valueOf(request.getParameter("idImport"));           
+            System.out.println("Id import lay tu ajax : " + idImport);
+            ArrayList<ImportDetailModel> importDetails = importDetailDAL.readImportDetailwithidImport(idImport);
+            ArrayList<ProductModel> dataProduct = pr.readProduct();
+            // Chuyển danh sách thành JSON để gửi về
+            Gson gson = new Gson();
+            jsonResponse.add("dataImportdetails", gson.toJsonTree(importDetails));
+            jsonResponse.add("dataProduct", gson.toJsonTree(dataProduct));
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(jsonResponse.toString());                  
         }
         response.setContentType("application/json");
-        response.sendRedirect("Import");
+//        response.sendRedirect("Import");
+             
 
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

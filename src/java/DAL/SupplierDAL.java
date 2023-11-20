@@ -9,9 +9,11 @@ import java.sql.ResultSet ;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
 
+
 /**
  *
  * @author LENOVO
+
  */
 public class SupplierDAL extends MyDatabaseManager{
     public  SupplierDAL(){
