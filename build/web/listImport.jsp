@@ -44,52 +44,66 @@
                         <label>Date Created</label>
                         <input id="dateCreated" type="date" name="dateCreated" class="form-control" placeholder="Enter Date">
                     </div>
-                    <!--                    <div class="form-group">
-                                            <label> Total Bill</label>
-                                            <input id="totalBill" type="text" name="totalBill" class="form-control" value="" placeholder="Enter Total">
-                                        </div>-->
-                    <div class="form-group">                                            
-                        <div id="containercart">
-                            <h6>Danh sách sản phẩm</h6>
-                            <table id="dataProduct" class="scrollable-table">
-                                <!--<table class="table table-bordered table-ScrollBar" id="dataTable" width="100%" cellspacing="0">-->
-                                <!--<thead>-->
-                                <tr>
-                                    <th>Id Product</th>
-                                    <th>Name Product</th>
-                                    <th>Price</th>
-                                </tr>
-                                <!--</thead>-->
-                                <!--<tbody>-->
-                                <c:forEach items="${dataProduct}" var="c">
-                                    <tr>
-                                        <td> ${c.idProduct}</td>
-                                        <td> ${c.nameProduct}</td>
-                                        <td>${c.price}</td>
-                                        <td><a>Chọn</a></td>
 
-                                    </tr>
-                                </c:forEach>
+                    <div class="form-group">
+                        <label>Sản phẩm</label>
+                        <div class="container-fluid" style="display: flex; justify-content: space-between; gap: 10px;">
+                            <div class="card shadow mb-4"style="max-width: 100%;min-width: 100%;max-height: 200px !important; overflow: auto !important">
+                                <div class="card-body" >
+                                    <div class="table-responsive table-Cover">
+                                        <table id="dataProduct" class="table table-bordered table-ScrollBar" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id Product</th>
+                                                    <th>Name Product</th>
+                                                    <th>Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${dataProduct}" var="c">
+                                                    <tr>
+                                                        <td> ${c.idProduct}</td>
+                                                        <td> ${c.nameProduct}</td>
+                                                        <td>${c.price}</td>
+                                                        <td><a style="cursor: pointer">Chọn</a></td>
 
-                                <!--</tbody>-->
-                                <!--</table>-->
-                            </table>
-                            <h6>Sản phẩm cần nhập</h6>
-                            <table id="datacheckProduct" class="scrollable-table">
-                                <tr>
-                                    <th>IdProduct</th>
-                                    <th>NameProduct</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                </tr>
-
-                            </table>
-                            <div class="total">Tổng tiền: <span id="totalprice">0</span></div>
-                            <input id="totalBill" type="hidden" name="totalBill" value="0">
-
-                            <!--<button onclick="deletecartall()">Xóa tất cả</button>-->                                   
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <div class="form-group">
+                            <label>Sản phẩm được chọn </label>
+                            <div class="card shadow mb-4" style="max-width: 100%;min-width: 100%;max-height: 200px !important; overflow: auto !important">
+                                <div class="card-body">
+                                    <div class="table-responsive table-Cover">
+                                        <table id="datacheckProduct" class="table table-bordered table-ScrollBar"  width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>IdProduct</th>
+                                                    <th>NameProduct</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="total" style="text-align: right; color: black; font-weight: bold; height: 50px; font-size: 12pt; margin-top: 20px; margin-right: 50px;">Tổng tiền: <span id="totalprice">0</span></div>
+                            <input id="totalBill" type="hidden" name="totalBill" value="0">
+                        </div>
+
+
 
                     </div>
 
@@ -168,6 +182,7 @@
 
 </div>
 <script>
+    
     function addProduct() {
         var row = event.target.parentElement.parentElement;
         // Lấy giá trị từ các ô trong hàng
@@ -218,6 +233,7 @@
 
             var deleteButton = document.createElement('a');
             deleteButton.textContent = 'Xóa';
+            deleteButton.style.cursor = 'pointer';
             deleteButton.addEventListener('click', function () {
                 deleteRow(newRow);
 //                    updateTotal(); // Cập nhật tổng khi xóa sản phẩm
@@ -263,7 +279,7 @@
     function updateTotal() {
         const totalSpan = document.getElementById('totalprice');
         const totalPrice = calculateTotal();
-        totalSpan.textContent = totalPrice;
+        totalSpan.textContent = formatCurrency(totalPrice);
         // Cập nhật giá trị totalBill trong form
         const totalBillInput = document.getElementById('totalBill');
         if (totalBillInput) {
@@ -305,18 +321,22 @@
             console.log("list product" + listProductString);
 
             document.getElementById("chosenProducts").value = listProductString;
-            window.location.href = "/J2EE_Project_Admin/Import";
+//            window.location.href = "/J2EE_Project_Admin/Import";
         });
     });
-
+                const existingContent = new Set();
+                
+                let defaultAction = 'add-Import';
+                
+                var clickButtonEdit = false;
 //    update-import
     //Cập nhật
     document.addEventListener('click', function (e) {
         if (e.target && e.target.id === 'edit_btn') {
 
-           let form = document.getElementById('ImportForm');
+            let form = document.getElementById('ImportForm');
             form.action = 'update-Import';
-            
+
             // Lấy giá trị từ hàng tương ứng
             let row = e.target.closest('tr');
             const idImport = row.cells[0].textContent.trim(); // Thay thế 0 bằng vị trí cột ID
@@ -330,142 +350,116 @@
             document.getElementById('totalBill').value = totalbill;
 //            ajax 
             $.ajax({
-                    url: "/J2EE_Project_Admin/load_datacheckproduct",
-                    type: "POST",
-                    data: {
-                        idImport: idImport
-                    },
-                    dataType: "json",
-                    success: function (response) {
-                        var importDetails = response.dataImportdetails;
-                        var dataProduct = response.dataProduct;
-                        if (importDetails && dataProduct && Array.isArray(importDetails) && Array.isArray(dataProduct)) {
-                            updateProductDetails(importDetails, dataProduct);
-                        } else {
-                            console.error("Dữ liệu không tồn tại hoặc không đầy đủ!");
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Lỗi phân tích JSON:", error);
+                url: "/J2EE_Project_Admin/load_datacheckproduct",
+                type: "POST",
+                data: {
+                    idImport: idImport
+                },
+                dataType: "json",
+                success: function (response) {
+                    var importDetails = response.dataImportdetails;
+                    var dataProduct = response.dataProduct;
+                    if (importDetails && dataProduct && Array.isArray(importDetails) && Array.isArray(dataProduct)) {
+                        updateProductDetails(importDetails, dataProduct);
+                    } else {
+                        console.error("Dữ liệu không tồn tại hoặc không đầy đủ!");
                     }
-                });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Lỗi phân tích JSON:", error);
+                }
+            });
+            existingContent.clear();
         }
-
+         else if(e.target && e.target.id === 'exit-btn'){
+                        let form = document.getElementById('ImportForm');
+                        form.action=defaultAction;
+                    }                
     });
+     document.addEventListener('click', function (e) {
+                    // Kiểm tra xem phần tử được click có thuộc modal không
+                    let isModalClick = isDescendant(document.getElementById('addadminprofile'),e.target);
+                    if ((isModalClick===false && clickButtonEdit === false)) {
+                        let form = document.getElementById('ImportForm');
+                        // Khôi phục giá trị mặc định của action khi click ra ngoài modal
+                        form.action = defaultAction;
+                    }
+
+                    clickButtonEdit = false;
+ 
+                });
+    
 
     function updateProductDetails(importDetails, dataProduct) {
-    var datacheckProduct = document.getElementById('datacheckProduct');
-    importDetails.forEach(function (importDetail) {
-        var existingProduct = dataProduct.find(function (product) {
-            return product.idProduct === importDetail.idProduct;
+        var datacheckProduct = document.getElementById('datacheckProduct');
+        importDetails.forEach(function (importDetail) {
+            var existingProduct = dataProduct.find(function (product) {
+                return product.idProduct === importDetail.idProduct;
+            });
+            if (existingProduct) {
+                var newRow = datacheckProduct.insertRow();
+                newRow.innerHTML = '<td>' + importDetail.idProduct + '</td>' +
+                        '<td>' + existingProduct.nameProduct + '</td>' +
+                        '<td>' + existingProduct.price + '</td>' +
+                        '<td><input type="number" value="' + importDetail.quantity + '" min="1" /></td>' +
+                        '<td>' + importDetail.price * importDetail.quantity + '</td>';
+                var deleteCell = newRow.insertCell(5);
+                var deleteButton = document.createElement('a');
+                deleteButton.textContent = 'Xóa';
+                deleteButton.style.cursor = 'pointer';
+                deleteButton.addEventListener('click', function () {
+                    deleteRow(newRow);
+                });
+                deleteCell.appendChild(deleteButton);
+
+                var quantityInput = newRow.querySelector('input[type="number"]');
+                quantityInput.addEventListener('change', function () {
+                    var quantity = parseInt(quantityInput.value);
+                    var total = existingProduct.price * quantity;
+                    newRow.cells[4].textContent = total.toFixed(2);
+                    updateTotal();
+                });
+            }
         });
-        if (existingProduct) {
-            var newRow = datacheckProduct.insertRow();
-            newRow.innerHTML = '<td>' + importDetail.idProduct + '</td>' +
-                '<td>' + existingProduct.nameProduct + '</td>' +
-                '<td>' + existingProduct.price + '</td>' +
-                '<td><input type="number" value="' + importDetail.quantity + '" min="1" /></td>' +
-                '<td>' + importDetail.price * importDetail.quantity + '</td>';
-            var deleteCell = newRow.insertCell(5);
-            var deleteButton = document.createElement('a');
-            deleteButton.textContent = 'Xóa';
-            deleteButton.addEventListener('click', function () {
-                deleteRow(newRow);
-            });
-            deleteCell.appendChild(deleteButton);
+        updateTotal();
+    }
+    function formatCurrency(amount) {
+        return amount.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+    }
 
-            var quantityInput = newRow.querySelector('input[type="number"]');
-            quantityInput.addEventListener('change', function () {
-                var quantity = parseInt(quantityInput.value);
-                var total = existingProduct.price * quantity;
-                newRow.cells[4].textContent = total.toFixed(2);
-                updateTotal();
-            });
-        }
-    });
-    updateTotal();
-}
+    
+            function isDescendant(parent, child) {
+                let node = child.parentNode;
 
+                while (node !== null) {
+                    if (node === parent) {
+                        return true;
+                    }
+                    node = node.parentNode;
+                }
 
+                return false;
+            }
+            const apiURL = "https://api.vietqr.io/v2/banks";
+            fetch(apiURL)
+            .then(response => response.json())
+            .then(data=>{
+                data.data.forEach(bank =>{
+                    const option = document.createElement('option');
+                    option.value = bank.code;
+                    option.text = bank.name+' ('+bank.shortName+')';
+                    
+                    const logoImg = document.createElement('img');
+                    logoImg.src = bank.logo;
+                    logoImg.alt = 'Logo ${bank.name}';
+                    logoImg.classList.add('bank-logo');
+                    
+                    option.prepend(logoImg);
+                    
+                    bankSelect.appendChild(option);
+                });
+    })
+    .catch(error => console.error('Error fetching data:', error));
 
 </script>
-<style>
-    #containercart{
-        margin: 30px auto;
-        height: auto;
-        width: 90%;
-        border: 2px solid #000;
-        padding: 20px;
-    }
-    #containercart h6{
-        text-align: center;
-    }
-    #containercart #dataProduct{
-        display: block;
-    }
-    #containercart #dataProduct{
-        border-spacing: 0;
-        width: 100%;
-    }
-    #containercart #dataProduct th, td{
-        width: 200px;
-        text-align: center;
-        /*border-bottom: 1px solid #000;*/
-        padding: 10px;
-        vertical-align: middle;
-    }
-
-    #containercart #datacheckProduct{
-        border-spacing: 0;
-        width: 100%;
-    }
-    #containercart #datacheckProduct th, td{
-        width: 150px;
-        text-align: center;
-        /*border-bottom: 1px solid #000;*/
-        padding: 10px;
-        vertical-align: middle;
-    }
-    #containercart #datacheckProduct td button{
-        height: auto;
-        width: 30px;
-        line-height: 25px;
-        font-size: 15pt;
-        text-align: center;
-        border: 2px solid #000;
-        background: none;
-        cursor: pointer;
-        outline: none;
-    }
-    #containercart #datacheckProduct td button:active{
-        border: 2px solid rgb(221, 18, 18);
-        color: rgb(221, 18, 18);
-    }
-    #containercart #datacheckProduct td input{
-        height: 25px;
-        width: 50px;
-        font-size: 12pt;
-        text-align: center;
-        /*border-left: none;*/
-        /*border-right: none;*/
-        background: none;
-    }
-    #containercart .total{
-        text-align: right;
-        color: black;
-        font-weight: bold;
-        height: 50px;
-        font-size: 12pt;
-        margin-top: 20px;
-    }
-    #quantityInput {
-        border: none; /* Loại bỏ viền */
-        /* Các thuộc tính CSS khác cho ô input nếu cần */
-    }
-    .scrollable-table {
-        max-height: calc(5 * 30px); /* 30px là chiều cao ước lượng của mỗi hàng */
-        overflow-y: auto; /* Hiển thị thanh cuộn dọc khi vượt quá chiều cao */
-        display: block; /* Để xác định chiều cao cụ thể cho từng hàng */
-    }
-</style>
 <%@include file ="component/footer.jsp" %>

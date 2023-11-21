@@ -4,8 +4,10 @@
  */
 package Controller;
 
+import DAL.AccountDAL;
 import DAL.CreateID;
 import DAL.CustomerDAL;
+import Model.AccountModel;
 import Model.CustomerModel;
 import com.google.gson.JsonObject;
 import jakarta.servlet.ServletException;
@@ -17,12 +19,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author LENOVO
  */
-@WebServlet({"/Customer" ,"/add-Customer","/delete-Customer","/update-Customer"})
+@WebServlet({"/Customer", "/add-Customer", "/delete-Customer", "/update-Customer", "/loadPasswordCus"})
 public class Customer extends HttpServlet {
 
     /**
@@ -42,7 +43,7 @@ public class Customer extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Customer</title>");            
+            out.println("<title>Servlet Customer</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Customer at " + request.getContextPath() + "</h1>");
@@ -63,11 +64,11 @@ public class Customer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         CustomerDAL cusDAL = new CustomerDAL();
-           ArrayList<CustomerModel> st = cusDAL.readCustomer();
-           request.setAttribute("listCustomer", st);
-           request.getRequestDispatcher("listCustomer.jsp").forward(request, response);
+        ArrayList<CustomerModel> st = cusDAL.readCustomer();
+        request.setAttribute("listCustomer", st);
+        request.getRequestDispatcher("listCustomer.jsp").forward(request, response);
     }
 
     /**
@@ -81,38 +82,66 @@ public class Customer extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-           CustomerDAL cusDAL = new CustomerDAL();
-           String url = request.getRequestURI();
-           JsonObject jsonResponse = new JsonObject();
-           if (request.getCharacterEncoding()== null) {
+        CustomerDAL cusDAL = new CustomerDAL();
+        AccountDAL accountDAL = new AccountDAL();
+
+        String url = request.getRequestURI();
+        JsonObject jsonResponse = new JsonObject();
+        if (request.getCharacterEncoding() == null) {
             request.setCharacterEncoding("UTF-8");
-            }
-           if (url.contains("add-Customer")) {
-               String idCustomer = new CreateID("CT").create();
-               String email = String.valueOf(request.getParameter("email"));
-               String fullName = String.valueOf(request.getParameter("fullName"));
-               String address = String.valueOf(request.getParameter("address"));
-               String phoneNumber = String.valueOf(request.getParameter("numberPhone"));                            
-                CustomerModel cusModel = new CustomerModel(idCustomer, email, address, phoneNumber, fullName);
-                cusDAL.addCustomer(cusModel);
-                jsonResponse.addProperty("message", "Thêm  thành công rồi thk lòn");
-           }
-           else if(url.contains("delete-Customer")){
-                String idCustomer = String.valueOf(request.getParameter("idCustomer"));
-                cusDAL.deleteCustomer(idCustomer);
-                jsonResponse.addProperty("message", "Xóa nhóm quyền thành công");
-              }
-           else if (url.contains("update-Customer")) {
-               String idCustomer = String.valueOf(request.getParameter("idCustomer"));
-               String email = String.valueOf(request.getParameter("email"));
-               String fullName = String.valueOf(request.getParameter("fullName"));
-               String address = String.valueOf(request.getParameter("address"));
-               String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
-               CustomerModel cusModel = new CustomerModel(idCustomer, email, address, phoneNumber, fullName);
-               cusDAL.updateCustomer(cusModel);
         }
-        response.setContentType("application/json");
-        response.getWriter().write(jsonResponse.toString());
-        response.sendRedirect("Customer");
+        if (url.contains("add-Customer")) {
+            String idCustomer = new CreateID("CT").create();
+            String email = String.valueOf(request.getParameter("email"));
+            String fullName = String.valueOf(request.getParameter("fullName"));
+            String address = String.valueOf(request.getParameter("address"));
+            String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
+            CustomerModel cusModel = new CustomerModel(idCustomer, email, address, phoneNumber, fullName);
+            cusDAL.addCustomer(cusModel);
+            String idACcount = new CreateID("TK").create();
+            String password = String.valueOf(request.getParameter("password"));
+            String status = "2";
+            AccountModel accountModel = new AccountModel(idACcount, idCustomer, email, password, status);
+            accountDAL.addAccount(accountModel);
+            jsonResponse.addProperty("message", "Thêm  thành công rồi thk lòn");
+                        response.sendRedirect("Customer");
+
+        } else if (url.contains("delete-Customer")) {
+            String idCustomer = String.valueOf(request.getParameter("idCustomer"));
+            cusDAL.deleteCustomer(idCustomer);
+            if (cusDAL.deleteCustomer(idCustomer) != 0) {
+                accountDAL.deleteAccountByIdStaff(idCustomer);
+            }
+            jsonResponse.addProperty("message", "Xóa nhóm quyền thành công");
+                        response.sendRedirect("Customer");
+
+        } else if (url.contains("update-Customer")) {
+            String idCustomer = String.valueOf(request.getParameter("idCustomer"));
+            String email = String.valueOf(request.getParameter("email"));
+            String fullName = String.valueOf(request.getParameter("fullName"));
+            String address = String.valueOf(request.getParameter("address"));
+            String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
+            CustomerModel cusModel = new CustomerModel(idCustomer, email, address, phoneNumber, fullName);
+            if (cusDAL.updateCustomer(cusModel) != 0) {
+                String idACcount = accountDAL.searchAccount(idCustomer).getIdAccount();
+                String password = String.valueOf(request.getParameter("password"));
+                String status = "2";
+                AccountModel accountModel = new AccountModel(idACcount, idCustomer, email, password, status);
+                accountDAL.updateAccount(accountModel);
+            } 
+            response.setContentType("application/json");
+            response.getWriter().write(jsonResponse.toString());
+            response.sendRedirect("Customer");
+        }
+        else if (url.contains("loadPasswordCus")) {
+                String idCus = String.valueOf(request.getParameter("idCustomer"));
+                System.out.println(idCus);
+                String password = accountDAL.searchAccount(idCus).getPassword();
+                System.out.println("Controller.Customer.doPost()" + password);
+                System.out.println(password);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("{\"pass\": \"" + password + "\"}");
+            }
     }
 }

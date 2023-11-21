@@ -39,6 +39,27 @@ public class AccountDAL extends MyDatabaseManager{
         }
         return list;
     }
+        public AccountModel searchAccount(String idStaff){
+            AccountModel account = new AccountModel();
+            try{
+            
+            String query ="SELECT * FROM account WHERE idPerson='"+idStaff+"'";
+            ResultSet rs = AccountDAL.doReadQuery(query);
+            if(rs!=null){
+                 while (rs.next()) {                     
+                    account.setIdAccount(rs.getString("idAccount"));
+                    account.setIdPerson(rs.getString("idPerson"));
+                    account.setEmail(rs.getString("email"));
+                    account.setPassword(rs.getString("password"));
+                    account.setStatus(rs.getString("status"));
+ 
+                 }
+             }
+            }catch(Exception e) {
+            e.printStackTrace();
+        }return account;
+        }
+        
 //     Thêm Tài khoản //
      public int addAccount(AccountModel account) {
          int rs = 0;
