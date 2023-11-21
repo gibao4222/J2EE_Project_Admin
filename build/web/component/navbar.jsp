@@ -10,7 +10,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     String email = (String)session.getAttribute("email");
-
+    
     if(email == null || email.isEmpty()){
         response.sendRedirect("login");
         return;
@@ -49,7 +49,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                     
@@ -62,7 +62,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active" id="dashboardMenu">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="home">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>

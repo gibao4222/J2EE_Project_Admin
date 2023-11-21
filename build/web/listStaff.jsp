@@ -6,9 +6,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="component/navbar.jsp" %>
-<%@page import="Model.AccountModel" %>
-<%@page import="java.io.IOException" %>
-<%@page import="DAL.AccountDAL" %>
+<%@ page import="Model.StaffModel" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.*" %>
 <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -96,7 +96,7 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">Danh Sách Admin
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
+            <button type="button" class="btn btn-primary only-admin" data-toggle="modal" data-target="#addadminprofile">
               Thêm Admin
             </button>
     </h6>
@@ -117,8 +117,8 @@
             <th>BankAccount </th>
             <th>AccountNumber</th>
             <th>Position</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th class="only-admin">Edit</th>
+            <th class="only-admin">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -132,14 +132,14 @@
                     <td>${staff.bankAccount}</td>
                     <td>${staff.accountNumber}</td>
                     <td>${staff.position}</td>
-                    <td>
+                    <td class="only-admin">
                         <form action="" method="post">
                             <!--<input type="hidden" name="edit_user" value="<?php echo $result['admin_User']; ?>">-->
                             <button  id="edit_btn" type="button" name="edit_btn" class="btn btn-success"data-toggle="modal" data-target="#addadminprofile"> Sửa </button>
                               <!--<a href="editStaff.jsp" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">EDIT</a>--> 
                         </form>
                      </td>
-                      <td>
+                     <td class="only-admin">
                         <form action="delete-Staff" method="post">
                           <input type="hidden" name="idStaff" value="${staff.idStaff}">
                           <button type="submit" name="delete_btn" class="btn btn-danger"> Xóa </button>
@@ -151,7 +151,17 @@
           
             
           </tr>-->
+        <%
+            StaffModel st = (StaffModel) session.getAttribute("staff");
+            String emaill = (String )session.getAttribute("email");
+            String position = "N/A";  // Giá trị mặc định
+
+            if (st != null) {
+                position = (st.getPosition() != null) ? st.getPosition() : "N/A";
+            }
+        %>
         </tbody>
+
       </table>
 
     </div>
@@ -160,6 +170,7 @@
 
 </div>
 <script>
+        
         function isValidEmail(email) {
             // Biểu thức chính quy để kiểm tra định dạng email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -215,7 +226,16 @@
                     }
         });
         
-                 document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            var adminOnlyElements = document.getElementsByClassName('only-admin');
+            var position = '<%=position%>';
+            
+            for (var i = 0; i < adminOnlyElements.length; i++) {
+                if(position === 'admin'){
+//                    adminOnlyElements[i].style.display = 'block';
+                }else
+                    adminOnlyElements[i].style.display = 'none';
+            }
                 var table = document.getElementById('dataTable');
             
                 const existingContent = new Set();
@@ -302,6 +322,53 @@
 
                 return false;
             }
+            
+            $("#StaffForm").submit(function (event) {
+                // Lấy giá trị của action từ form
+                const formAction = $(this).attr('action');
+                // Kiểm tra xem action có phải là "add-Staff" không
+                if (formAction === "add-Staff") {
+                    event.preventDefault();
+                    const note = document.getElementById("alert-danger");
+                    const note1 = document.getElementById("alert-success");
+                    $.ajax({
+                        url: "/J2EE_Project_Admin/checkAccount",  // Đường dẫn tương đối hoặc đầy đủ đến tài nguyên xử lý đăng nhập
+                        type: "post",  // Phương thức HTTP là POST để bảo mật thông tin đăng nhập
+                        data: $("#StaffForm").serialize(),  // Sử dụng serialize để lấy dữ liệu từ form
+                        success: function (data) {
+                            try {
+
+                            // Xử lý phản hồi từ server
+                                if (data.result === "1") {
+                                // Nếu đăng nhập thành công, thực hiện chuyển hướng hoặc các hành động khác
+                                    note1.style.display ='none';
+                                    note.style.display ='block';
+                                    note.innerHTML="Email đã được đăng ký";
+                                } else {
+                                    // Nếu đăng nhập không thành công, hiển thị thông báo lỗi
+                                    $.ajax({
+                                        url: "/J2EE_Project_Admin/add-Staff",  // Đường dẫn tương đối hoặc đầy đủ đến tài nguyên xử lý đăng nhập
+                                        type: "post",  // Phương thức HTTP là POST để bảo mật thông tin đăng nhập
+                                        data: $("#StaffForm").serialize(), // Sử dụng serialize để lấy dữ liệu từ form
+                                        success: function(data){
+                                            window.location.href = "/J2EE_Project_Admin/staff";
+                                        },
+                                        error: function(xhr){
+                                        }
+                            
+                                    });
+                                }
+                            } catch (error) {
+                                console.error("Lỗi phân tích JSON:", error);
+                            }
+                        },
+                        error: function (xhr) {
+                            // Xử lý lỗi nếu có
+                        }
+                    });
+                }
+        });
+            
             const apiURL = "https://api.vietqr.io/v2/banks";
             fetch(apiURL)
             .then(response => response.json())

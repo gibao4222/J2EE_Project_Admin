@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @author Thanhchan
  */
-@WebServlet({"/product", "/add-product", "/update-poduct","/delete-Product","/save-product","/home","/category"})
+@WebServlet({"/product", "/add-product", "/update-poduct","/delete-Product","/save-product","/category"})
 public class productController extends HttpServlet {
 
     /**

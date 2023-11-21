@@ -81,14 +81,15 @@ public class AccountDAL extends MyDatabaseManager{
         int rs = 0;
         try {
             String query = "UPDATE account  "
-                    + "SET idAccount  = ?, idPerson =? , email =? , password =? , status = ? "
-                    + "WHERE account.idAccount = ?;";
+                    + "SET idAccount  = ?,idPerson =? , email =? , password =? , status = ? "
+                    + "WHERE account.idAccount = ?";
               PreparedStatement p = AccountDAL.getConnection().prepareStatement(query);
                p.setString(1, account.getIdAccount());
                 p.setString(2, account.getIdPerson());
                 p.setString(3, account.getEmail());
                 p.setString(4, account.getPassword());
                 p.setString(5,account.getStatus());
+                p.setString(6, account.getIdAccount());
                
             rs = p.executeUpdate();
         } catch (Exception e) {
