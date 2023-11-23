@@ -63,7 +63,8 @@ public class CreateID extends MyDatabaseManager{
                  query = "SELECT * FROM customer";
                 break;
             case "TK":
-                query="SELECT * FROM account";
+                 query = "SELECT * FROM customer";
+                break;
             case "PD":
                 query = "SELECT * FROM promotiondetail";
 
@@ -118,7 +119,7 @@ public class CreateID extends MyDatabaseManager{
     }
     
     public static void main(String[] args) {
-        CreateID cre = new CreateID("PE");
+        CreateID cre = new CreateID("TK");
         System.out.println(cre.create());
     }
 }

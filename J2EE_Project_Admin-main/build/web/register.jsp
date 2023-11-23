@@ -27,10 +27,16 @@
 
         <div class="signin-signup">
         
-            <form id="login" action="login" method="post" class="sign-in-form">
+            <form id="register" action="register" method="post" class="sign-in-form">
                                                   <mark>${message}</mark>
-
-            <h2 class="title">Sign in</h2>
+<div class="alert-danger" id="alert-danger" role="alert">
+              ${mess}  
+            </div>
+            <h2 class="title">Sign up</h2>
+             <div class="input-field">
+          <i class="fa-solid fa-font"></i>
+              <input type="text" name="fullname" value="" placeholder="fullname" />
+            </div>
             <div class="input-field">
               <i class="fas fa-user"></i>
               <input type="text" name="email" value="" id="email" placeholder="Email" />
@@ -47,7 +53,16 @@
               <i class="fas fa-lock"></i>
               <input type="password" name="password" value="" placeholder="Password" />
             </div>
-            <input type="submit" value="Login" class="btn solid" />
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input type="text" name="address" value="" placeholder="addresss" />
+            </div>
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input type="text" name="phone" value="" placeholder="phone" />
+            </div>
+           
+            <input type="submit" value="register" class="btn solid" />
             <p style="color:red;" ></p>
             <p class="social-text">Or Sign in with social platforms</p>
             <div class="social-media">
@@ -65,49 +80,7 @@
               </a>
             </div>
           </form>
-                  <div class="mt-3">
-        <a href="email.jsp" class="btn btn-link">Quên Mật Khẩu?</a>
-    </div>                                
-            <form th:action="@{/register}"  method="POST" class="sign-up-form">
-                <h2 class="title">Sign up</h2>
-
-                <div class="input-field">
-                    <i class="fas fa-user"></i>
-                    <input type="text" name="Fullname" placeholder="Username" />
-                </div>
-
-                <div class="input-field">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" name="Password" placeholder="Password" />
-                </div>
-
-                <div class="input-field">
-                    <i class="fa fa-address-book"></i>
-                    <input type="text" name="Address" placeholder="Address" />
-                </div>
-
-                <div class="input-field">
-                    <i class="fas fa-city"></i>
-                    <input type="text" name="City" placeholder="City" />
-                </div>
-
-                <input type="submit" class="btn" value="Sign up" />
-                <p class="social-text">Or Sign up with social platforms</p>
-                <div class="social-media">
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </div>
-            </form>
+            
         </div>
       </div>
 
@@ -163,33 +136,33 @@
                     }
         });
         
-        $("#login").submit(function (event) {
-            // Ngăn chặn hành động mặc định của form
-            event.preventDefault();
-            const note = document.getElementById("alert-danger");
-            $.ajax({
-                url: "login1",  // Đường dẫn tương đối hoặc đầy đủ đến tài nguyên xử lý đăng nhập
-                type: "post",  // Phương thức HTTP là POST để bảo mật thông tin đăng nhập
-                data: $("#login").serialize(),  // Sử dụng serialize để lấy dữ liệu từ form
-                success: function (data) {
-                     try {
-
-                // Xử lý phản hồi từ server
-                    if (data.status === "success") {
-                        // Nếu đăng nhập thành công, thực hiện chuyển hướng hoặc các hành động khác
-                        window.location.href = "/J2EE_Project_Admin-main/home";
-                    } else {
-                        // Nếu đăng nhập không thành công, hiển thị thông báo lỗi
-                        note.innerHTML="Email hoặc password không đúng";
-                    }
-                    } catch (error) {
-            console.error("Lỗi phân tích JSON:", error);
-        }
-                },
-                error: function (xhr) {
-                    // Xử lý lỗi nếu có
-                }
-            });
-        });
+//        $("#register").submit(function (event) {
+//            // Ngăn chặn hành động mặc định của form
+//            event.preventDefault();
+//            const note = document.getElementById("alert-danger");
+//            $.ajax({
+//                url: "",  // Đường dẫn tương đối hoặc đầy đủ đến tài nguyên xử lý đăng nhập
+//                type: "post",  // Phương thức HTTP là POST để bảo mật thông tin đăng nhập
+//                data: $("#register").serialize(),  // Sử dụng serialize để lấy dữ liệu từ form
+//                success: function (data) {
+//                     try {
+//
+//                // Xử lý phản hồi từ server
+//                    if (data.status === "success") {
+//                        // Nếu đăng nhập thành công, thực hiện chuyển hướng hoặc các hành động khác
+//                        window.location.href = "/J2EE_Project_Admin-main/home";
+//                    } else {
+//                        // Nếu đăng nhập không thành công, hiển thị thông báo lỗi
+//                        note.innerHTML="Email hoặc password không đúng";
+//                    }
+//                    } catch (error) {
+//            console.error("Lỗi phân tích JSON:", error);
+//        }
+//                },
+//                error: function (xhr) {
+//                    // Xử lý lỗi nếu có
+//                }
+//            });
+//        });
     </script>
 </html>

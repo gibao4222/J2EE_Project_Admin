@@ -157,42 +157,43 @@ public class productDAL extends MyDatabaseManager{
              }
         return list;
     }
-//      public int insertproduct(product ps){
-//          int result = 0;
-//          try{
-//        String query = "Insert product (nameProduct, introduce, image,size,stuff,quantity,price,portray,id_category,color) VALUES (?,?,?,?,?,?,?,?,?,?)";
-//        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
-//        p.setString(1, ps.getNameProduct());
-//        p.setString(2, ps.getIntroduce());
-//        p.setString(3, ps.getImage());
-//        p.setString(4, ps.getSize());
-//
-//        p.setString(5, ps.getStuff());
-//
-//         p.setString(6, ps.getQuantity());
-//         p.setFloat(7, ps.getPrice());
-//         p.setString(8, ps.getPortray());
-//         p.setInt(9, ps.getId_category());
-//         p.setString(10, ps.getColor());
-//                                        
-//        result = p.executeUpdate();
-//        } catch (Exception e) {
-//             System.out.println(e);
-//             }
-//        return result;
-//    }
-//       public int deleteproduct(int id) {
-//           int result = 0 ;
-//           try{
-//        String query = "DELETE FROM product WHERE IdProduct  = ?";
-//        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
-//        p.setInt(1, id);
-//         result = p.executeUpdate();
-//         } catch (Exception e) {
-//             System.out.println(e);
-//             }
-//        return result;
-//    }
+      public int insertproduct(ProductModel ps){
+          int result = 0;
+          try{
+        String query = "Insert product (IdProduct ,nameProduct, introduce, image,size,stuff,quantity,price,portray,idCategory,color) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
+        p.setString(1, ps.getIdProduct());
+        p.setString(2, ps.getNameProduct());
+        p.setString(3, ps.getIntroduce());
+        p.setString(4, ps.getImage());
+        p.setString(5, ps.getSize());
+
+        p.setString(6, ps.getStuff());
+
+         p.setInt(7, ps.getQuantity());
+         p.setFloat(8, ps.getPrice());
+         p.setString(9, ps.getPortray());
+         p.setString(10, ps.getIdCategory());
+         p.setString(11, ps.getColor());
+                                        
+        result = p.executeUpdate();
+        } catch (Exception e) {
+             System.out.println(e);
+             }
+        return result;
+    }
+       public int deleteproduct(int id) {
+           int result = 0 ;
+           try{
+        String query = "DELETE FROM product WHERE IdProduct  = ?";
+        PreparedStatement p = productDAL.getConnection().prepareStatement(query);
+        p.setInt(1, id);
+         result = p.executeUpdate();
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return result;
+    }
        public ProductModel findProduct(String id)  {
             ProductModel ps = new ProductModel();
            try{

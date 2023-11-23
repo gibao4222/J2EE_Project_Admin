@@ -5,25 +5,23 @@
 package Controller;
 
 import DAL.AccountDAL;
-import DAL.productDAL;
+import java.util.Random;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.mail.*;
-import javax.mail.internet.*;
-import java.util.Properties;
+
 
 /**
  *
  * @author Thanhchan
  */
-@WebServlet(name = "LogoutServlet", urlPatterns = {"/logout"})
-public class LogoutServlet extends HttpServlet {
+@WebServlet({"/check-email"})
+public class forgotpassController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,14 +37,15 @@ public class LogoutServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-         String customerEmail = "voquang17@example.com"; // Lấy từ thông tin đơn hàng
-        String orderDetails = "Chi tiết đơn hàng..."; // Lấy từ thông tin đơn hàng
-        EmailSender.sendOrderConfirmation(customerEmail, orderDetails);
-             
-            HttpSession session = request.getSession();
-            session.invalidate();
-            request.getRequestDispatcher("login.jsp").forward(request, response);         
-
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet forgotpassController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet forgotpassController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -76,7 +75,29 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         try {
+    Class.forName("com.mysql.cj.jdbc.Driver");
+} catch (ClassNotFoundException e) {
+    e.printStackTrace();
+}
+       String email = request.getParameter("email");
+        AccountDAL a =  new AccountDAL();
+        int kq = a.checktk(email);
+        if(kq==0){
+           request.setAttribute("mess", "email này chưa từng được đăng kí");
+                       request.getRequestDispatcher("email.jsp").forward(request, response);
+
+        }else{
+           // Tạo một số ngẫu nhiên 6 chữ số
+        Random random = new Random();
+        int randomNumber = 100000 + random.nextInt(900000);
+           String code = String.valueOf(randomNumber);
+            System.err.println(code);
+ EmailSender emailSender = new EmailSender("vainglory791@gmail.com", "tips iasu kwwk uawg");
+emailSender.sendEmail("nq2017.tranvungocthanh251202@gmail.com", "Mã xác thực", "567656");
+
+//           response.sendRedirect("maxacthuc.jsp");
+        }
     }
 
     /**

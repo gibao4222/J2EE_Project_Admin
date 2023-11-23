@@ -141,11 +141,16 @@ button.btn.btn-primary {
                                  <a class="nav-link" href="contact.html">Contact Us</a>
                               </li>
                               <li class="nav-item d_none login_btn">
-                                 <a class="nav-link" href="#">Login</a>
+                                  <c:choose>
+                    <c:when test="${empty sessionScope.name}">
+                        <a href="login.jsp">Login</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="logout">Logout</a>
+                    </c:otherwise>
+                </c:choose>
                               </li>
-                              <li class="nav-item d_none">
-                                 <a class="nav-link" href="#">Register</a>
-                              </li>
+                             
                               <li class="nav-item d_none sea_icon">
                                  <a class="nav-link" href="#"><i class="fa fa-shopping-bag" aria-hidden="true"></i><i class="fa fa-search" aria-hidden="true"></i></a>
                               </li>
@@ -245,6 +250,12 @@ button.btn.btn-primary {
                </div>
             </div>
          </div>
+          <%
+        String name = (String) session.getAttribute("name");
+    %>
+
+    <%-- Hiển thị dữ liệu --%>
+    <p>Welcome, <%= name %>!</p>
            <div class="container mt-4">
         <h2>lọc sản phẩm</h2>
         

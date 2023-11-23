@@ -4,11 +4,14 @@
  */
 package Controller;
 
+import DAL.CustomerDAL;
+import DAL.checkLogin;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.System.out;
@@ -16,13 +19,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.mail.Session;
+import model.CustomerModel;
 
 
 /**
  *
  * @author Thanhchan
  */
-@WebServlet(name = "loginn", urlPatterns = {"/login"})
+@WebServlet(name = "loginn", urlPatterns = {"/login1"})
 public class LoginServlet extends HttpServlet {
     String newSQL;
     String kq;
@@ -48,57 +53,52 @@ public class LoginServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet loginn at " + request.getContextPath() + "</h1>");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
            
-            out.println(email);
-           out.println(password); 
-            newSQL = "SELECT account.password, customer.email FROM account INNER JOIN customer ON account.idPerson = customer.idCustomer WHERE account.password=" + password +" AND customer.email='"+email+"'";
-;
-            
-            String conStr = "jdbc:mysql://localhost:3306/csdl_j2ee";
-            Statement stmt = null;
-            ResultSet rs = null;    
-            try{
-                Connection con = null;
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection(conStr,"root","");
-                stmt = con.createStatement();
-                rs = stmt.executeQuery(newSQL);
-                String name="";
-                if(rs.next()) {
-                    name = rs.getString("email");
-                    kq="true";
-                   
-                    CookieUtils.add("email", email, response); 
-                    CookieUtils.add("password", password, response); 
-                                            request.setAttribute("message", "Đăng nhập thành công"); 
-                                     String emaill = CookieUtils.get("email", request); 
-                String passwordd = CookieUtils.get("password", request); 
-                    request.setAttribute("emaill", emaill); 
-                    request.setAttribute("passwordd", passwordd);
-                out.print("hi"+" "+emaill);
-                                request.getRequestDispatcher("index.jsp").forward(request, response);         
-
+//            newSQL = "SELECT email,password form account where email = "+email+"and password="+password+"";
+//;
+//            
+//            String conStr = "jdbc:mysql://localhost:3306/csdl_j2ee";
+//            Statement stmt = null;
+//            ResultSet rs = null;    
+//            try{
+//                Connection con = null;
+//                Class.forName("com.mysql.jdbc.Driver");
+//                con = DriverManager.getConnection(conStr,"root","");
+//                stmt = con.createStatement();
+//                rs = stmt.executeQuery(newSQL);
+//                String name="";
+//                if(rs.next()) {
+//                    name = rs.getString("email");
+//                    kq="true";
+//                   System.out.print(kq);
+////                    CookieUtils.add("email", email, response); 
+////                    CookieUtils.add("password", password, response); 
+////                                            request.setAttribute("message", "Đăng nhập thành công"); 
+////                                     String emaill = CookieUtils.get("email", request); 
+////                String passwordd = CookieUtils.get("password", request); 
+////                    request.setAttribute("emaill", emaill); 
+////                    request.setAttribute("passwordd", passwordd);
+////                out.print("hi"+" "+emaill);
+////            response.sendRedirect("home");
+////                request.getRequestDispatcher("login.jsp").forward(request, response); 
+//
+//
+//            }else{
+//                kq = "false";
+//                request.setAttribute("message", "Tài khoản hoặc mật khẩu không đúng"); 
 //                request.getRequestDispatcher("login.jsp").forward(request, response); 
-
-
-            }else{
-                kq = "false";
-                request.setAttribute("message", "Tài khoản hoặc mật khẩu không đúng"); 
-                request.getRequestDispatcher("login.jsp").forward(request, response); 
-
-
-            }
-               
+//
+//
+//            }
+//               
 
                 
-            }catch(Exception e){
-                out.println("Error:"+e);
-            }
-            
-            out.println("</body>");
-            out.println("</html>");
+//            }catch(Exception e){
+//                out.println("Error:"+e);
+//            }
+//            
+//            out.println("</body>");
+//            out.println("</html>");
         }
     }
 
@@ -128,8 +128,29 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+         HttpSession session = request.getSession();
+        String email = request.getParameter("email");
+            String password = request.getParameter("password");
+           
+            out.println(email);
+           out.println(password); 
+            checkLogin c = new checkLogin();
+        CustomerModel cus = c.check(email, password);
+        if(cus.getFullName()==null){
+            request.setAttribute("message", "Tài khoản hoặc mật khẩu không đúng"); 
+             response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("{\"status\": \"fail\"}");
+               
+        
+        }else{
+          session.setAttribute("id", cus.getIdCustomer());
+           session.setAttribute("name", cus.getFullName());
+           
+            response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("{\"status\": \"success\"}");
+    }}
 
     /**
      * Returns a short description of the servlet.
