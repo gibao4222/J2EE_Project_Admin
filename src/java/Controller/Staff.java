@@ -25,7 +25,7 @@ import java.util.ArrayList;
  *
  * @author Admin
  */
-@WebServlet({"/staff" ,"/add-Staff","/delete-Staff","/update-Staff","/loadPassword"})
+@WebServlet({"/staff" ,"/add-Staff","/delete-Staff","/update-Staff","/loadPassword","/checkAccount"})
 public class Staff extends HttpServlet {
    
     /** 
@@ -99,7 +99,9 @@ public class Staff extends HttpServlet {
                String accountNumber = String.valueOf(request.getParameter("accountNumber"));
                String position = String.valueOf(request.getParameter("position"));
                StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber,position);
-               if(staffDAL.addStaff(staffModel)!=0){
+               
+               if( staffDAL.checktk(email)==0){
+                   if(staffDAL.addStaff(staffModel)!=0){
 //                   add-Account 
                 String idACcount = new CreateID("TK").create();               
                 String password = String.valueOf(request.getParameter("password"));
@@ -113,6 +115,8 @@ public class Staff extends HttpServlet {
                 AccountModel accountModel= new AccountModel(idACcount, idStaff, email, password, status);
                 accountDAL.addAccount(accountModel);
                }
+               }
+               
 //               
                 
                 
@@ -137,6 +141,7 @@ public class Staff extends HttpServlet {
                 StaffModel staffModel = new StaffModel(idStaff, email, fullName, address, phoneNumber, bankAccount, accountNumber,position);
                
                if(staffDAL.updateStaff(staffModel)!=0){
+
                    String idACcount = accountDAL.searchAccount(idStaff).getIdAccount();
                     String password = String.valueOf(request.getParameter("password"));
                     String status;
@@ -151,13 +156,22 @@ public class Staff extends HttpServlet {
                }}
                else if(url.contains("loadPassword")){
                    String idStaff = String.valueOf(request.getParameter("idStaff"));
-                   System.out.println(idStaff);
+
                    String password = accountDAL.searchAccount(idStaff).getPassword();
-                   System.out.println(password);
+
                    response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
+                    response.setCharacterEncoding("UTF-8");
                    response.getWriter().write("{\"pass\": \""+password+"\"}");
                }
+               else if(url.contains("checkAccount")){
+
+                    String email = String.valueOf(request.getParameter("email"));
+                    
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                   int rs = staffDAL.checktk(email);
+                    response.getWriter().write("{\"result\": \""+rs+"\"}");
+                }
     
     }
     /** 

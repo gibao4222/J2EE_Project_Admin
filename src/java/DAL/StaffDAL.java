@@ -114,6 +114,7 @@ public class StaffDAL extends MyDatabaseManager{
                         st.setNumberPhone(rs.getString("numberPhone"));
                         st.setBankAccount(rs.getString("bankAccount"));
                         st.setAccountNumber(rs.getString("accountNumber"));
+                        st.setPosition(rs.getString("position"));
                     }
                 }
                 else{
@@ -123,6 +124,21 @@ public class StaffDAL extends MyDatabaseManager{
             }
             return st;
         }
+        
+        public int checktk(String email)  {
+           int kq=0;
+           try{
+        String query = "SELECT * FROM account WHERE email  LIKE '%"+email+"%'";
+       
+        ResultSet rs = AccountDAL.doReadQuery(query);
+          if (rs.next()) {
+              kq=1;
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return kq;
+    }
         public static void main(String[] args) {
         StaffDAL stDAL = new StaffDAL();
         StaffModel st = stDAL.searchStaff("ST001");

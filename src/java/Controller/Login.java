@@ -146,13 +146,11 @@ public class Login extends HttpServlet {
                 idStaff = resultSet.getString("idStaff");
                 StaffDAL staffDAL = new StaffDAL();
                 StaffModel st = staffDAL.searchStaff(idStaff);
-                System.out.println(st.getFullName());
                 HttpSession session = request.getSession(true);
                 int oneDayInSeconds = 3600;
                 session.setMaxInactiveInterval(oneDayInSeconds);
                 session.setAttribute("email", email);
                 session.setAttribute("staff",st);
-                
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("{\"status\": \"success\"}");

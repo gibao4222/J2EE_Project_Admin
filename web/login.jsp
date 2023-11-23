@@ -174,7 +174,7 @@
                 // Xử lý phản hồi từ server
                     if (data.status === "success") {
                         // Nếu đăng nhập thành công, thực hiện chuyển hướng hoặc các hành động khác
-                        window.location.href = "/J2EE_Project_Admin/";
+                        window.location.href = "/J2EE_Project_Admin/home";
                     } else {
                         // Nếu đăng nhập không thành công, hiển thị thông báo lỗi
                         note.innerHTML="Email hoặc password không đúng";

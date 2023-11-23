@@ -12,18 +12,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.ResultSet;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name="LoginServlet", urlPatterns={"/Login"})
-public class LoginServlet extends HttpServlet{
-   Connect connect = new Connect();
-   public LoginServlet(){
-       connect.openConnection();
-   }
+@WebServlet(name="HomeServlet", urlPatterns={"/home"})
+public class HomeServlet extends HttpServlet {
+   
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -36,36 +32,15 @@ public class LoginServlet extends HttpServlet{
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-//            String tentbao = request.getParameter("txtThuebao");
-//            ResultSet rs=null;
-//            if(tentbao != null && tentbao.length()!=0)
-//                rs = read(tentbao);
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");  
+            out.println("<title>Servlet HomeServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-//            out.println("<h1>Kết quả tra điện thoại theo yêu cầu của bạn :</h1>");
-//            out.println("<table border=1 cellPadding=1 cellSpacing=1>");
-//            try{
-//            out.println("<tr><th>Số thứ tự</th><th>Tên thuê bao</th><th>Số điện thoại</th><th>Địa chỉ</th></tr>\n");
-//                if(rs!=null){
-//                    for(int i=1;rs.next();){
-//                        out.println("<tr>"+"<td>"+i+"</td>"+"<td>"+rs.getString(2)+"</td>"
-//                        +"<td>"+rs.getString(3)+"</td>"
-//                        +"<td>"+rs.getString(4)+"</td> </tr>\n");
-//                    }
-//                    out.println("</table>");
-//                    rs.close();
-//                    connect.stmt.close();
-//                    connect.con.close();
-//                }
-//            out.println("</body>");
-//            out.println("</html>");
-//            }catch(Exception e){
-//                out.println("Error:"+e);
-//            }
+            out.println("<h1>Servlet HomeServlet at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     } 
 
@@ -80,7 +55,7 @@ public class LoginServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     } 
 
     /** 
@@ -93,7 +68,7 @@ public class LoginServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /** 
@@ -104,9 +79,5 @@ public class LoginServlet extends HttpServlet{
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-//    public ResultSet read(String tentbao){
-//        String newSQL = "SELECT * FROM customer"+ " WHERE TenThueBao like '%" + tentbao + "%'";
-//        ResultSet rs = connect.doReadQuery(newSQL);
-//        return rs;
-//    }
+
 }

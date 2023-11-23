@@ -97,12 +97,16 @@ public class Customer extends HttpServlet {
             String address = String.valueOf(request.getParameter("address"));
             String phoneNumber = String.valueOf(request.getParameter("numberPhone"));
             CustomerModel cusModel = new CustomerModel(idCustomer, email, address, phoneNumber, fullName);
-            cusDAL.addCustomer(cusModel);
+           
             String idACcount = new CreateID("TK").create();
             String password = String.valueOf(request.getParameter("password"));
             String status = "2";
-            AccountModel accountModel = new AccountModel(idACcount, idCustomer, email, password, status);
+            if( accountDAL.checktk(email)==0){
+                if ( cusDAL.addCustomer(cusModel)!=0) {
+                     AccountModel accountModel = new AccountModel(idACcount, idCustomer, email, password, status);
             accountDAL.addAccount(accountModel);
+                }           
+            }
             jsonResponse.addProperty("message", "Thêm  thành công rồi thk lòn");
                         response.sendRedirect("Customer");
 

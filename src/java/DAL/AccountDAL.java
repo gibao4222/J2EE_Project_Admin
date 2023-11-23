@@ -85,14 +85,17 @@ public class AccountDAL extends MyDatabaseManager{
         int rs = 0;
         try {
             String query = "UPDATE account  "
-                    + "SET  idPerson =? , email =? , password =? , status = ? "
-                    + "WHERE account.idAccount = ?;";
+
+                    + "SET idAccount  = ?,idPerson =? , email =? , password =? , status = ? "
+                    + "WHERE account.idAccount = ?";
               PreparedStatement p = AccountDAL.getConnection().prepareStatement(query);
-                p.setString(1, account.getIdPerson());
-                p.setString(2, account.getEmail());
-                p.setString(3, account.getPassword());
-                p.setString(4,account.getStatus());
-                  p.setString(5, account.getIdAccount());
+               p.setString(1, account.getIdAccount());
+                p.setString(2, account.getIdPerson());
+                p.setString(3, account.getEmail());
+                p.setString(4, account.getPassword());
+                p.setString(5,account.getStatus());
+                p.setString(6, account.getIdAccount());
+
             rs = p.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,6 +126,20 @@ public class AccountDAL extends MyDatabaseManager{
             e.printStackTrace();
         }
         return rs;
+    }
+         public int checktk(String email)  {
+           int kq=0;
+           try{
+        String query = "SELECT * FROM account WHERE email  LIKE '%"+email+"%'";
+       
+        ResultSet rs = AccountDAL.doReadQuery(query);
+          if (rs.next()) {
+              kq=1;
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return kq;
     }
          public static void main(String[] args) {
         AccountDAL st = new AccountDAL();
