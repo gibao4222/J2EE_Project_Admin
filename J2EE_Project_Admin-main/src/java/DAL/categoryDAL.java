@@ -31,7 +31,7 @@ public class categoryDAL extends MyDatabaseManager {
         if (rs != null) {
             while (rs.next()) {
                 category s = new category();
-                s.setIdCategory(rs.getInt("idCategory"));
+                s.setIdCategory(rs.getString("idCategory"));
                 s.setNameCategory(rs.getString("nameCategory"));
                     
                 list.add(s);
@@ -45,22 +45,23 @@ public class categoryDAL extends MyDatabaseManager {
       public int insertcategory(category ps){
           int result = 0;
           try{
-        String query = "Insert category (nameCategory) VALUES (?)";
+        String query = "Insert category (idCategory ,nameCategory) VALUES (?,?)";
         PreparedStatement p = categoryDAL.getConnection().prepareStatement(query);
-        p.setString(1, ps.getNameCategory());
-       
+        p.setString(1, ps.getIdCategory());
+               p.setString(2, ps.getNameCategory());
+
         result = p.executeUpdate();
         } catch (Exception e) {
              System.out.println(e);
              }
         return result;
     }
-       public int deletecategory(int id) {
+       public int deletecategory(String id) {
            int result = 0 ;
            try{
         String query = "DELETE FROM category WHERE idCategory   = ?";
         PreparedStatement p = categoryDAL.getConnection().prepareStatement(query);
-        p.setInt(1, id);
+        p.setString(1, id);
          result = p.executeUpdate();
          } catch (Exception e) {
              System.out.println(e);
@@ -75,7 +76,7 @@ public class categoryDAL extends MyDatabaseManager {
         ResultSet rs = p.executeQuery();
         if (rs != null) {
             while (rs.next()) {
-                ps.setIdCategory(rs.getInt("idCategory"));
+                ps.setIdCategory(rs.getString("idCategory"));
                 ps.setNameCategory(rs.getString("nameCategory"));
                
             }
@@ -87,7 +88,7 @@ public class categoryDAL extends MyDatabaseManager {
         return ps;
         
     }
-       public int updatecategory(category ps, int id) {
+       public int updatecategory(category ps, String id) {
            int result = 0 ;
            try{
         String query = "Update category SET nameCategory = ?"
@@ -108,16 +109,13 @@ public class categoryDAL extends MyDatabaseManager {
         categoryDAL p = new categoryDAL();
        
          List<category> list  =  p.readcategory();
-         System.out.println(list.get(0).getIdCategory());
-         category ca = new category();
-//         ca.setNameCategory("aaaaaa");
-//         p.insertcategory(ca);
-
-    ca.setIdCategory(1);
-    category ps = new category();
-    p.findcategory(1);
-    ps.setNameCategory("cc");
-    p.updatecategory(ps, 4);
+         System.out.println(list.get(0).getNameCategory());
+        category cate = new category();
+        CreateID cre = new CreateID("CA");
+        cate.setIdCategory(cre.create());
+        cate.setNameCategory("mooomo");
+        p.deletecategory( "CA012");
+        
           
 
           

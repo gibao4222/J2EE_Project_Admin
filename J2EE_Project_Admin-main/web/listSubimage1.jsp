@@ -37,7 +37,7 @@
         
       </div>
      
-        <form action="add-subimage" id="Productform">
+        <form action="add-subimage" id="Productform" method="post">
 
         <div class="modal-body">
             <input type="hidden" name="idSubImage" id="idSubImage">
@@ -163,11 +163,18 @@
                         document.getElementById("idSubImage").value = row.cells[0].innerText;
 
                         document.getElementById("idProduct").value = row.cells[1].innerText;
-                         document.getElementById("subImage").value = row.cells[2].innerText;
+                         document.getElementById("subImage").value = row.cells[1].innerText;
 
-                        document.getElementById("note").value = row.cells[3    ].innerText;
+                        document.getElementById("note").value = row.cells[3].innerText;
+                          var originalSelect = document.getElementById('idProduct');
+                         var selectedValue =row.cells[1].innerText; // Lấy giá trị của tùy chọn được chọn
 
-                        
+            // Duyệt qua các tùy chọn trong thẻ <select> trong biểu mẫu và đặt thuộc tính "selected" cho tùy chọn tương ứng
+            for (var i = 0; i < originalSelect.options.length; i++) {
+                if (originalSelect.options[i].value === selectedValue) {
+                    originalSelect.options[i].selected = true;
+                }
+            }
 //                        document.getElementById("nameGroup").value = row.cells[1].innerText;
 //                        document.getElementById("portray").value = row.cells[2].innerText;
                         

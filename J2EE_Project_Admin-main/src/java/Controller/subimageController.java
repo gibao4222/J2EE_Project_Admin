@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import DAL.CreateID;
 import model.category;
 import DAL.categoryDAL;
 import DAL.productDAL;
@@ -19,6 +20,7 @@ import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.util.List;
 import model.ProductModel;
+import model.subimageModel;
 
 /**
  *
@@ -78,15 +80,36 @@ public class subimageController extends HttpServlet {
 //        
 //        request.getRequestDispatcher("listCategory.jsp").forward(request, response);
         
+}else {
+  subimageDAL c = new subimageDAL();
+             String id =request.getParameter("id");
+             c.deletesubimage(id);
+               response.sendRedirect("show-subimage");
 }
-else if(uri.contains("add-subimage")){ // [Tính chu vi].Click
-subimage cate = new subimage();
+
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String uri = request.getRequestURI();
+     if(uri.contains("add-subimage")){ // [Tính chu vi].Click
+subimageModel cate = new subimageModel();
 subimageDAL c = new subimageDAL();
 String idProduct = request.getParameter("idProduct");
 String subImage = request.getParameter("subImage");
 
 String note = request.getParameter("note");
-
+CreateID cre = new CreateID("SB");
+cate.setIdSubImage(cre.create());
 cate.setIdProduct(idProduct);
 cate.setSubImage(subImage);
 cate.setNote(note);
@@ -105,13 +128,13 @@ List<subimage> sub1 = s.findsubByidpro(String.valueOf(id));
 request.setAttribute("subupdate", sub1);      
 request.getRequestDispatcher("updateSubimage.jsp").forward(request, response);    
 }else if(uri.contains("save-subimage")){ // [Tính chu vi].Click
- int id =Integer.parseInt(request.getParameter("idSubImage"));
+ String id =request.getParameter("idSubImage");
          String idProduct = request.getParameter("idProduct");
                   String subImage = request.getParameter("subImage");
 
                            String note = request.getParameter("note");
 
-           subimage sub = new subimage();
+           subimageModel sub = new subimageModel();
             sub.setIdProduct(idProduct);
                         sub.setSubImage(subImage);
 
@@ -125,26 +148,7 @@ request.getRequestDispatcher("updateSubimage.jsp").forward(request, response);
                      
 
 response.sendRedirect("show-subimage");
-}else {
-  subimageDAL c = new subimageDAL();
-             int id = Integer.parseInt(request.getParameter("id"));
-             c.deletesubimage(id);
-               response.sendRedirect("show-subimage");
 }
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**

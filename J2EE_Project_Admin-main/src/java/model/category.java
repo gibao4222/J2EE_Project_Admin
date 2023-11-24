@@ -11,23 +11,14 @@ import DAL.*;
  * @author Thanhchan
  */
 public class category {
-    int idCategory;
-    
-    String nameCategory;
+       
+    String nameCategory,idCategory ;
 
     public category() {
     }
 
-    public category(int idCategory, String nameCategory) {
-        this.idCategory = idCategory;
+    public category(String nameCategory, String idCategory) {
         this.nameCategory = nameCategory;
-    }
-
-    public int getIdCategory() {
-        return idCategory;
-    }
-
-    public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
     }
 
@@ -38,5 +29,14 @@ public class category {
     public void setNameCategory(String nameCategory) {
         this.nameCategory = nameCategory;
     }
+
+    public String getIdCategory() {
+        return idCategory;
+    }
+
+    public void setIdCategory(String idCategory) {
+        this.idCategory = idCategory;
+    }
+
     
 }

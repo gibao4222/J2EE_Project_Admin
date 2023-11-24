@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import DAL.CreateID;
 import DAL.OrderDAL;
 import model.category;
 import DAL.categoryDAL;
@@ -77,41 +78,6 @@ public class categoryController extends HttpServlet {
 //        
 //        request.getRequestDispatcher("listCategory.jsp").forward(request, response);
         
-}
-else if(uri.contains("add-category")){ // [Tính chu vi].Click
-category cate = new category();
-categoryDAL c = new categoryDAL();
-String nameCategory = request.getParameter("nameCategory");
-cate.setNameCategory(nameCategory);
-c.insertcategory(cate);
-response.sendRedirect("show-category");
-}else if(uri.contains("edit-category")){ // [Tính chu vi].Click
- 
-int id =   Integer.parseInt( request.getParameter("id"));
-        
-categoryDAL p = new categoryDAL();
-category cate = new category();
-cate = p.findcategory(id);
-request.setAttribute("cateupdate", cate);      
-request.getRequestDispatcher("updateCategory.jsp").forward(request, response);    
-}else if(uri.contains("save-category")){ // [Tính chu vi].Click
- int id =Integer.parseInt(request.getParameter("idCategory"));
-         String nameCategory = request.getParameter("nameCategory");
-            category cate = new category();
-            cate.setNameCategory(nameCategory);
-            
-           
-            categoryDAL c = new categoryDAL();
-            c.updatecategory(cate,id);
-           request.setAttribute("message", "update thành công");
-                     
-
-response.sendRedirect("show-category");
-}else  if(uri.contains("delete-category")){
-  categoryDAL c = new categoryDAL();
-             int id = Integer.parseInt(request.getParameter("id"));
-             c.deletecategory(id);
-               response.sendRedirect("show-category");
 }else  if(uri.contains("order-customer")){
      OrderDAL or = new OrderDAL();
          List<Order> orr = or.findOrder("3");
@@ -131,8 +97,44 @@ response.sendRedirect("show-category");
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+         String uri = request.getRequestURI();
+ if(uri.contains("add-category")){ // [Tính chu vi].Click
+category cate = new category();
+categoryDAL c = new categoryDAL();
+String nameCategory = request.getParameter("nameCategory");
+CreateID cre = new CreateID("CA");
+cate.setIdCategory(cre.create());
+cate.setNameCategory(nameCategory);
+c.insertcategory(cate);
+response.sendRedirect("show-category");
+}else if(uri.contains("edit-category")){ // [Tính chu vi].Click
+ 
+int id =   Integer.parseInt( request.getParameter("id"));
+        
+categoryDAL p = new categoryDAL();
+category cate = new category();
+cate = p.findcategory(id);
+request.setAttribute("cateupdate", cate);      
+request.getRequestDispatcher("updateCategory.jsp").forward(request, response);    
+}else if(uri.contains("save-category")){ // [Tính chu vi].Click
+ String id =request.getParameter("idCategory");
+         String nameCategory = request.getParameter("nameCategory");
+            category cate = new category();
+            cate.setNameCategory(nameCategory);
+            
+           
+            categoryDAL c = new categoryDAL();
+            c.updatecategory(cate,id);
+           request.setAttribute("message", "update thành công");
+                     
+
+response.sendRedirect("show-category");
+}else  if(uri.contains("delete-category")){
+  categoryDAL c = new categoryDAL();
+             String id = request.getParameter("id");
+             c.deletecategory(id);
+               response.sendRedirect("show-category");
+}    }
 
     /**
      * Returns a short description of the servlet.

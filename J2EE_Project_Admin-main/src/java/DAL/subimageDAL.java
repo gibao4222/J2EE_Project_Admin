@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import model.subimageModel;
 
 /**
  *
@@ -29,8 +30,8 @@ public class subimageDAL extends MyDatabaseManager{
 
         if (rs != null) {
             while (rs.next()) {
-                subimage s = new subimage();
-                s.setIdSubImage(rs.getInt("idSubImage"));
+                subimageModel s = new subimageModel();
+                s.setIdSubImage(rs.getString("idSubImage"));
                 s.setIdProduct(rs.getString(    "idProduct"));
 
                 s.setSubImage(rs.getString("subImage"));
@@ -56,8 +57,8 @@ public class subimageDAL extends MyDatabaseManager{
 
         if (rs != null) {
             while (rs.next()) {
-                subimage s = new subimage();
-                s.setIdSubImage(rs.getInt("idSubImage"));
+                subimageModel s = new subimageModel();
+                s.setIdSubImage(rs.getString("idSubImage"));
                 s.setIdProduct(rs.getString(    "idProduct"));
 
                 s.setSubImage(rs.getString("subImage"));
@@ -72,27 +73,28 @@ public class subimageDAL extends MyDatabaseManager{
              }
         return list;
     }
-      public int insertsubimage(subimage ps){
+      public int insertsubimage(subimageModel ps){
           int result = 0;
           try{
-        String query = "Insert subimage (idProduct,subImage,note) VALUES (?,?,?)";
+        String query = "Insert subimage (idSubImage,idProduct,subImage,note) VALUES (?,?,?,?)";
         PreparedStatement p = subimageDAL.getConnection().prepareStatement(query);
-        p.setString(2, ps.getSubImage());
-                p.setString(3, ps.getNote());
+        p.setString(2, ps.getIdProduct());
+                p.setString(3, ps.getSubImage());
+                                p.setString(4, ps.getNote());
 
-                p.setString(1,ps.getIdProduct());
+                p.setString(1,ps.getIdSubImage());
         result = p.executeUpdate();
         } catch (Exception e) {
              System.out.println(e);
              }
         return result;
     }
-       public int deletesubimage(int id) {
+       public int deletesubimage(String id) {
            int result = 0 ;
            try{
         String query = "DELETE FROM subimage WHERE idSubImage    = ?";
         PreparedStatement p = subimageDAL.getConnection().prepareStatement(query);
-        p.setInt(1, id);
+        p.setString(1, id);
          result = p.executeUpdate();
          } catch (Exception e) {
              System.out.println(e);
@@ -106,9 +108,9 @@ public class subimageDAL extends MyDatabaseManager{
         PreparedStatement p = subimageDAL.getConnection().prepareStatement(query);
         ResultSet rs = p.executeQuery();
         if (rs != null) {
-             subimage ps = new subimage();
+             subimageModel ps = new subimageModel();
             while (rs.next()) {
-                             ps.setIdSubImage(rs.getInt("idSubImage"));
+                             ps.setIdSubImage(rs.getString("idSubImage"));
 
                 ps.setIdProduct(rs.getString("idProduct"));
                 ps.setSubImage(rs.getString("subImage"));
@@ -124,7 +126,7 @@ public class subimageDAL extends MyDatabaseManager{
         return list;
         
     }
-       public int updatesubimage(subimage ps, int id) {
+       public int updatesubimage(subimageModel ps, String id) {
            int result = 0 ;
            try{
         String query = "Update subimage SET idProduct = ?, subImage=? , note=?"

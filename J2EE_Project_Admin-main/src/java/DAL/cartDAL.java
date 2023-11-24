@@ -82,7 +82,7 @@ public class cartDAL extends MyDatabaseManager{
         ResultSet rs = p.executeQuery();
         if (rs != null) {
             while (rs.next()) {
-                ps.setIdCategory(rs.getInt("idCategory"));
+                ps.setIdCategory(rs.getString("idCategory"));
                 ps.setNameCategory(rs.getString("nameCategory"));
                
             }
