@@ -85,15 +85,15 @@
                                 <div class="card-body">
                                     <div class="table-responsive table-Cover">
                                         <table id="datacheckProduct" class="table table-bordered table-ScrollBar"  width="100%" cellspacing="0">
-                                            
-                                                <tr>
-                                                    <th>IdProduct</th>
-                                                    <th>NameProduct</th>
-                                                    <th>Price</th>
-                                                    <th>Quantity</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                                                                      
+
+                                            <tr>
+                                                <th>IdProduct</th>
+                                                <th>NameProduct</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                            </tr>
+
                                         </table>
                                     </div>
                                 </div>
@@ -186,66 +186,70 @@
     document.getElementById('dataProduct').addEventListener('click', function (event) {
         if (event.target.tagName === 'A') {
             var row = event.target.parentElement.parentElement;
-        // Lấy giá trị từ các ô trong hàng
-        var idProduct = row.cells[0].textContent.trim();
-        var nameProduct = row.cells[1].textContent.trim();
-        var price = parseFloat(row.cells[2].textContent.trim());
-        var datacheckProduct = document.getElementById('datacheckProduct');
-        var newRow = datacheckProduct.insertRow();
-        var existingRow = null;
-        Array.from(datacheckProduct.rows).forEach(function (checkRow) {
-            if (checkRow.cells.length >= 1) {
-                var checkIdProduct = checkRow.cells[0].textContent.trim();
-                if (checkIdProduct === idProduct) {
-                    existingRow = checkRow;
-                }
-            }
-        });
-        if (existingRow) {
-            var quantityInput = existingRow.cells[3].querySelector('input[type="number"]');
-            quantityInput.value = parseInt(quantityInput.value) + 1;
-            var quantity = parseInt(quantityInput.value);
-            var totalCell = existingRow.cells[4];
-            var total = price * quantity;
-            totalCell.textContent = total;
-        } else {
+            // Lấy giá trị từ các ô trong hàng
+            var idProduct = row.cells[0].textContent.trim();
+            var nameProduct = row.cells[1].textContent.trim();
+            var price = parseFloat(row.cells[2].textContent.trim());
+            var datacheckProduct = document.getElementById('datacheckProduct');
             var newRow = datacheckProduct.insertRow();
-            var idCell = newRow.insertCell(0);
-            var nameCell = newRow.insertCell(1);
-            var priceCell = newRow.insertCell(2);
-            var quantityCell = newRow.insertCell(3);
-            var totalCell = newRow.insertCell(4);
-            var deleteCell = newRow.insertCell(5);
-            idCell.textContent = idProduct;
-            nameCell.textContent = nameProduct;
-            priceCell.textContent = price;
-            var quantityInput = document.createElement('input');
-            quantityInput.type = 'number';
-            quantityInput.id = 'quantity_' + idProduct;
-            quantityInput.value = 1;
-            quantityInput.min = 1;
-            quantityCell.appendChild(quantityInput);
-            quantityInput.addEventListener('change', function () {
+            var existingRow = null;
+            Array.from(datacheckProduct.rows).forEach(function (checkRow) {
+                if (checkRow.cells.length >= 1) {
+                    var checkIdProduct = checkRow.cells[0].textContent.trim();
+                    if (checkIdProduct === idProduct) {
+                        existingRow = checkRow;
+                    }
+                }
+            });
+            if (existingRow) {
+                var quantityInput = existingRow.cells[3].querySelector('input[type="number"]');
+                quantityInput.value = parseInt(quantityInput.value) + 1;
                 var quantity = parseInt(quantityInput.value);
+                var totalCell = existingRow.cells[4];
                 var total = price * quantity;
                 totalCell.textContent = total;
-                updateTotal(); // Cập nhật tổng khi có thay đổi số lượng sản phẩm
-            });
+            } else {
+                var newRow = datacheckProduct.insertRow();
+                var idCell = newRow.insertCell(0);
+                var nameCell = newRow.insertCell(1);
+                var priceCell = newRow.insertCell(2);
+                var quantityCell = newRow.insertCell(3);
+                var totalCell = newRow.insertCell(4);
+                var deleteCell = newRow.insertCell(5);
+                idCell.textContent = idProduct;
+                nameCell.textContent = nameProduct;
+                priceCell.textContent = price;
+                var quantityInput = document.createElement('input');
+                quantityInput.type = 'number';
+                quantityInput.id = 'quantity_' + idProduct;
+                quantityInput.value = 1;
+                quantityInput.min = 1;
+                quantityCell.appendChild(quantityInput);
+                quantityInput.addEventListener('change', function () {
+                    var quantity = parseInt(quantityInput.value);
+                    if (isNaN(quantity) || quantity <= 0) {
+                        quantityInput.value = 1; // Nếu số âm, đặt lại giá trị là 1 hoặc có thể xử lý khác
+                        quantity = 1; // Đặt lại biến quantity thành 1 hoặc giá trị mặc định
+                    }
+                    var total = price * quantity;
+                    totalCell.textContent = total;
+                    updateTotal(); // Cập nhật tổng khi có thay đổi số lượng sản phẩm
+                });
 
-            var deleteButton = document.createElement('a');
-            deleteButton.textContent = 'Xóa';
-            deleteButton.style.cursor = 'pointer';
-            deleteButton.addEventListener('click', function () {
-                deleteRow(newRow);
+                var deleteButton = document.createElement('a');
+                deleteButton.textContent = 'Xóa';
+                deleteButton.style.cursor = 'pointer';
+                deleteButton.addEventListener('click', function () {
+                    deleteRow(newRow);
 //                    updateTotal(); // Cập nhật tổng khi xóa sản phẩm
-            });
-            deleteCell.appendChild(deleteButton);
+                });
+                deleteCell.appendChild(deleteButton);
 
-            var initialQuantity = parseInt(quantityInput.value);
-            var initialTotal = price * initialQuantity;
-            totalCell.textContent = initialTotal;
-        }
-        updateTotal();
+                var initialQuantity = parseInt(quantityInput.value);
+                var initialTotal = price * initialQuantity;
+                totalCell.textContent = initialTotal;
+            }
+            updateTotal();
         }
     });
 
@@ -408,6 +412,10 @@
                 var quantityInput = newRow.querySelector('input[type="number"]');
                 quantityInput.addEventListener('change', function () {
                     var quantity = parseInt(quantityInput.value);
+                    if (isNaN(quantity) || quantity <= 0) {
+                        quantityInput.value = 1; // Nếu số âm, đặt lại giá trị là 1 hoặc có thể xử lý khác
+                        quantity = 1; // Đặt lại biến quantity thành 1 hoặc giá trị mặc định
+                    }
                     var total = existingProduct.price * quantity;
                     newRow.cells[4].textContent = total;
                     updateTotal();
