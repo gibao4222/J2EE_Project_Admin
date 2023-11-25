@@ -6,6 +6,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="component/navbar.jsp" %>
+<%@ page import="Model.CustomerModel" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.*" %>
 <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -120,6 +123,7 @@
                                   
                                     
                                   </tr>-->
+
                     </tbody>
                 </table>
 
@@ -251,6 +255,66 @@
         });
 
     });
+
+    function isDescendant(parent, child) {
+        let node = child.parentNode;
+
+        while (node !== null) {
+            if (node === parent) {
+                return true;
+            }
+            node = node.parentNode;
+        }
+
+        return false;
+    }
+//check email đã đăng ký chưa 
+    $("#CustomerForm").submit(function (event) {
+        // Lấy giá trị của action từ form
+        const formAction = $(this).attr('action');
+        // Kiểm tra xem action có phải là "add-Staff" không
+        if (formAction === "add-Customer") {
+            event.preventDefault();
+            const note = document.getElementById("alert-danger");
+            const note1 = document.getElementById("alert-success");
+            $.ajax({
+                url: "/J2EE_Project_Admin/checkAccountCus", // Đường dẫn tương đối hoặc đầy đủ đến tài nguyên xử lý đăng nhập
+                type: "post", // Phương thức HTTP là POST để bảo mật thông tin đăng nhập
+                data: $("#CustomerForm").serialize(), // Sử dụng serialize để lấy dữ liệu từ form
+                success: function (data) {
+                    try {
+
+                        // Xử lý phản hồi từ server
+                        if (data.result === "1") {
+                            // Nếu đăng nhập thành công, thực hiện chuyển hướng hoặc các hành động khác
+                            note1.style.display = 'none';
+                            note.style.display = 'block';
+                            note.innerHTML = "Email đã được đăng ký";
+                        } else {
+                            // Nếu đăng nhập không thành công, hiển thị thông báo lỗi
+                            $.ajax({
+                                url: "/J2EE_Project_Admin/add-Customer", // Đường dẫn tương đối hoặc đầy đủ đến tài nguyên xử lý đăng nhập
+                                type: "post", // Phương thức HTTP là POST để bảo mật thông tin đăng nhập
+                                data: $("#CustomerForm").serialize(), // Sử dụng serialize để lấy dữ liệu từ form
+                                success: function (data) {
+                                    window.location.href = "/J2EE_Project_Admin/Customer";
+                                },
+                                error: function (xhr) {
+                                }
+
+                            });
+                        }
+                    } catch (error) {
+                        console.error("Lỗi phân tích JSON:", error);
+                    }
+                },
+                error: function (xhr) {
+                    // Xử lý lỗi nếu có
+                }
+            });
+        }
+    });
+
 </script>
 
 <%@include file="component/footer.jsp" %>

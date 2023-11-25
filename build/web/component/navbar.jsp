@@ -110,7 +110,7 @@
                         <a class="collapse-item" href="order">Danh sách đơn hàng</a>
                         <div class="collapse-divider" id="importMenu"></div>
                         <h6 class="collapse-header">Nhập hàng:</h6>
-                        <a class="collapse-item" href="import">Danh sách nhập hàng</a>
+                        <a class="collapse-item" href="Import">Danh sách nhập hàng</a>
                     </div>
                 </div>
             </li>
@@ -150,7 +150,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item" id="customerMenu">
-                <a class="nav-link" href="customer">
+                <a class="nav-link" href="Customer">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh Sách Khách Hàng</span></a>
             </li>

@@ -31,7 +31,7 @@ public class ImportDAL extends MyDatabaseManager{
                     ip.setIdSupplier(rs.getString("idSupplier"));
                     ip.setDateCreated(rs.getString("dateCreated"));
                     ip.setTotalBill(rs.getString("totalBill"));
-    
+                    ip.setIdPerson(rs.getString("idPerson"));
                    list.add(ip);
                  }
              }
@@ -44,13 +44,14 @@ public class ImportDAL extends MyDatabaseManager{
      public int addImport(ImportModel ip) {
          int rs = 0;
          try {
-              String query = "INSERT INTO import ( idImport ,idSupplier , dateCreated, totalBill) "
-                 + " VALUES (?,? ,?,?);";
+              String query = "INSERT INTO import ( idImport ,idSupplier , dateCreated, totalBill ,idPerson) "
+                 + " VALUES (?,? ,?,?,?);";
                 PreparedStatement p = ImportDAL.getConnection().prepareStatement(query);
                 p.setString(1, ip.getIdImport());
                 p.setString(2, ip.getIdSupplier());
                 p.setString(3, ip.getDateCreated());
                 p.setString(4, ip.getTotalBill());
+                p.setString(5, ip.getIdPerson());
            rs = p.executeUpdate();
          } catch (Exception e) {
              e.printStackTrace();
@@ -64,14 +65,15 @@ public class ImportDAL extends MyDatabaseManager{
         int rs = 0;
         try {
             String query = "UPDATE import  "
-                    + "SET idSupplier =?, dateCreated = ?, totalBill = ?"
+                    + "SET idSupplier =?, dateCreated = ?, totalBill = ? ,idPerson=?"
                    
                     + "WHERE import.idImport = ?;";
               PreparedStatement p = ImportDAL.getConnection().prepareStatement(query);
                 p.setString(1, ip.getIdSupplier());
                 p.setString(2, ip.getDateCreated());
                 p.setString(3, ip.getTotalBill());
-                p.setString(4, ip.getIdImport());
+                p.setString(4, ip.getIdPerson());
+                p.setString(5, ip.getIdImport());
             rs = p.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

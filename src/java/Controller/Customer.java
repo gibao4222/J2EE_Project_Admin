@@ -23,7 +23,7 @@ import java.util.ArrayList;
  *
  * @author LENOVO
  */
-@WebServlet({"/Customer", "/add-Customer", "/delete-Customer", "/update-Customer", "/loadPasswordCus"})
+@WebServlet({"/Customer", "/add-Customer", "/delete-Customer", "/update-Customer", "/loadPasswordCus","/checkAccountCus"})
 public class Customer extends HttpServlet {
 
     /**
@@ -147,5 +147,14 @@ public class Customer extends HttpServlet {
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("{\"pass\": \"" + password + "\"}");
             }
+        else if(url.contains("checkAccountCus")){
+
+                    String email = String.valueOf(request.getParameter("email"));
+                    
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                   int rs = accountDAL.checktk(email);
+                    response.getWriter().write("{\"result\": \""+rs+"\"}");
+                }
     }
 }

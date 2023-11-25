@@ -109,16 +109,17 @@ public class ImportServlet extends HttpServlet {
             String idSupplier = String.valueOf(request.getParameter("idSupplier"));
             String dateCreated = String.valueOf(request.getParameter("dateCreated"));
             String totalBill = String.valueOf(request.getParameter("totalBill"));
+            String idPerson = String.valueOf(request.getParameter("idPerson"));
             System.out.println("hllo");
-            ImportModel importModel = new ImportModel(idImport, idSupplier, dateCreated, totalBill);
-            importDAL.addImport(importModel);
+            ImportModel importModel = new ImportModel(idImport, idSupplier, dateCreated, totalBill,idPerson);           
 //               lấy dữ liệu product 
             String listProduct = String.valueOf(request.getParameter("chosenProducts"));
             System.out.println("listproduct" + listProduct);
             // Sử dụng Gson để chuyển đổi chuỗi JSON thành JsonObject
             JsonArray jsonArray = JsonParser.parseString(listProduct).getAsJsonArray();
             // Duyệt qua mảng JSON và lấy giá trị từ các đối tượng JSON
-            for (int i = 0; i < jsonArray.size(); i++) {
+            if ( importDAL.addImport(importModel)!=0) {
+                for (int i = 0; i < jsonArray.size(); i++) {
                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
                 String idProduct = jsonObject.get("idProduct").getAsString();
                 String quantity = jsonObject.get("quantity").getAsString();
@@ -132,15 +133,15 @@ public class ImportServlet extends HttpServlet {
                 ImportDetailModel importDetailModel = new ImportDetailModel(idImportDetails, idImport, idProduct, dateCreated, Integer.parseInt(quantity), price, total);
                 importDetailDAL.addImportDetail(importDetailModel);
             }
+            }
+            
             response.sendRedirect("Import");
 //                jsonResponse.addProperty("message", "Thêm  thành công rồi thk lòn");
         } else if (url.contains("delete-Import")) {
-            String idImport = String.valueOf(request.getParameter("idImport"));
-            String idSupplier = String.valueOf(request.getParameter("idSupplier"));
-            String dateCreated = String.valueOf(request.getParameter("dateCreated"));
-            String totalBill = String.valueOf(request.getParameter("totalBill"));
-            importDAL.deleteImport(idImport);
+            String idImport = String.valueOf(request.getParameter("idImport"));            
+            if(importDAL.deleteImport(idImport)!=0){
             importDetailDAL.deleteImportDetail(idImport);
+            }
             response.sendRedirect("Import");
 
 //                jsonResponse.addProperty("message", "Xóa nhóm quyền thành công");
@@ -149,8 +150,9 @@ public class ImportServlet extends HttpServlet {
             String idSupplier = String.valueOf(request.getParameter("idSupplier"));
             String dateCreated = String.valueOf(request.getParameter("dateCreated"));
             String totalBill = String.valueOf(request.getParameter("totalBill"));
+            String idPerson = String.valueOf(request.getParameter("idPerson"));
             System.out.println("hllo");
-            ImportModel importModel = new ImportModel(idImport, idSupplier, dateCreated, totalBill);
+            ImportModel importModel = new ImportModel(idImport, idSupplier, dateCreated, totalBill,idPerson);
             importDAL.updateImport(importModel);
 //               lấy dữ liệu product 
             String listProduct = String.valueOf(request.getParameter("chosenProducts"));

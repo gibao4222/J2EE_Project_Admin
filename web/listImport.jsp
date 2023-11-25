@@ -30,6 +30,10 @@
                 <input type="hidden" name="chosenProducts" id="chosenProducts">
                 <div class="modal-body">
                     <input type="hidden" name="delete_id" value="">
+                    <div class="form-group">                        
+                        <label>Nhân viên nhập hàng : ${staff.idStaff} </label> 
+                        <input id="idPerson" name="idPerson" type="hidden" value=${staff.idStaff} >
+                    </div>
                     <div class="form-group">
                         <label> ID Supplier </label>
                         <!--<input id="idSupplier" type="text" name="idSupplier" required class="form-control" placeholder="Enter ID">-->
@@ -81,7 +85,7 @@
                                 <div class="card-body">
                                     <div class="table-responsive table-Cover">
                                         <table id="datacheckProduct" class="table table-bordered table-ScrollBar"  width="100%" cellspacing="0">
-                                            <thead>
+                                            
                                                 <tr>
                                                     <th>IdProduct</th>
                                                     <th>NameProduct</th>
@@ -89,10 +93,7 @@
                                                     <th>Quantity</th>
                                                     <th>Total</th>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
+                                                                                      
                                         </table>
                                     </div>
                                 </div>
@@ -182,9 +183,9 @@
 
 </div>
 <script>
-    
-    function addProduct() {
-        var row = event.target.parentElement.parentElement;
+    document.getElementById('dataProduct').addEventListener('click', function (event) {
+        if (event.target.tagName === 'A') {
+            var row = event.target.parentElement.parentElement;
         // Lấy giá trị từ các ô trong hàng
         var idProduct = row.cells[0].textContent.trim();
         var nameProduct = row.cells[1].textContent.trim();
@@ -206,7 +207,7 @@
             var quantity = parseInt(quantityInput.value);
             var totalCell = existingRow.cells[4];
             var total = price * quantity;
-            totalCell.textContent = total.toFixed(2);
+            totalCell.textContent = total;
         } else {
             var newRow = datacheckProduct.insertRow();
             var idCell = newRow.insertCell(0);
@@ -227,7 +228,7 @@
             quantityInput.addEventListener('change', function () {
                 var quantity = parseInt(quantityInput.value);
                 var total = price * quantity;
-                totalCell.textContent = total.toFixed(2);
+                totalCell.textContent = total;
                 updateTotal(); // Cập nhật tổng khi có thay đổi số lượng sản phẩm
             });
 
@@ -242,13 +243,9 @@
 
             var initialQuantity = parseInt(quantityInput.value);
             var initialTotal = price * initialQuantity;
-            totalCell.textContent = initialTotal.toFixed(2);
+            totalCell.textContent = initialTotal;
         }
         updateTotal();
-    }
-    document.getElementById('dataProduct').addEventListener('click', function (event) {
-        if (event.target.tagName === 'A') {
-            addProduct();
         }
     });
 
@@ -272,7 +269,7 @@
                 }
 
             }
-        return total.toFixed(2);
+        return total;
     }
 
 // Cập nhật tổng tiền khi có thay đổi trong bảng datacheckProduct
@@ -286,8 +283,6 @@
             totalBillInput.value = totalPrice;
         }
     }
-
-
 // Gọi hàm updateTotal khi xóa sản phẩm
     function deleteRow(row) {
         row.parentElement.removeChild(row);
@@ -318,17 +313,16 @@
             });
 
             let listProductString = JSON.stringify(productList);
-            console.log("list product" + listProductString);
-
+            alert("list product" + listProductString);
             document.getElementById("chosenProducts").value = listProductString;
 //            window.location.href = "/J2EE_Project_Admin/Import";
         });
     });
-                const existingContent = new Set();
-                
-                let defaultAction = 'add-Import';
-                
-                var clickButtonEdit = false;
+    const existingContent = new Set();
+
+    let defaultAction = 'add-Import';
+
+    var clickButtonEdit = false;
 //    update-import
     //Cập nhật
     document.addEventListener('click', function (e) {
@@ -370,25 +364,24 @@
                 }
             });
             existingContent.clear();
+        } else if (e.target && e.target.id === 'exit-btn') {
+            let form = document.getElementById('ImportForm');
+            form.action = defaultAction;
         }
-         else if(e.target && e.target.id === 'exit-btn'){
-                        let form = document.getElementById('ImportForm');
-                        form.action=defaultAction;
-                    }                
     });
-     document.addEventListener('click', function (e) {
-                    // Kiểm tra xem phần tử được click có thuộc modal không
-                    let isModalClick = isDescendant(document.getElementById('addadminprofile'),e.target);
-                    if ((isModalClick===false && clickButtonEdit === false)) {
-                        let form = document.getElementById('ImportForm');
-                        // Khôi phục giá trị mặc định của action khi click ra ngoài modal
-                        form.action = defaultAction;
-                    }
+    document.addEventListener('click', function (e) {
+        // Kiểm tra xem phần tử được click có thuộc modal không
+        let isModalClick = isDescendant(document.getElementById('addadminprofile'), e.target);
+        if ((isModalClick === false && clickButtonEdit === false)) {
+            let form = document.getElementById('ImportForm');
+            // Khôi phục giá trị mặc định của action khi click ra ngoài modal
+            form.action = defaultAction;
+        }
 
-                    clickButtonEdit = false;
- 
-                });
-    
+        clickButtonEdit = false;
+
+    });
+
 
     function updateProductDetails(importDetails, dataProduct) {
         var datacheckProduct = document.getElementById('datacheckProduct');
@@ -416,7 +409,7 @@
                 quantityInput.addEventListener('change', function () {
                     var quantity = parseInt(quantityInput.value);
                     var total = existingProduct.price * quantity;
-                    newRow.cells[4].textContent = total.toFixed(2);
+                    newRow.cells[4].textContent = total;
                     updateTotal();
                 });
             }
@@ -427,39 +420,20 @@
         return amount.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
     }
 
-    
-            function isDescendant(parent, child) {
-                let node = child.parentNode;
 
-                while (node !== null) {
-                    if (node === parent) {
-                        return true;
-                    }
-                    node = node.parentNode;
-                }
+    function isDescendant(parent, child) {
+        let node = child.parentNode;
 
-                return false;
+        while (node !== null) {
+            if (node === parent) {
+                return true;
             }
-            const apiURL = "https://api.vietqr.io/v2/banks";
-            fetch(apiURL)
-            .then(response => response.json())
-            .then(data=>{
-                data.data.forEach(bank =>{
-                    const option = document.createElement('option');
-                    option.value = bank.code;
-                    option.text = bank.name+' ('+bank.shortName+')';
-                    
-                    const logoImg = document.createElement('img');
-                    logoImg.src = bank.logo;
-                    logoImg.alt = 'Logo ${bank.name}';
-                    logoImg.classList.add('bank-logo');
-                    
-                    option.prepend(logoImg);
-                    
-                    bankSelect.appendChild(option);
-                });
-    })
-    .catch(error => console.error('Error fetching data:', error));
+            node = node.parentNode;
+        }
+
+        return false;
+    }
+
 
 </script>
 <%@include file ="component/footer.jsp" %>
