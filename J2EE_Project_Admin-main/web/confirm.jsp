@@ -133,8 +133,11 @@
                         </div>
         <div class="total-price">Giá sau khi giảm giá:  <fmt:formatNumber value="${p-s}" pattern="#,###" />VNĐ</div>
         <form action="checkout" method="POST"
+               <%
+        String id = (String) session.getAttribute("idCustomer");
+    %>
                             <input type="hidden" name="total" value="${p-s}"/>
-                             <input type="hidden" name="idCustomer" value="3"/>
+                             <input type="hidden" name="idCustomer" value="<%= id %>"/>
                         <input type="hidden" name="total" value="${p-s}"/>
                              <input type="hidden" name="action" value="confirm"/>
 

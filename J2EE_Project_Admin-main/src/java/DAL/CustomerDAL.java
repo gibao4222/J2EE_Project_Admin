@@ -26,6 +26,7 @@ public class CustomerDAL extends MyDatabaseManager{
         ResultSet rs = p.executeQuery();
         if (rs != null) {
             while (rs.next()) {
+                ps.setIdCustomer(rs.getString("idCustomer"));
                 ps.setAddress(rs.getString("address"));
                 ps.setEmail(rs.getString("email"));
                 ps.setFullName(rs.getString("fullName"));
@@ -117,7 +118,11 @@ public class CustomerDAL extends MyDatabaseManager{
         public static void main(String[] args) {
         CustomerModel c = new CustomerModel();
         CustomerDAL cu  = new CustomerDAL();
-        c= cu.findCustomer("3");
-            System.err.println(c.getFullName());
+       c.setEmail("bb@gmail.com");
+       c.setFullName("aa");
+       c.setAddress("aaa");
+       c.setNumberPhone("09090909");
+       c.setIdCustomer("CT004");
+       cu.updateCustomer(c);
     }
 }

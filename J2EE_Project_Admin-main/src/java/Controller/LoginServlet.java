@@ -144,9 +144,8 @@ public class LoginServlet extends HttpServlet {
                
         
         }else{
-          session.setAttribute("id", cus.getIdCustomer());
+          session.setAttribute("idCustomer", cus.getIdCustomer());
            session.setAttribute("name", cus.getFullName());
-           
             response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("{\"status\": \"success\"}");

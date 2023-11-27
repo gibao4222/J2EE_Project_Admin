@@ -92,7 +92,7 @@ public class subimageDAL extends MyDatabaseManager{
        public int deletesubimage(String id) {
            int result = 0 ;
            try{
-        String query = "DELETE FROM subimage WHERE idSubImage    = ?";
+        String query = "DELETE FROM subimage WHERE idSubImage =?";
         PreparedStatement p = subimageDAL.getConnection().prepareStatement(query);
         p.setString(1, id);
          result = p.executeUpdate();
@@ -150,10 +150,9 @@ public class subimageDAL extends MyDatabaseManager{
        public static void main(String[] args) {
            subimageDAL  s= new subimageDAL();
                 
-        List<subimage> list = s.findsubByidpro("45");
+        List<subimageModel> list = s.findsubByidpro("sp001");
            System.out.println(list.get(0).getIdSubImage());
            subimage sub = new subimage();
-//           sub.setIdProduct("1");
-           
+s.deletesubimage("SB002");
     }
 }

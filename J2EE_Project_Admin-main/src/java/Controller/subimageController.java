@@ -26,7 +26,7 @@ import model.subimageModel;
  *
  * @author Thanhchan
  */
-@WebServlet({"/show-subimage", "/add-subimage", "/edit-subimage","/delete-subimage","/save-subimage"})
+@WebServlet({"/subimage", "/add-subimage", "/edit-subimage","/delete-subimage","/save-subimage"})
 public class subimageController extends HttpServlet {
 
     /**
@@ -68,7 +68,7 @@ public class subimageController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        String uri = request.getRequestURI();
-     if(uri.contains("show-subimage")) { // [Tính diện tích].Click
+     if(uri.contains("subimage")) { // [Tính diện tích].Click
  productDAL p = new productDAL();
         List <ProductModel> list1 = p.readproduct();
         request.setAttribute("pro", list1);
@@ -80,11 +80,11 @@ public class subimageController extends HttpServlet {
 //        
 //        request.getRequestDispatcher("listCategory.jsp").forward(request, response);
         
-}else {
+}else if(uri.contains("delete-subimage")) {
   subimageDAL c = new subimageDAL();
              String id =request.getParameter("id");
              c.deletesubimage(id);
-               response.sendRedirect("show-subimage");
+//               response.sendRedirect("subimage");
 }
 
     }
@@ -116,7 +116,7 @@ cate.setNote(note);
 
 
 c.insertsubimage(cate);
-response.sendRedirect("show-subimage");
+response.sendRedirect("subimage");
 }else if(uri.contains("edit-subimage")){ // [Tính chu vi].Click
  
 int id =   Integer.parseInt( request.getParameter("id"));
@@ -147,7 +147,7 @@ request.getRequestDispatcher("updateSubimage.jsp").forward(request, response);
            request.setAttribute("message", "update thành công");
                      
 
-response.sendRedirect("show-subimage");
+response.sendRedirect("subimage");
 }
     }
 

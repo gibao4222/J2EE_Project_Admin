@@ -251,11 +251,11 @@ button.btn.btn-primary {
             </div>
          </div>
           <%
-        String name = (String) session.getAttribute("name");
+        String id = (String) session.getAttribute("idCustomer");
     %>
 
     <%-- Hiển thị dữ liệu --%>
-    <p>Welcome, <%= name %>!</p>
+    <p>Welcome, <%= id %>!</p>
            <div class="container mt-4">
         <h2>lọc sản phẩm</h2>
         

@@ -52,12 +52,10 @@ public class AccountDAL extends MyDatabaseManager{
         return kq;
     }
     public static void main(String[] args) {
-         CreateID cre = new CreateID("TK");
-         CreateID cre1 = new CreateID("CT");
-        System.out.print(cre.create());
+         
         AccountDAL ac = new AccountDAL();
        
-       int kq = ac.checktk("b@gmaisl.com");
+       int kq = ac.checktk("b@gmail.com");
         System.err.println(kq);
     }
 }

@@ -39,9 +39,7 @@ public class LogoutServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-         String customerEmail = "voquang17@example.com"; // Lấy từ thông tin đơn hàng
-        String orderDetails = "Chi tiết đơn hàng..."; // Lấy từ thông tin đơn hàng
-        EmailSender.sendOrderConfirmation(customerEmail, orderDetails);
+       
              
             HttpSession session = request.getSession();
             session.invalidate();

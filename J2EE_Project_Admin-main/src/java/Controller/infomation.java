@@ -4,8 +4,6 @@
  */
 package Controller;
 
-import DAL.AccountDAL;
-import DAL.CreateID;
 import DAL.CustomerDAL;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,22 +13,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import javax.mail.Session;
-import model.AccountModel;
 import model.CustomerModel;
-
 
 /**
  *
  * @author Thanhchan
  */
-@WebServlet(name = "registerServlet", urlPatterns = {"/register"})
-public class registerServlet extends HttpServlet {
+@WebServlet(name = "infomation", urlPatterns = {"/info"})
+public class infomation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,10 +39,10 @@ public class registerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet registerServlet</title>");            
+            out.println("<title>Servlet infomation</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet registerServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet infomation at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -70,7 +60,17 @@ public class registerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                 HttpSession session = request.getSession();
+
+CustomerModel cus = new CustomerModel();
+CustomerDAL c = new CustomerDAL();
+cus = c.findCustomer((String) session.getAttribute("idCustomer"));
+request.setAttribute("email", cus.getEmail());
+request.setAttribute("name", cus.getFullName());
+request.setAttribute("address", cus.getAddress());
+request.setAttribute("phone", cus.getNumberPhone());
+request.getRequestDispatcher("infoCustomer.jsp").forward(request, response);
+
     }
 
     /**
@@ -84,52 +84,7 @@ public class registerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-    Class.forName("com.mysql.cj.jdbc.Driver");
-} catch (ClassNotFoundException e) {
-    e.printStackTrace();
-}
-         HttpSession session = request.getSession();
-
-       String name = request.getParameter("fullname");
-       String email = request.getParameter("email");
-       String password = request.getParameter("password");
-       String address   = request.getParameter("address");
-       String phone = request.getParameter("phone");
-       
-       AccountDAL ac = new AccountDAL();
-       
-       int kq = ac.checktk(email);
-       
-        if(kq==0){
-            CreateID acount = new CreateID("TK");
-            CreateID customer = new CreateID("CT");
-            String idPersion = customer.create();
-            AccountModel accountmodel = new AccountModel();
-            accountmodel.setIdAccount(acount.create());
-            accountmodel.setIdPerson(idPersion);
-            accountmodel.setPassword(password);
-            accountmodel.setEmail(email);
-            accountmodel.setStatus(2);
-            ac.insertaccount(accountmodel);
-            CustomerModel c = new CustomerModel();
-            c.setIdCustomer(idPersion);
-            c.setEmail(email);
-            c.setFullName(name);
-            c.setAddress(address);
-            c.setNumberPhone(phone);
-            CustomerDAL cus = new CustomerDAL();
-                    cus.addCustomer(c);
-                    session.setAttribute("idCustomer", idPersion);
-           session.setAttribute("name", name);
-           response.sendRedirect("home");
-        }else{
-            request.setAttribute("mess", "email đã tồn tại");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
-          System.out.print("email ton tai") ; 
-        }
-
-       
+        processRequest(request, response);
     }
 
     /**

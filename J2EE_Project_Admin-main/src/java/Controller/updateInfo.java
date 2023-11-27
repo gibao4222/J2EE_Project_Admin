@@ -5,23 +5,24 @@
 package Controller;
 
 import DAL.AccountDAL;
-import java.util.Random;
-
+import DAL.CustomerDAL;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import model.CustomerModel;
 
 
 /**
  *
  * @author Thanhchan
  */
-@WebServlet({"/check-email"})
-public class forgotpassController extends HttpServlet {
+@WebServlet(name = "updateInfo", urlPatterns = {"/updateInfo"})
+public class updateInfo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,20 +35,39 @@ public class forgotpassController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet forgotpassController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet forgotpassController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+                 HttpSession session = request.getSession();
+
+           // Nhận dữ liệu từ request
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+                String address = request.getParameter("address");
+
+         AccountDAL ac = new AccountDAL();
+       
+      
+
+        // Thực hiện cập nhật thông tin khách hàng ở đây (ví dụ: in ra console)
+         CustomerModel c = new CustomerModel();
+        CustomerDAL cu  = new CustomerDAL();
+       c.setEmail(email);
+       c.setFullName(name);
+       c.setAddress(address);
+       c.setNumberPhone(phone);
+       c.setIdCustomer((String) session.getAttribute("idCustomer"));
+       cu.updateCustomer(c);
+
+        // Thêm email mới vào danh sách (giả sử bạn lưu trữ danh sách trong bộ nhớ)
+       
+        // Gửi phản hồi về trình duyệt
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+
+        PrintWriter out = response.getWriter();
+        out.write("Thông tin khách hàng đã được cập nhật thành công!");
+        out.close();
         }
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -75,29 +95,7 @@ public class forgotpassController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         try {
-    Class.forName("com.mysql.cj.jdbc.Driver");
-} catch (ClassNotFoundException e) {
-    e.printStackTrace();
-}
-       String email = request.getParameter("email");
-        AccountDAL a =  new AccountDAL();
-        int kq = a.checktk(email);
-        if(kq==0){
-           request.setAttribute("mess", "email này chưa từng được đăng kí");
-                       request.getRequestDispatcher("email.jsp").forward(request, response);
-
-        }else{
-           // Tạo một số ngẫu nhiên 6 chữ số
-        Random random = new Random();
-        int randomNumber = 100000 + random.nextInt(900000);
-           String code = String.valueOf(randomNumber);
-            System.err.println(code);
-// EmailSender emailSender = new EmailSender("vainglory791@gmail.com", "tips iasu kwwk uawg");
-//emailSender.sendEmail("nq2017.tranvungocthanh251202@gmail.com", "Mã xác thực", "567656");
-
-//           response.sendRedirect("maxacthuc.jsp");
-        }
+        processRequest(request, response);
     }
 
     /**

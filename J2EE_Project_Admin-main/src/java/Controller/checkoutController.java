@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
@@ -68,11 +69,18 @@ public class checkoutController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        String uri = request.getRequestURI();
+                HttpSession session = request.getSession();
+String idCustomer = (String) session.getAttribute("idCustomer");
+if(idCustomer==null){
+    response.sendRedirect("login.jsp");
+}else
      if(uri.contains("checkout")) { // [Tính diện tích].Click
+         
          ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
          CustomerModel cus = new CustomerModel();
         CustomerDAL cu  = new CustomerDAL();
-        cus = cu.findCustomer("3");
+        
+        cus = cu.findCustomer(idCustomer);
          String fullname = cus.getFullName();
          String address = cus.getAddress();
          String phone = cus.getNumberPhone();
@@ -136,7 +144,7 @@ public class checkoutController extends HttpServlet {
           }else{
        System.out.print(kq);
          OrderDAL or = new OrderDAL();
-         List<Order> orr = or.findOrder("3");
+         List<Order> orr = or.findOrder(idCustomer);
         request.setAttribute("Order", orr);
                 request.getRequestDispatcher("historyOrder.jsp").forward(request, response);
           }

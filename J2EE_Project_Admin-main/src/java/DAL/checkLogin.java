@@ -56,8 +56,8 @@ public class checkLogin  extends MyDatabaseManager{
     }
      public static void main(String[] args) {
         checkLogin c = new checkLogin();
-        CustomerModel cus =c.check("thanh@gmail.com", "12345");
-        System.out.print(cus.getFullName()
-        );
+        CustomerModel cus =c.check("thanhchan791@gmail.com", "1234567");
+        System.out.print(cus.getIdCustomer());
+        
     }
 }
