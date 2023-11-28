@@ -146,7 +146,7 @@ if(idCustomer==null){
          OrderDAL or = new OrderDAL();
          List<Order> orr = or.findOrder(idCustomer);
         request.setAttribute("Order", orr);
-                request.getRequestDispatcher("historyOrder.jsp").forward(request, response);
+                request.getRequestDispatcher("bill.jsp").forward(request, response);
           }
 
 //        
@@ -156,7 +156,7 @@ if(idCustomer==null){
             List<OrderDetail> oo = o.findOrderDetails(idOrder);
             
             request.setAttribute("details", oo);
-                            request.getRequestDispatcher("detailsOrder.jsp").forward(request, response);
+                            request.getRequestDispatcher("billdetails.jsp").forward(request, response);
 
         }
     }

@@ -4,21 +4,17 @@
     Author     : Thanhchan
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-   <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Chi tiết sản phẩm</title>
+<%@include file="component-ui/header.jsp" %>
+
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
         }
 
-        .container {
+        .container1 {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
@@ -86,7 +82,9 @@
             margin-top: 20px;
             text-align: center;
         }
-
+.product {
+    margin-bottom: -100px;
+}
         .product-image img {
     width: 150px;
     height: 200px;
@@ -109,10 +107,23 @@ img.sub-galerry {
             border-radius: 5px;
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Chi tiết sản phẩm</h1>
+ <section class="breadcrumb-section set-bg" data-setbg="./resources/img2/background.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Chi tiết sản phẩm</h2>
+                        <div class="breadcrumb__option">
+                            <a href="home">Trang chủ</a>
+                            <span>Thông tin mua hàng</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container1">
+       
        <form action="ShoppingCartServlet" method="GET">
          <div class="product">
             <div class="product-image">
@@ -143,5 +154,5 @@ img.sub-galerry {
                 <input  type="submit" class="buy-button" value="Mua hàng" />
          </form>
     </div>
-</body>
-</html>
+<%@include file="component-ui/footer.jsp" %>
+

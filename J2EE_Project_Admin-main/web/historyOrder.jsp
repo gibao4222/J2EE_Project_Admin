@@ -1,34 +1,16 @@
-<%@ page import="java.util.List" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="./resources/css/styleComponent.css">
-<link rel="stylesheet" href="./resources/css/sb-admin-2.css">
-<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="./resources/css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/font-awesome.min.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/elegant-icons.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/nice-select.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/jquery-ui.min.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/owl.carousel.min.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/slicknav.min.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/style.css" type="text/css">
-<link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-    <title>Lịch sử đơn hàng</title>
-    <style>
+<%@include file="component-ui/header.jsp" %>
+
+   
+
+   
+   
+    
+
+
+     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
@@ -99,10 +81,6 @@
             background-color: #45a049;
         }
     </style>
-    
-</head>
-<body>
-    
     <h1>Lịch sử đơn hàng</h1>
     <div class="order-container">
         <c:forEach items="${Order}" var="v">
@@ -137,7 +115,6 @@
                         <a href="home" class="primary-btn cart-btn">Quay lại</a>
                         
                     </div>
-</body>
-</html>
+<%@include file="component-ui/footer.jsp" %>
 
 

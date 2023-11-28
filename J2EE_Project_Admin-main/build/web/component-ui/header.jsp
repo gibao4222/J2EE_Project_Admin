@@ -4,8 +4,9 @@
     Author     : Thanhchan
 --%>
 <%@ page import="java.util.List" %>
-
+<%@ page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -104,7 +105,7 @@
         if(id!=null){
     %>
                            <li><a href="info">Thông tin </a></li>;
-                                   <li><a href="./bill.php">Đơn hàng</a></li>;
+                                   <li><a href="Ordercustomer?idCustomer=<%= id %>">Đơn hàng</a></li>;
                                    <% }else{
 
 } %>
@@ -116,7 +117,7 @@
                     <div class="header__cart">
                         <ul>
                             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="cart.php"><i class="fa fa-shopping-bag"></i> <span>
+                            <li><a href="show-cart"><i class="fa fa-shopping-bag"></i> <span>
                                 </span></a></li>
                         </ul>
                         <div class="header__cart__price"> <span>

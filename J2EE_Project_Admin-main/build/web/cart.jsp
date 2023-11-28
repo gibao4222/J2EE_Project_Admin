@@ -3,28 +3,9 @@
     Created on : Oct 18, 2023, 1:59:18 PM
     Author     : Admin
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<link rel="stylesheet" href="./resources/css/styleComponent.css">
-<link rel="stylesheet" href="./resources/css/sb-admin-2.css">
-<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="./resources/css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/font-awesome.min.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/elegant-icons.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/nice-select.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/jquery-ui.min.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/owl.carousel.min.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/slicknav.min.css" type="text/css">
-<link rel="stylesheet" href="./resources/css/style.css" type="text/css">
-<link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<%@include file="component-ui/header.jsp" %>
+
 <style type="text/css">
     
     button.stylinggg {
@@ -100,7 +81,7 @@
     <!-- Hero Section End -->
    
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="img/background.jpg">
+    <section class="breadcrumb-section set-bg" data-setbg="./resources/img2/background.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -213,3 +194,4 @@
             </div>
         </div>
     </section>
+<%@include file="component-ui/footer.jsp" %>
