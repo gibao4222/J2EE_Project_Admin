@@ -301,7 +301,7 @@ button.btn.btn-primary {
           
          <div class="container-fluid">
              
-            <div class="row">
+            <div class="row">details?idproduct=<c:out value="${c.idProduct}"/>
                                 <c:forEach items="${data}" var="c">
                                     <a  href="details?idproduct=<c:out value="${c.idProduct}"/>">         
                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">

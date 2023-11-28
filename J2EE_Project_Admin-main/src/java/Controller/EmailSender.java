@@ -36,7 +36,7 @@ public class EmailSender {
         }
     }
     public static void main(String[] args) {
-         String customerEmail = "voquang17@gmail.com"; // Lấy từ thông tin đơn hàng
+         String customerEmail = "nq2017.tranvungocthanh251202@gmail.com"; // Lấy từ thông tin đơn hàng
         String orderDetails = "Chi tiết đơn hàng..."; // Lấy từ thông tin đơn hàng
         EmailSender.sendOrderConfirmation(customerEmail, orderDetails);
              

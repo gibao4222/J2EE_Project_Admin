@@ -4,6 +4,7 @@
  */
 package DAL;
 
+import Controller.EmailSender;
 import java.util.Locale;
 import model.AccountModel;
 import java.sql.PreparedStatement;
@@ -57,5 +58,8 @@ public class AccountDAL extends MyDatabaseManager{
        
        int kq = ac.checktk("b@gmail.com");
         System.err.println(kq);
+        String customerEmail = "nq2017.tranvungocthanh251202@gmail.com"; // Lấy từ thông tin đơn hàng
+        String orderDetails = "Chi tiết đơn hàng..."; // Lấy từ thông tin đơn hàng
+        EmailSender.sendOrderConfirmation(customerEmail, orderDetails);
     }
 }

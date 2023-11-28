@@ -4,32 +4,29 @@
     Author     : Thanhchan
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông Tin Khách Hàng</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <style>
-        .container {
-            max-width: 400px;
-            margin-top: 50px;
-        }
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="component-ui/header.jsp" %>
+
+    <style>
+       
+.container-inf {
+    text-align: center;
+}
         .error-message {
             color: red;
         }
+        form#customerForm {
+    text-align: center;
+    margin-left: 380px;
+}
     </style>
-</head>
-<body>
 
-<div class="container">
+
+
+<div class="container-inf">
     <h2>Thông Tin Khách Hàng</h2>
-    <form id="customerForm">
+    <form style="width: 500px;" id="customerForm">
         <div class="form-group">
             <label for="name">Họ và Tên:</label>
             <input type="text" class="form-control" id="name" name="name" value="${name}">
@@ -101,6 +98,6 @@
     }
 </script>
 
-</body>
-</html>
+<%@include file="component-ui/footer.jsp" %>
+
 

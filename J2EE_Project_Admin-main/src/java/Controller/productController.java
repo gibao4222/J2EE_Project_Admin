@@ -89,7 +89,7 @@ public class productController extends HttpServlet {
          List<category> cate = c.readcategory();
                    
          request.setAttribute("cate", cate);
-                 request.getRequestDispatcher("homepages1.jsp").forward(request, response);
+                 request.getRequestDispatcher("index2.jsp").forward(request, response);
 
          
      }else if(uri.contains("details")){
@@ -219,7 +219,7 @@ public class productController extends HttpServlet {
         if(uri.contains("add-product")){ // [Tính chu vi].Click
             String nameProduct = request.getParameter("nameProduct");
             String introduce = request.getParameter("introduce");
-
+            String color = request.getParameter("color");
             String image = request.getParameter("image");
             String idCategory = request.getParameter("id_category");
             String size = request.getParameter("size");
@@ -238,6 +238,7 @@ public class productController extends HttpServlet {
             ProductModel pro= new ProductModel();
             pro.setIdProduct(new CreateID("PR").create());
             pro.setIdCategory(idCategory);
+            pro.setColor(color);
             pro.setNameProduct(nameProduct);
             pro.setIntroduce(introduce);
             pro.setImage(image);
@@ -246,9 +247,10 @@ public class productController extends HttpServlet {
             pro.setQuantity(quantity);
             pro.setPrice(price);
             pro.setPortray(portray);
-//            product.addProduct(pro);
+            productDAL p = new productDAL();
+            p.insertproduct(pro);
 //            request.setAttribute("mess", "add thành công");
-//            request.getRequestDispatcher("listproduct.jsp").forward(request, response);
+//            request.getRequestDispatcher("listProduct.jsp").forward(request, response);
 //
            response.sendRedirect("product");
 }
