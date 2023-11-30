@@ -26,7 +26,7 @@ import model.category;
  *
  * @author Thanhchan
  */
-@WebServlet({"/product","/details", "/add-product", "/update-poduct","/delete-Product","/save-product","/home","/category"})
+@WebServlet({"/product","/details", "/add-product", "/update-poduct","/delete-Product","/save-product","/home","/categoryHome"})
 public class productController extends HttpServlet {
 
     /**
@@ -117,6 +117,23 @@ public class productController extends HttpServlet {
              request.getRequestDispatcher("detailsproduct.jsp").forward(request, response);
 
              
+     
+     
+     }else if(uri.contains("categoryHome")){
+         productDAL p = new productDAL();
+         String idCategory = request.getParameter("idCategory");
+           List<ProductModel> l  =  p.findproductbyCategory(idCategory);
+      
+          
+        request.setAttribute("data", l);
+        categoryDAL c = new categoryDAL();
+         List<category> cate = c.readcategory();
+                   
+         request.setAttribute("cate", cate);
+                 request.getRequestDispatcher("index2.jsp").forward(request, response);
+ 
+
+        
      
      
      }// [Tính diện tích].Click

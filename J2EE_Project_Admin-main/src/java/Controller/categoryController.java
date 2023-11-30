@@ -74,7 +74,7 @@ public class categoryController extends HttpServlet {
         List <category> list = p.readcategory();
         request.setAttribute("data", list);
        
-        request.getRequestDispatcher("listCategory1.jsp").forward(request, response);
+        request.getRequestDispatcher("listcategory.jsp").forward(request, response);
 //        
 //        request.getRequestDispatcher("listCategory.jsp").forward(request, response);
         
@@ -83,6 +83,11 @@ public class categoryController extends HttpServlet {
          List<Order> orr = or.findOrder("3");
         request.setAttribute("Order", orr);
                 request.getRequestDispatcher("historyOrder.jsp").forward(request, response);
+}else  if(uri.contains("delete-category")){
+  categoryDAL c = new categoryDAL();
+             String id = request.getParameter("id");
+             c.deletecategory(id);
+               response.sendRedirect("show-category");
 }
     }
 
@@ -129,11 +134,6 @@ request.getRequestDispatcher("updateCategory.jsp").forward(request, response);
                      
 
 response.sendRedirect("show-category");
-}else  if(uri.contains("delete-category")){
-  categoryDAL c = new categoryDAL();
-             String id = request.getParameter("id");
-             c.deletecategory(id);
-               response.sendRedirect("show-category");
 }    }
 
     /**

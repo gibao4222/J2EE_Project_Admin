@@ -125,6 +125,39 @@ public class productDAL extends MyDatabaseManager{
              }
         return list;
     }
+      public ArrayList findproductbyCategory(String Idcategory)  {
+          ArrayList list = new ArrayList();
+         try {
+                 
+            
+        String query = "SELECT * FROM product WHERE idCategory LIKE '%"+Idcategory+"%'";
+        ResultSet rs = productDAL.doReadQuery(query);
+       
+
+        if (rs != null) {
+            while (rs.next()) {
+                ProductModel s = new ProductModel();
+               s.setIdProduct(rs.getString("IdProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setIdCategory(rs.getString("idCategory"));
+                s.setPrice(rs.getFloat("price"));
+                s.setColor(rs.getString("color"));
+                 s.setQuantity(rs.getInt("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+
+                                                                
+                list.add(s);
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return list;
+    }
      public ArrayList findproductbyColor(String color)  {
           ArrayList list = new ArrayList();
          try {
@@ -410,10 +443,10 @@ public class productDAL extends MyDatabaseManager{
       public static void main(String[] args) {
         productDAL p = new productDAL();
 
-         List<ProductModel> list  =  p.readproduct();
+         List<ProductModel> list  =  p.findproductbyCategory("CA012");
          
-          List<ProductModel> l= p.filterMax();
-          System.err.println(l.get(0).getPrice());
+          
+          System.err.println(list.get(1).getNameProduct());
 ////         product pro = p.findProduct(24);
 //            product pro = new product();
 //         pro.setNameProduct("adadad");

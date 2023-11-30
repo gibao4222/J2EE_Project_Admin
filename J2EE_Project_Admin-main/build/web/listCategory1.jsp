@@ -107,16 +107,14 @@
           </tr>
         </thead>
         <tbody>
-
-          <c:forEach items="${data}" var="c">
-                <tr>
-                    <td>  ${c.idCategory } </td>
-                    <td>  ${c.nameCategory} </td>
+<tr>
+                    <td>  1 </td>
+                    <td>  a </td>
                     
                      <td >  <button  type="button" name="edit_btn" id="edit_btn" class="btn btn-success" data-toggle="modal" data-target="#addadminprofile">update</button> <a href="delete-category?id=<c:out value="${c.idCategory}"/>">delete</a></td>
                     
                 </tr>
-        </c:forEach>
+          
                 
         </tbody>
       </table>

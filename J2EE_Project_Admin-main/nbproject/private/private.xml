@@ -3,17 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/checkoutController.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/component-ui/header.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/index2.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/component-ui/footer.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/subimageController.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/historyOrder.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/infoCustomer.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/categoryController.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/productDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listCategory1.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/productController.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listProduct.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listcategory.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/component/navbar.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/homepages1.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listSubimage1.jsp</file>
         </group>
     </open-files>
 </project-private>

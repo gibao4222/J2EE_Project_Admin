@@ -131,6 +131,11 @@
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Danh Sách Nhân Sự</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="show-category">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Danh Sách Danh mục</span></a>
+            </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
