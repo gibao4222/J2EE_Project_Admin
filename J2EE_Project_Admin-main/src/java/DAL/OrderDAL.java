@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.ArrayList;
 import java.sql.*;
 import java.util.List;
-import model.Order;
+import model.OrderModel;
 
 
 /**
@@ -24,8 +24,8 @@ public class OrderDAL extends MyDatabaseManager {
 
      OrderDAL.connectDB();
     }
-     public ArrayList<Order> readOrder()  {
-          ArrayList<Order> list= new ArrayList<>();
+     public ArrayList<OrderModel> readOrder()  {
+          ArrayList<OrderModel> list= new ArrayList<>();
 //          String query = "SELECT * FROM orders ";
          try {
                  
@@ -36,12 +36,12 @@ public class OrderDAL extends MyDatabaseManager {
 
         if (rs != null) {
             while (rs.next()) {
-                Order s = new Order();
+                OrderModel s = new OrderModel();
                 s.setIdOrder(rs.getString("idOrder"));
                 s.setIdCustomer(rs.getString("idCustomer"));
                 s.setDateCreated(rs.getString("dateCreated"));
                 s.setTotalBill(rs.getString("totalBill"));
-               s.setStatus(rs.getString("status"));
+               s.setStatus(rs.getInt("status"));
                 list.add(s);
             }
         }
@@ -61,10 +61,10 @@ public class OrderDAL extends MyDatabaseManager {
 
         if (rs != null) {
             while (rs.next()) {
-                Order s = new Order();
+                OrderModel s = new OrderModel();
                 s.setIdOrder(rs.getString("idOrder"));
                 s.setTotalBill(rs.getString("totalBill"));
-                s.setStatus(String.valueOf(rs.getInt("status")));
+                s.setStatus(rs.getInt("status"));
                 s.setDateCreated(rs.getString("dateCreated"));
 
                                                                 
@@ -76,7 +76,7 @@ public class OrderDAL extends MyDatabaseManager {
              }
         return list;
     }
-      public int addOrder(Order o){
+      public int addOrder(OrderModel o){
         int rs = 0;
         try {
 //            String query = "INSERT INTO orders (idOrder,idCustomer,dateCreated,totalBill,status) VALUES(?,?,?,?,?)";
@@ -93,7 +93,7 @@ public class OrderDAL extends MyDatabaseManager {
         p.setString(2, o.getIdCustomer());
         p.setString(3, o.getDateCreated());
         p.setString(4, o.getTotalBill());
-        p.setString(5, o.getStatus());
+        p.setInt(5, o.getStatus());
         rs = p.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,7 +114,7 @@ public class OrderDAL extends MyDatabaseManager {
         return rs;
     }
     
-    public int updateOrder(Order o){
+    public int updateOrder(OrderModel o){
         int rs = 0;
         try {
 String query = "UPDATE orders "
@@ -124,7 +124,7 @@ String query = "UPDATE orders "
             p.setString(1, o.getIdCustomer());
             p.setString(2, o.getDateCreated());
             p.setString(3, o.getTotalBill());
-            p.setString(4, o.getStatus());
+            p.setInt(4, o.getStatus());
             p.setString(5, o.getIdOrder());
             
             rs = p.executeUpdate();
@@ -134,7 +134,7 @@ String query = "UPDATE orders "
         return rs;
     }
     public static void main(String[] args) {
-        Order o = new Order();
+        OrderModel o = new OrderModel();
         OrderDAL oo = new OrderDAL();
 //        o.setIdCustomer("3");
 //        o.setStatus("ádasd");
@@ -142,7 +142,7 @@ String query = "UPDATE orders "
 //        o.setIdOrder("1");
 //        o.setDateCreated("2512/2002");
 //        oo.addOrder(o);
-         List<Order> or = oo.findOrder("3");
+         List<OrderModel> or = oo.findOrder("3");
                System.out.print(or.get(1).getTotalBill());
     }
 }

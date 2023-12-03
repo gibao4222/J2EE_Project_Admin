@@ -21,7 +21,7 @@ import model.category;
  *
  * @author Thanhchan
  */
-@WebServlet(name = "searchProductServlet", urlPatterns = {"/searchProductServlet"})
+@WebServlet(name = "searchProductServlet", urlPatterns = {"/Search"})
 public class searchProductServlet extends HttpServlet {
 
     /**
@@ -76,11 +76,9 @@ public class searchProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- String select = request.getParameter("filterOption"); 
-     if ("name".equals(select)) {
-         String name= request.getParameter("searchValue");
-         productDAL p = new productDAL();
-       List<ProductModel> l = p.findproductbyName(name);
+        String namePro = request.getParameter("namepro");
+        productDAL p = new productDAL();
+       List<ProductModel> l = p.findproductbyName(namePro);
       
           
         request.setAttribute("data", l);
@@ -88,20 +86,38 @@ public class searchProductServlet extends HttpServlet {
          List<category> cate = c.readcategory();
                    
          request.setAttribute("cate", cate);
-        request.getRequestDispatcher("homepages1.jsp").forward(request, response);
-     } else if ("color".equals(select)) {
-          String name= request.getParameter("searchValue");
-         productDAL p = new productDAL();
-       List<ProductModel> l = p.findproductbyColor(name);
+        request.getRequestDispatcher("Home.jsp").forward(request, response);
       
           
-        request.setAttribute("data", l);
-        categoryDAL c = new categoryDAL();
-         List<category> cate = c.readcategory();
+       
                    
-         request.setAttribute("cate", cate);
-        request.getRequestDispatcher("homepages1.jsp").forward(request, response);
-     }
+       
+// String select = request.getParameter("filterOption"); 
+//     if ("name".equals(select)) {
+//         String name= request.getParameter("searchValue");
+//         productDAL p = new productDAL();
+//       List<ProductModel> l = p.findproductbyName(name);
+//      
+//          
+//        request.setAttribute("data", l);
+//        categoryDAL c = new categoryDAL();
+//         List<category> cate = c.readcategory();
+//                   
+//         request.setAttribute("cate", cate);
+//        request.getRequestDispatcher("homepages1.jsp").forward(request, response);
+//     } else if ("color".equals(select)) {
+//          String name= request.getParameter("searchValue");
+//         productDAL p = new productDAL();
+//       List<ProductModel> l = p.findproductbyColor(name);
+//      
+//          
+//        request.setAttribute("data", l);
+//        categoryDAL c = new categoryDAL();
+//         List<category> cate = c.readcategory();
+//                   
+//         request.setAttribute("cate", cate);
+//        request.getRequestDispatcher("homepages1.jsp").forward(request, response);
+//     }
      }
 
     /**

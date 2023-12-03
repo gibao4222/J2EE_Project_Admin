@@ -8,20 +8,19 @@ package model;
  *
  * @author trinh
  */
-public class Order {
- String idOrder, idCustomer,dateCreated,  totalBill,status;
+public class OrderModel {
+ String idOrder, idCustomer,dateCreated,  totalBill;
+ int status;
 
-    public Order(String idOrder, String idCustomer, String dateCreated, String totalBill, String status) {
+    public OrderModel() {
+    }
+
+    public OrderModel(String idOrder, String idCustomer, String dateCreated, String totalBill, int status) {
         this.idOrder = idOrder;
         this.idCustomer = idCustomer;
         this.dateCreated = dateCreated;
         this.totalBill = totalBill;
         this.status = status;
-    }
-
-
-   public Order() {
-       
     }
 
     public String getIdOrder() {
@@ -56,14 +55,15 @@ public class Order {
         this.totalBill = totalBill;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
+    
 
 
    

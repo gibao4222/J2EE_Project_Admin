@@ -89,7 +89,7 @@ public class productController extends HttpServlet {
          List<category> cate = c.readcategory();
                    
          request.setAttribute("cate", cate);
-                 request.getRequestDispatcher("index2.jsp").forward(request, response);
+                 request.getRequestDispatcher("Home.jsp").forward(request, response);
 
          
      }else if(uri.contains("details")){
@@ -130,7 +130,7 @@ public class productController extends HttpServlet {
          List<category> cate = c.readcategory();
                    
          request.setAttribute("cate", cate);
-                 request.getRequestDispatcher("index2.jsp").forward(request, response);
+                 request.getRequestDispatcher("Home.jsp").forward(request, response);
  
 
         

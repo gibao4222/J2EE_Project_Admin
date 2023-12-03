@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import model.Order;
+import model.OrderModel;
 
 
 /**
@@ -63,7 +63,7 @@ public class Ordercustomer extends HttpServlet {
             throws ServletException, IOException {
         OrderDAL or = new OrderDAL();
        String idCustomer= request.getParameter("idCustomer");
-         List<Order> orr = or.findOrder(idCustomer);
+         List<OrderModel> orr = or.findOrder(idCustomer);
         request.setAttribute("Order", orr);
                 request.getRequestDispatcher("bill.jsp").forward(request, response);
     }

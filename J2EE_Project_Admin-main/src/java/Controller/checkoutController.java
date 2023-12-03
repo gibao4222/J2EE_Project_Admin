@@ -20,8 +20,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 import model.CustomerModel;
-import model.Order;
-import model.OrderDetail;
+import model.OrderModel;
+import model.OrderDetailModel;
 
 /**
  *
@@ -122,11 +122,11 @@ if(idCustomer==null){
 
 //         Lấy ID ngẫu nhiên trong phạm vi từ 1 đến 100,000
         int idOrder = random.nextInt(10000) + 1;
-        Order o = new Order();
+        OrderModel o = new OrderModel();
         o.setDateCreated(formattedDate);
         o.setIdOrder(String.valueOf(idOrder));
         o.setIdCustomer(idCustomer);
-        o.setStatus("1");
+        o.setStatus(1);
         o.setTotalBill(total);
         OrderDAL oo = new OrderDAL();
         oo.addOrder(o);
@@ -144,7 +144,7 @@ if(idCustomer==null){
           }else{
        System.out.print(kq);
          OrderDAL or = new OrderDAL();
-         List<Order> orr = or.findOrder(idCustomer);
+         List<OrderModel> orr = or.findOrder(idCustomer);
         request.setAttribute("Order", orr);
                 request.getRequestDispatcher("bill.jsp").forward(request, response);
           }
@@ -153,7 +153,7 @@ if(idCustomer==null){
         } else if ("detailsOrder".equals(action)) {
             String idOrder = request.getParameter("idOrder");
             OrderDetailDAL o = new OrderDetailDAL();
-            List<OrderDetail> oo = o.findOrderDetails(idOrder);
+            List<OrderDetailModel> oo = o.findOrderDetails(idOrder);
             
             request.setAttribute("details", oo);
                             request.getRequestDispatcher("billdetails.jsp").forward(request, response);

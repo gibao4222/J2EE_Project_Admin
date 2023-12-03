@@ -4,7 +4,7 @@ package DAL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import model.OrderDetail;
+import model.OrderDetailModel;
 import model.ProductModel;
 
 /*
@@ -57,7 +57,7 @@ public int addItemToData(  String idOrder, String date){
              productDAL p1 = new productDAL();
              p1.trusoluong(cartItem.getQuantity(), cartItem.getMaHang());
              OrderDetailDAL oo = new OrderDetailDAL();
-         OrderDetail o = new OrderDetail();
+         OrderDetailModel o = new OrderDetailModel();
             o.setPrice(String.valueOf(cartItem.getGia()));
             o.setIdProduct(cartItem.getMaHang());
             o.setQuantity(String.valueOf(cartItem.getQuantity()));

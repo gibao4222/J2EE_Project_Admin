@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import model.OrderDetail;
+import model.OrderDetailModel;
 import model.ProductModel;
 
 /**
@@ -20,13 +20,13 @@ public class OrderDetailDAL extends MyDatabaseManager{
         OrderDetailDAL.connectDB();
     }
      public ArrayList readOrderDetail(){
-        ArrayList<OrderDetail> list = new ArrayList<>();
+        ArrayList<OrderDetailModel> list = new ArrayList<>();
         try {
             String query = "SELECT * FROM orderdetail";
             ResultSet rs =OrderDetailDAL.doReadQuery(query);
             if(rs!=null){
                  while (rs.next()) {                     
-                    OrderDetail orderDetail = new OrderDetail();
+                    OrderDetailModel orderDetail = new OrderDetailModel();
                     orderDetail.setIdOrderDetail(rs.getString("idOrderDetail"));
                     orderDetail.setIdOrder(rs.getString("idOrder"));
                     orderDetail.setIdProduct(rs.getString("idProduct"));
@@ -55,7 +55,7 @@ public class OrderDetailDAL extends MyDatabaseManager{
 
         if (rs != null) {
             while (rs.next()) {
-                OrderDetail s = new OrderDetail();
+                OrderDetailModel s = new OrderDetailModel();
                s.setIdProduct(rs.getString("idProduct"));
                s.setPrice(String.valueOf(rs.getDouble("price")));
                s.setQuantity(String.valueOf(rs.getInt("Quantity")));
@@ -80,7 +80,7 @@ public class OrderDetailDAL extends MyDatabaseManager{
              }
         return list;
     }
-     public int addOrderDetail(OrderDetail odd) {
+     public int addOrderDetail(OrderDetailModel odd) {
          int rs = 0;
          try {
               String query = "INSERT INTO orderdetail ( idOrderDetail ,idOrder , idProduct, dateCreated, quantity, price,total,idSale) "
@@ -104,7 +104,7 @@ public class OrderDetailDAL extends MyDatabaseManager{
 //     update staff //
  
     
-    public int updateOrderDetail(OrderDetail odd){
+    public int updateOrderDetail(OrderDetailModel odd){
         int rs = 0;
         try {
             String query = "UPDATE orderdetail  "
@@ -142,7 +142,7 @@ public class OrderDetailDAL extends MyDatabaseManager{
         return rs;
     }
         public static void main(String[] args) {
-        OrderDetail o = new OrderDetail();
+        OrderDetailModel o = new OrderDetailModel();
         OrderDetailDAL oo = new OrderDetailDAL();
 //        o.setDateCreated("2002-12-12");
 //        o.setIdOrder("10000");
@@ -152,7 +152,7 @@ public class OrderDetailDAL extends MyDatabaseManager{
 //        o.setPrice("1000000");
 //        o.setQuantity("21");
 //        o.setTotal("123213123");
-       List<OrderDetail> order=  oo.findOrderDetails("9247");
+       List<OrderDetailModel> order=  oo.findOrderDetails("9247");
             System.out.println(order.get(0).getIdProduct());
             
     }

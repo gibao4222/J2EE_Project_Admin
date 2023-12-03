@@ -8,7 +8,7 @@ package model;
  *
  * @author trinh
  */
-public class OrderDetail {
+public class OrderDetailModel {
     String idOrderDetail, idOrder, idProduct,dateCreated,quantity,price,total, idSale,img,namePro;
 
     public String getNamePro() {
@@ -19,7 +19,7 @@ public class OrderDetail {
         this.namePro = namePro;
     }
 
-    public OrderDetail(String idOrderDetail, String idOrder, String idProduct, String dateCreated, String quantity, String price, String total, String idSale) {
+    public OrderDetailModel(String idOrderDetail, String idOrder, String idProduct, String dateCreated, String quantity, String price, String total, String idSale) {
         this.idOrderDetail = idOrderDetail;
         this.idOrder = idOrder;
         this.idProduct = idProduct;
@@ -30,7 +30,7 @@ public class OrderDetail {
         this.idSale = idSale;
     }
 
-    public OrderDetail() {
+    public OrderDetailModel() {
        
     }
 

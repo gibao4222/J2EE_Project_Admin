@@ -9,13 +9,12 @@ package model;
  * @author Thanhchan
  */
 public class AccountModel {
-    String idAccount ,idPerson,email,password;
-    int status;
+    String idAccount ,idPerson,email,password,status;
 
     public AccountModel() {
     }
 
-    public AccountModel(String idAccount, String idPerson, String email, String password, int status) {
+    public AccountModel(String idAccount, String idPerson, String email, String password, String status) {
         this.idAccount = idAccount;
         this.idPerson = idPerson;
         this.email = email;
@@ -55,12 +54,14 @@ public class AccountModel {
         this.password = password;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
-    
+   
+
+   
 }

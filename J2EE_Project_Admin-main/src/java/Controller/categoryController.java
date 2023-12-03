@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import model.Order;
+import model.OrderModel;
 /**
  *
  * @author Thanhchan
@@ -80,7 +80,7 @@ public class categoryController extends HttpServlet {
         
 }else  if(uri.contains("order-customer")){
      OrderDAL or = new OrderDAL();
-         List<Order> orr = or.findOrder("3");
+         List<OrderModel> orr = or.findOrder("3");
         request.setAttribute("Order", orr);
                 request.getRequestDispatcher("historyOrder.jsp").forward(request, response);
 }else  if(uri.contains("delete-category")){

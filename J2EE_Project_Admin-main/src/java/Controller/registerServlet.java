@@ -110,7 +110,7 @@ public class registerServlet extends HttpServlet {
             accountmodel.setIdPerson(idPersion);
             accountmodel.setPassword(password);
             accountmodel.setEmail(email);
-            accountmodel.setStatus(2);
+            accountmodel.setStatus("2");
             ac.insertaccount(accountmodel);
             CustomerModel c = new CustomerModel();
             c.setIdCustomer(idPersion);

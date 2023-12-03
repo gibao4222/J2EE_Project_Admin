@@ -68,7 +68,7 @@
                             
                                           
                                  <div class="header__top__right__social">
-                                     <a href="register.php"><i ></i> Đăng ký</a>
+                                     <a href="register.jsp"><i ></i> Đăng ký</a>
                                  </div>   
                              <c:choose>
                     <c:when test="${empty sessionScope.name}">
