@@ -85,11 +85,12 @@
 .product {
     margin-bottom: -100px;
 }
-        .product-image img {
+       .product-image img {
     width: 150px;
     height: 200px;
-    margin-left: 333px;
+    margin-left: 310px;
     border-radius: 15px;
+    margin-top: -50px;
 }
 img.sub-galerry {
     height: 150px;

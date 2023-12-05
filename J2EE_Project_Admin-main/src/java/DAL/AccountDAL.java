@@ -163,13 +163,10 @@ public class AccountDAL extends MyDatabaseManager{
        
 
     public static void main(String[] args) {
-         
-        AccountDAL ac = new AccountDAL();
+         AccountDAL accountDAL = new AccountDAL();
+      AccountModel accountModel= new AccountModel("2", "2", "@", "2", "2");
+                accountDAL.addAccount(accountModel);
        
-       int kq = ac.checktk("b@gmail.com");
-        System.err.println(kq);
-        String customerEmail = "nq2017.tranvungocthanh251202@gmail.com"; // Lấy từ thông tin đơn hàng
-        String orderDetails = "Chi tiết đơn hàng..."; // Lấy từ thông tin đơn hàng
-        EmailSender.sendOrderConfirmation(customerEmail, orderDetails);
+      
     }
 }

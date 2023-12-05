@@ -1,162 +1,88 @@
 <%-- 
-    Document   : listProduct
-    Created on : Oct 10, 2023, 9:27:36 AM
+    Document   : listadmin
+    Created on : Oct 7, 2023, 8:13:02 PM
     Author     : Admin
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="component/navbar.jsp" %>
-<style type="text/css">
-  .scroll{
-  height: 700px;
-  overflow: scroll;
-}
-.image-input {
-  text-aling: center;
-}
-.image-input input {
-  display: none;
-}
-.image-input label {
-  display: block;
-  color: #FFF;
-  background: #000;
-  padding: 0.3rem 0.6rem;
-  font-size: 115%;
-  cursor: pointer;
-}
-.image-input label i {
-  font-size: 125%;
-  margin-right: 0.3rem;
-}
-.image-input label:hover i {
-  animation: shake 0.35s;
-}
-.image-input img {
-  max-width: 175px;
-  display: none;
-}
-.image-input span {
-  display: none;
-  text-align: center;
-  cursor: pointer;
-}
-
-@keyframes shake {
-  0% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(10deg);
-  }
-  50% {
-    transform: rotate(0deg);
-  }
-  75% {
-    transform: rotate(-10deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-</style>
-
-
+<%@ page import="model.StaffModel" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.*" %>
 <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Thêm Sản Phẩm</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Thêm Nhân Viên </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        
       </div>
-     
-        <form action="add-product" id="Productform" method="POST">
+      <form id= "StaffForm" action="add-Staff" method="POST">
+            <input type="hidden" name="idStaff" id="idStaff" >
 
         <div class="modal-body">
-            <input type="hidden" name="IdProduct" id="IdProduct">
+            <input type="hidden" name="delete_id" value="">
             <div class="form-group">
-
-                <label> Name Product </label>
-                <input type="text" name="nameProduct" id="nameProduct1" class="form-control" placeholder="Enter Product">
+                <label> Tên Người Dùng </label>
+                <input id="fullName" type="text" name="fullName" required class="form-control" placeholder="Enter Username">
+            </div>            
+            <div class="form-group">
+                <label>Email</label>
+                <input id="email" type="text" name="email" class="form-control" placeholder="Enter Email"> 
+            <div class="alert-danger" id="alert-danger" role="alert">
+                
             </div>
+            <div class="alert-success" id="alert-success" role="alert">
+                
+            </div>
+            </div>
+            
              <div class="form-group">
-
-                 <div class="form-group">
-
-                <label>category </label>
-                <select name="id_category" id="id_category">
-                    <c:forEach items="${cate}" var="v">
-                        <option value="${v.idCategory }">${v.nameCategory}</option>
-                     </c:forEach>
+                <label>Mật khẩu </label>
+                <input id="password" type="text" name="password" class="form-control" placeholder="Enter Password">
+            </div>             
+            <div class="form-group">
+                <label> Địa Chỉ</label>
+                <input id="address" type="text" name="address" class="form-control" value="" placeholder="Enter Address">
+            </div>
+            <div class="form-group">
+                <label> Số điện thoại </label>
+                <input id="numberPhone" type="text" name="numberPhone" class="form-control" value="" placeholder="Enter Number Phone">
+                <div class="alert-danger" id="alert-danger1" role="alert">
+                
+            </div>
+            <div class="alert-success" id="alert-success1" role="alert">
+                
+            </div>
+            </div>
+            <div class="form-group">
+                <label> Tài Khoản Ngân Hàng </label>
+                <!--<input id="bankAccount" type="text" name="bankAccount" class="form-control" value="" placeholder="Enter Bank Account">-->
+                <select id="bankSelect" class="form-control" name="bankAccount">
+                
                 </select>
-            </div>
-            </div>
-             <div class="form-group">
-
-                <label> introduce </label>
-                <input type="text" name="introduce" id="introduce1" class="form-control" placeholder="Enter introduce">
-            </div>
-             <div class="form-group">
-
-                <label> Ảnh </label>
-                <!--<input type="text" name="image1" id="image1" class="form-control" style="display: none">-->
-                <div class="image-input">
-                    <input type="file" accept="image/*" id="image" name="image">
-                    <label for="image" class="image-button"><i class="far fa-image"></i> Choose image</label>
-                    <img src="" class="image-preview" id="nameImg">
-                    <span class="change-image">Choose different image</span>
-                </div>
-            </div>
-                 <div class="form-group">
-
-                <label> size </label>
-                <input type="text" name="size" id="size1" class="form-control" placeholder="Enter size">
-            </div>
-            
-            <label> stuff </label>
-            <input type="text" name="stuff" id="stuff1" class="form-control" placeholder="Enter stuff">
-          
-            <div class="form-group">
-
-                <label> Quantity </label>
-                <input type="text" name="quantity" id="quantity1" class="form-control" placeholder="Enter quantity">
-            </div>
-             <div class="form-group">
-
-                <label> Color </label>
-                <input type="text" name="color" id="color1" class="form-control" placeholder="Enter color">
-            </div>
                 <div class="form-group">
-
-                <label> Price </label>
-                <input type="text" name="price" id="price1" class="form-control" placeholder="Enter price">
+                
             </div>
-            
+            </div>
             <div class="form-group">
-
-                <label> portray </label>
-                <input type="text" name="portray" id="portray1" class="form-control" placeholder="Enter portray">
+                <label> Số Tài Khoản </label>
+                <input id="accountNumber" type="text" name="accountNumber" class="form-control" value="" placeholder="Enter Account Number">
             </div>
-    </div>
-           
-<!--             <div class="form-group">
+            <div class="form-group">
+                <label>Nhóm quyền</label>
+                <select id="idGroup" name="position" class="form-control">
+                        <option value="admin">Admin</option>
+                        <option value="staff">Nhân viên bán hàng</option>
+                </select>
+                <!--<input id="idGroup" type="text" name="idGroup" class="form-control" value="" placeholder="Enter Account Number">-->
 
-                <label> Image Thumbnail </label>
-                <input type="file" name="thumb1" class="form-control" >
-                <input type="file" name="thumb2" class="form-control" >
-                <input type="file" name="thumb3" class="form-control" >
-                <input type="file" name="thumb4" class="form-control" >
-            </div> -->
-            
-        
-        
+            </div>
+        </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-            <button type="submit" name="registerbtn" class="btn btn-primary" id="btn-save">Lưu</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="exit-btn">Close</button>
+            <button type="submit" name="registerbtn" class="btn btn-primary">Save</button>
         </div>
       </form>
 
@@ -164,22 +90,14 @@
   </div>
 </div>
 
-
- 
-<!-- /.container-fluid -->
-
-
-
-
-
-
 <div class="container-fluid">
+
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Danh Sách Sản Phẩm 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
-             Thêm Sản Phẩm
+    <h6 class="m-0 font-weight-bold text-primary">Danh Sách Admin
+            <button type="button" class="btn btn-primary only-admin" data-toggle="modal" data-target="#addadminprofile">
+              Thêm Admin
             </button>
     </h6>
   </div>
@@ -187,8 +105,6 @@
   <div class="card-body">
 
     <div class="table-responsive">
-
-      <div class="scroll">
 
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
@@ -203,10 +119,10 @@
             <th>Position</th>
             <th class="only-admin">Edit</th>
             <th class="only-admin">Delete</th>
+          </tr>
         </thead>
         <tbody>
-
-          <c:forEach items="${listStaff}" var="staff">
+             <c:forEach items="${listStaff}" var="staff">
                 <tr>
                     <td>${staff.idStaff}</td>
                     <td>${staff.email}</td>
@@ -245,181 +161,234 @@
             }
         %>
         </tbody>
+
       </table>
-      </div>
-       
 
     </div>
   </div>
 </div>
 
 </div>
-
 <script>
-    
-    document.addEventListener('click',function (e){
-        if(e.target && e.target.id==='edit-btn'){
-            let form = document.getElementById('Productform');
-            form.action='save-product';
-                        
-                        
-            let row = e.target.closest('tr');
-            document.getElementById("IdProduct").value = row.cells[0].innerText;
-
-            document.getElementById("nameProduct1").value = row.cells[2].innerText;
-            document.getElementById("introduce1").value = row.cells[3].innerText;
-//            document.getElementById("image1").value = row.cells[4].innerText; 
-            document.getElementById("size1").value = row.cells[5].innerText;
-            document.getElementById("stuff1").value = row.cells[6].innerText;
-            document.getElementById("quantity1").value = row.cells[7].innerText;
-            document.getElementById("color1").value = row.cells[9].innerText;
-
-            document.getElementById("price1").value = row.cells[10].innerText;
-            document.getElementById("portray1").value = row.cells[8].innerText;
-            var originalSelect = document.getElementById('id_category');
-    
-
-            var selectedValue = row.cells[1].innerText; // Lấy giá trị của tùy chọn được chọn
-
-            // Duyệt qua các tùy chọn trong thẻ <select> trong biểu mẫu và đặt thuộc tính "selected" cho tùy chọn tương ứng
-            for (var i = 0; i < originalSelect.options.length; i++) {
-                if (originalSelect.options[i].value === selectedValue) {
-                    originalSelect.options[i].selected = true;
-                }
-            }
-            var fakeFileInput = document.createElement('input');
-            var fakeFile = new File([fakeFileInput], 'leuleu', { type: 'image/jpeg' });
-            
-		fileReader = new FileReader();
-		fileReader.onload = function (data) {
-		$('.image-preview').attr('src', "./resources/img/"+row.cells[4].innerText );
-		}
-		fileReader.readAsDataURL(fakeFile);
-		$('.image-button').css('display', 'none');
-		$('.image-preview').css('display', 'block');
-		$('.change-image').css('display', 'block');
-            
-
-            
-        }
-        else if(e.target && e.target.id==='btn-save'){
-            var form = document.getElementById('Productform');
-
-            var action =form.action.split("/")[4];
-            if(action==='save-product'){
-//                var img1 = document.getElementById("image1").value;
-                let img = document.getElementById("image");
-                let name = document.getElementById("nameImg").src.split("/")[6];
-                var fileInput = document.getElementById('image');
-
-            // Kiểm tra xem có tệp tin được chọn hay không
-            if (fileInput.files.length > 0) {
-                // Lấy đối tượng File đầu tiên trong danh sách files
-                var file = fileInput.files[0];
-//
-//                // Hiển thị tên của tệp tin
-                alert('File Name: ' + file.name);
-
-//                document.getElementById("image1").style.display='none';
-            } else {
-                alert("chưa đổi");
-//                document.getElementById("image").style.display='none';
-            }
-        }
-        }
-    });
-//    $('#btn-save').on('click',function(){
-//        let form = document.getElementById('Productform');
-//        if(form.action==='save-product'){
-////            let img1 = document.getElementById("image1");
-////            let img = document.getElementById("image");
-////            let name = $('.image-preview').src.split("/")[3];
-//            alert("hello");
-//        }
-//            
-//    });
-    $('#image').on('change', function() {
-	$input = $(this);
-	if($input.val().length > 0) {
-		fileReader = new FileReader();
-		fileReader.onload = function (data) {
-		$('.image-preview').attr('src', data.target.result);
-		}
-		fileReader.readAsDataURL($input.prop('files')[0]);
-		$('.image-button').css('display', 'none');
-		$('.image-preview').css('display', 'block');
-		$('.change-image').css('display', 'block');
-	}
-});
-						
-$('.change-image').on('click', function() {
-	$control = $(this);			
-	$('#image').val('');	
-	$preview = $('.image-preview');
-	$preview.attr('src', '');
-	$preview.css('display', 'none');
-	$control.css('display', 'none');
-	$('.image-button').css('display', 'block');
-});
-</script>
-<script>
-     //Cập nhật
-     
-//                document.addEventListener('click',function(e){
-                    
-//                    if(e.target && e.target.id === 'edit-btn'){
-//                        
-//                        let form = document.getElementById('Productform');
-//                        form.action='save-product';
-//                        
-//                        
-//                        let row = e.target.closest('tr');
-//                        document.getElementById("IdProduct").value = row.cells[0].innerText;
-//
-//                        document.getElementById("nameProduct1").value = row.cells[1].innerText;
-//                        document.getElementById("introduce1").value = row.cells[2].innerText;
-////                        document.getElementById("image1"). = row.cells[3].innerText; 
-//                        document.getElementById("size1").value = row.cells[4].innerText;
-//                        document.getElementById("stuff1").value = row.cells[5].innerText;
-//                        document.getElementById("quantity1").value = row.cells[6].innerText;
-//                        document.getElementById("price1").value = row.cells[8].innerText;
-//                        document.getElementById("portray1").value = row.cells[7].innerText;
-//                        document.getElementById("nameGroup").value = row.cells[1].innerText;
-//                        document.getElementById("portray").value = row.cells[2].innerText;
-                        
-//                        existingContent.clear();
-//                        list.forEach(function(id){
-//                            //Tìm dòng trong bảng table có mã tương tự
-//                            let sourceRow = table.querySelector('tr[data-permissionid="'+id+'"]');
-//                            
-//                            if (sourceRow) {
-//                                // Clone dòng đã tìm thấy
-//                                let clonedRow = sourceRow.cloneNode(true);
-//      
-//                                // Chèn vào bảng tableChoice
-//                                let a = clonedRow.closest('tr');
-//                                if(a){
-//                                    const cell = a.querySelector('td');
-//                                    const rowContent = cell.textContent;
-//                                    existingContent.add(rowContent);
-//                                    addRowToTableChoice(rowContent);
-//                                }
-//                            }
-//                        });
-                        
-//                    }
-//                    else if(e.target && e.target.id === 'btn-save'){
-//                        e.preventDefault();
-//                        $.ajax({
-//                            url:"/J2EE_Project_Admin/add-product",
-//                            type: 'POST',
-//                            data: ${'#Productform'}.seriablize(),
-//                            success: function (response) {
-//                                alert("Add thành công");
-//                            }
-//                        });
-//                    }
-//                });
         
+        function isValidEmail(email) {
+            // Biểu thức chính quy để kiểm tra định dạng email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Sử dụng test() để kiểm tra xem email có khớp với biểu thức chính quy hay không
+            return emailRegex.test(email);
+        }
+        const emailtxt = document.getElementById("email");
+        
+        emailtxt.addEventListener('input',function (){
+//            alert(emailtxt.value);
+            const note = document.getElementById("alert-danger");
+            const note1 = document.getElementById("alert-success");
+                    if(emailtxt.value===""){
+                        note.style.display ='none';
+                        note1.style.display ='none';
+                    }
+                    else if (isValidEmail(emailtxt.value)) {
+                        note1.innerHTML ='Email hợp lệ';
+                        note.style.display ='none';
+                        note1.style.display ='block';
+                    } else {
+                        note.innerHTML ='Email không hợp lệ';
+                        note1.style.display ='none';
+                        note.style.display ='block';
+                    }
+        });
+        
+        function isValidPhoneNumber(phoneNumber) {
+            // Biểu thức chính quy kiểm tra số điện thoại
+            var phoneRegex = /^\d{10,12}$/;
+
+            // Sử dụng test() để kiểm tra xem số điện thoại có khớp với biểu thức chính quy hay không
+            return phoneRegex.test(phoneNumber);
+        }
+        const phonetxt = document.getElementById("numberPhone");
+        phonetxt.addEventListener('input',function (){
+//            alert(emailtxt.value);
+            const note = document.getElementById("alert-danger1");
+            const note1 = document.getElementById("alert-success1");
+                    if(phonetxt.value===""){
+                        note.style.display ='none';
+                        note1.style.display ='none';
+                    }
+                    else if (isValidPhoneNumber(phonetxt.value)) {
+                        note1.innerHTML ='Số điện thoại hợp lệ';
+                        note.style.display ='none';
+                        note1.style.display ='block';
+                    } else {
+                        note.innerHTML ='Số điện thoại không hợp lệ';
+                        note1.style.display ='none';
+                        note.style.display ='block';
+                    }
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            var adminOnlyElements = document.getElementsByClassName('only-admin');
+            var position = '<%=position%>';
+            
+            for (var i = 0; i < adminOnlyElements.length; i++) {
+                if(position === 'admin'){
+//                    adminOnlyElements[i].style.display = 'block';
+                }else
+                    adminOnlyElements[i].style.display = 'none';
+            }
+                var table = document.getElementById('dataTable');
+            
+                const existingContent = new Set();
+                
+                let defaultAction = 'add-Staff';
+                
+                var clickButtonEdit = false;
+                //Cập nhật
+                document.addEventListener('click',function(e){
+                    
+                    if(e.target && e.target.id === 'edit_btn'){
+                        let form = document.getElementById('StaffForm');
+                        form.action='update-Staff';
+                        clickButtonEdit = true;
+                        
+                        let row = e.target.closest('tr');
+                        
+                        document.getElementById("idStaff").value = row.cells[0].innerText;
+                        document.getElementById("email").value = row.cells[1].innerText;
+                        document.getElementById("fullName").value = row.cells[2].innerText;
+                        document.getElementById("address").value = row.cells[3].innerText;
+                        document.getElementById("numberPhone").value = row.cells[4].innerText;
+                        var idStaff = document.getElementById("idStaff").value;
+                $.ajax({
+                url: "loadPassword",  // Đường dẫn tương đối hoặc đầy đủ đến tài nguyên xử lý đăng nhập
+                type: "post",  // Phương thức HTTP là POST để bảo mật thông tin đăng nhập
+                
+                data: {
+                    idStaff : idStaff
+                },  // Sử dụng serialize để lấy dữ liệu từ form
+                success: function (data) {
+                     try {
+
+                // Xử lý phản hồi từ server
+                    if (data.pass !== "") {
+                        // Nếu đăng nhập thành công, thực hiện chuyển hướng hoặc các hành động khác
+                        document.getElementById("password").value = data.pass;
+                    } else {
+                        // Nếu đăng nhập không thành công, hiển thị thông báo lỗi
+                        alert("không thành công");
+                    }
+                    } catch (error) {
+            console.error("Lỗi phân tích JSON:", error);
+        }
+                },
+                error: function (xhr) {
+                    // Xử lý lỗi nếu có
+                }
+            });             
+                        document.getElementById("bankSelect").value = row.cells[5].innerText;
+                        document.getElementById("accountNumber").value = row.cells[6].innerText;
+                        document.getElementById("idGroup").value = row.cells[7].innerText;
+                        existingContent.clear();
+                                                
+                    }
+                    else if(e.target && e.target.id === 'exit-btn'){
+                        let form = document.getElementById('StaffForm');
+                        form.action=defaultAction;
+                    }
+                });
+                document.addEventListener('click', function (e) {
+                    // Kiểm tra xem phần tử được click có thuộc modal không
+                    let isModalClick = isDescendant(document.getElementById('addadminprofile'),e.target);
+                    if ((isModalClick===false && clickButtonEdit === false)) {
+                        let form = document.getElementById('StaffForm');
+                        // Khôi phục giá trị mặc định của action khi click ra ngoài modal
+                        form.action = defaultAction;
+                    }
+
+                    clickButtonEdit = false;
+ 
+                });
+
+            });
+            function isDescendant(parent, child) {
+                let node = child.parentNode;
+
+                while (node !== null) {
+                    if (node === parent) {
+                        return true;
+                    }
+                    node = node.parentNode;
+                }
+
+                return false;
+            }
+            
+            $("#StaffForm").submit(function (event) {
+                // Lấy giá trị của action từ form
+                const formAction = $(this).attr('action');
+                // Kiểm tra xem action có phải là "add-Staff" không
+                if (formAction === "add-Staff") {
+                    event.preventDefault();
+                    const note = document.getElementById("alert-danger");
+                    const note1 = document.getElementById("alert-success");
+                    $.ajax({
+                        url: "checkAccount",  // Đường dẫn tương đối hoặc đầy đủ đến tài nguyên xử lý đăng nhập
+                        type: "post",  // Phương thức HTTP là POST để bảo mật thông tin đăng nhập
+                        data: $("#StaffForm").serialize(),  // Sử dụng serialize để lấy dữ liệu từ form
+                        success: function (data) {
+                            try {
+
+                            // Xử lý phản hồi từ server
+                                if (data.result === "1") {
+                                // Nếu đăng nhập thành công, thực hiện chuyển hướng hoặc các hành động khác
+                                    note1.style.display ='none';
+                                    note.style.display ='block';
+                                    note.innerHTML="Email đã được đăng ký";
+                                } else {
+                                    // Nếu đăng nhập không thành công, hiển thị thông báo lỗi
+                                    $.ajax({
+                                        url: "add-Staff",  // Đường dẫn tương đối hoặc đầy đủ đến tài nguyên xử lý đăng nhập
+                                        type: "post",  // Phương thức HTTP là POST để bảo mật thông tin đăng nhập
+                                        data: $("#StaffForm").serialize(), // Sử dụng serialize để lấy dữ liệu từ form
+                                        success: function(data){
+                                            window.location.href = "/J2EE_Project_Admin-main/staff";
+                                        },
+                                        error: function(xhr){
+                                        }
+                            
+                                    });
+                                }
+                            } catch (error) {
+                                console.error("Lỗi phân tích JSON:", error);
+                            }
+                        },
+                        error: function (xhr) {
+                            // Xử lý lỗi nếu có
+                        }
+                    });
+                }
+        });
+            
+            const apiURL = "https://api.vietqr.io/v2/banks";
+            fetch(apiURL)
+            .then(response => response.json())
+            .then(data=>{
+                data.data.forEach(bank =>{
+                    const option = document.createElement('option');
+                    option.value = bank.code;
+                    option.text = bank.name+' ('+bank.shortName+')';
+                    
+                    const logoImg = document.createElement('img');
+                    logoImg.src = bank.logo;
+                    logoImg.alt = 'Logo ${bank.name}';
+                    logoImg.classList.add('bank-logo');
+                    
+                    option.prepend(logoImg);
+                    
+                    bankSelect.appendChild(option);
+                });
+    })
+    .catch(error => console.error('Error fetching data:', error));
+            
 </script>
 <%@include file="component/footer.jsp" %>

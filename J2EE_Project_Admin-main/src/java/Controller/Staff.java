@@ -127,7 +127,8 @@ public class Staff extends HttpServlet {
                     accountDAL.deleteAccountByIdStaff(idStaff);
                 }
                 
-                
+                                    response.sendRedirect("staff");
+
               }
            else if (url.contains("update-Staff")) {
                String idStaff = String.valueOf(request.getParameter("idStaff"));
@@ -153,6 +154,7 @@ public class Staff extends HttpServlet {
                     }
                     AccountModel accountModel= new AccountModel(idACcount, idStaff, email, password, status);
                     accountDAL.updateAccount(accountModel);
+                    response.sendRedirect("staff");
                }}
                else if(url.contains("loadPassword")){
                    String idStaff = String.valueOf(request.getParameter("idStaff"));

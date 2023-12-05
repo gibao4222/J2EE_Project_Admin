@@ -8,7 +8,14 @@
 
 <%@ page session="true" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%
+    String email = (String)session.getAttribute("email");
+    
+    if(email == null || email.isEmpty()){
+        response.sendRedirect("loginAdmin");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -55,7 +62,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active" id="dashboardMenu">
-                <a class="nav-link" href="home">
+                <a class="nav-link" href="admin">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -123,7 +130,7 @@
                         <h6 class="collapse-header">Thông tin</h6>
                         <a class="collapse-item" href="supplier">Nhà Sản Xuất</a>
                         <a class="collapse-item" href="product">Danh Sách Sản Phẩm</a>
-                        <a class="collapse-item" href="category">Danh Mục Sản Phẩm</a>
+                        <a class="collapse-item" href="show-category">Danh Mục Sản Phẩm</a>
                         <a class="collapse-item" href="promotion">Chương Trình Khuyến Mãi</a>
                     </div>
                 </div>
@@ -357,7 +364,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                               <a class="dropdown-item" href="logoutAdmin">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>

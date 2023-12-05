@@ -26,7 +26,7 @@
                     <div class="hero__search">
                         <div class="hero__search__form">
                             
-                            <form action="Search" method="POST">
+                            <form action="Search    " method="POST">
                                 <!-- <div class="hero__search__categories">
                                     All Categories
                                     <span class="arrow_carrot-down"></span>

@@ -167,7 +167,7 @@
                 
                 <div class="col-lg-6">
                      <div class="shoping__cart__btns">
-                        <a href="home" class="primary-btn cart-btn">Quay lại</a>
+                        <a href="." class="primary-btn cart-btn">Quay lại</a>
                         
                     </div>
                 </div>

@@ -72,7 +72,8 @@ public class checkoutController extends HttpServlet {
                 HttpSession session = request.getSession();
 String idCustomer = (String) session.getAttribute("idCustomer");
 if(idCustomer==null){
-    response.sendRedirect("login.jsp");
+    request.setAttribute("message", "vui lòng đăng nhập để thanh toán giỏ hàng");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
 }else
      if(uri.contains("checkout")) { // [Tính diện tích].Click
          

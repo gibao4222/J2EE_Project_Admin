@@ -91,14 +91,14 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.php"><img src="resources/img2/3.png" alt="" ></a>
+                        <a href="home"><img src="resources/img2/3.png" alt="" ></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
                             <li class="active"><a href="home">Trang chủ</a></li>
-                            <li><a href="./product.php">Sản phẩm</a></li>
+                           
                             
                              <%
         String id = (String) session.getAttribute("idCustomer");
