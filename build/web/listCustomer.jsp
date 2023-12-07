@@ -53,7 +53,7 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">Danh Sách Khách Hàng
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
+            <button type="button" class="btn btn-primary only-admin" data-toggle="modal" data-target="#addadminprofile">
               Thêm Khách Hàng
             </button>
     </h6>
@@ -71,8 +71,8 @@
             <th>FullName</th>
             <th>Address</th>
             <th>NumberPhone </th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th class="only-admin">Edit</th>
+            <th class="only-admin">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -83,14 +83,14 @@
                     <td>${cus.fullName}</td>
                     <td>${cus.address}</td>
                     <td>${cus.numberPhone}</td>
-                    <td>
+                    <td class="only-admin">
                         <form action="update-Customer" method="post">
                             <!--<input type="hidden" name="edit_user" value="<?php echo $result['admin_User']; ?>">-->
                             <button  id="edit_btn" type="button" name="edit_btn" class="btn btn-success"data-toggle="modal" data-target="#addadminprofile"> Sửa </button>
                               <!--<a href="editCustomer.jsp" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">EDIT</a>--> 
                         </form>
                      </td>
-                      <td>
+                     <td class="only-admin">
                         <form action="delete-Customer" method="post">
                           <input type="hidden" name="idCustomer" value="${cus.idCustomer}">
                           <button type="submit" name="delete_btn" class="btn btn-danger"> Xóa </button>

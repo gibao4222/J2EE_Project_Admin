@@ -128,7 +128,7 @@ public class StaffDAL extends MyDatabaseManager{
         public int checktk(String email)  {
            int kq=0;
            try{
-        String query = "SELECT * FROM account WHERE email  LIKE '%"+email+"%'";
+        String query = "SELECT * FROM account WHERE email  = '"+email+"'";
        
         ResultSet rs = AccountDAL.doReadQuery(query);
           if (rs.next()) {

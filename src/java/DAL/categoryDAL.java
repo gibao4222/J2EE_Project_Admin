@@ -44,9 +44,10 @@ public class categoryDAL extends MyDatabaseManager{
       public int insertcategory(category ps){
           int result = 0;
           try{
-        String query = "Insert category (nameCategory) VALUES (?)";
+        String query = "Insert category (idCategory,nameCategory) VALUES (?,?)";
         PreparedStatement p = categoryDAL.getConnection().prepareStatement(query);
-        p.setString(1, ps.getNameCategory());
+        p.setString(1, ps.getIdCategory());
+        p.setString(2, ps.getNameCategory());
        
         result = p.executeUpdate();
         } catch (Exception e) {
@@ -54,22 +55,22 @@ public class categoryDAL extends MyDatabaseManager{
              }
         return result;
     }
-       public int deletecategory(int id) {
+       public int deletecategory(String id) {
            int result = 0 ;
            try{
         String query = "DELETE FROM category WHERE idCategory   = ?";
         PreparedStatement p = categoryDAL.getConnection().prepareStatement(query);
-        p.setInt(1, id);
+        p.setString(1, id);
          result = p.executeUpdate();
          } catch (Exception e) {
              System.out.println(e);
              }
         return result;
     }
-       public category findcategory(int id)  {
+       public category findcategory(String id)  {
             category ps = new category();
            try{
-        String query = "SELECT * FROM category WHERE idCategory = " + id + " ";
+        String query = "SELECT * FROM category WHERE idCategory = '" + id + "' ";
         PreparedStatement p = categoryDAL.getConnection().prepareStatement(query);
         ResultSet rs = p.executeQuery();
         if (rs != null) {
@@ -86,7 +87,7 @@ public class categoryDAL extends MyDatabaseManager{
         return ps;
         
     }
-       public int updatecategory(category ps, int id) {
+       public int updatecategory(category ps, String id) {
            int result = 0 ;
            try{
         String query = "Update category SET nameCategory = ?"
@@ -106,8 +107,8 @@ public class categoryDAL extends MyDatabaseManager{
       public static void main(String[] args) {
         categoryDAL p = new categoryDAL();
        
-         List<category> list  =  p.readcategory();
-         System.out.println(list.get(0).getIdCategory());
+         
+         System.out.println(p.deletecategory("CA002"));
 //         category ca = new category();
 ////         ca.setNameCategory("aaaaaa");
 ////         p.insertcategory(ca);

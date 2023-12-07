@@ -36,8 +36,7 @@ public class PromotionDetailDAL extends MyDatabaseManager{
         
         return list;
     }
-    public ArrayList getIdProductByIdPromo(String idPromo){
-        System.out.println("heeellllo");
+    public String getIdProductByIdPromo(String idPromo){
          ArrayList<String> list = new ArrayList<>();
         try {
            
@@ -51,8 +50,12 @@ public class PromotionDetailDAL extends MyDatabaseManager{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        String strIdProduct ="";
+            for (String c :list){
+                strIdProduct += c+",";
+            }
         
-        return list;
+        return strIdProduct;
     }
     public int addPromotionDetail(PromotionDetailModel pd){
         int rs = 0;
@@ -87,9 +90,9 @@ public class PromotionDetailDAL extends MyDatabaseManager{
     
     public static void main(String[] args) {
         PromotionDetailDAL p = new PromotionDetailDAL();
-        ArrayList<String> list=p.getIdProductByIdPromo("Pr001");
-        for(String pd : list){
-            System.out.println(pd);
-        }
+//        ArrayList<String> list=p.getIdProductByIdPromo("Pr001");
+//        for(String pd : list){
+//            System.out.println(pd);
+//        }
     }
 }

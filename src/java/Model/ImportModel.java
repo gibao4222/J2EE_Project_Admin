@@ -9,19 +9,30 @@ package Model;
  * @author Admin
  */
 public class ImportModel {
-     String idImport,idSupplier,	dateCreated,	totalBill;
+     String idImport,idSupplier,	dateCreated,	totalBill,idPerson;
 
-    public ImportModel(String idImport, String idSupplier, String dateCreated, String totalBill) {
+    public ImportModel(String idImport, String idSupplier, String dateCreated, String totalBill,String idPerson) {
         this.idImport = idImport;
         this.idSupplier = idSupplier;
         this.dateCreated = dateCreated;
         this.totalBill = totalBill;
+        this.idPerson = idPerson;
     }
 
     public ImportModel() {
        
     }
 
+    public String getIdPerson() {
+        return idPerson;
+    }
+
+    public void setIdPerson(String idPerson) {
+        this.idPerson = idPerson;
+    }
+
+    
+    
     public String getIdImport() {
         return idImport;
     }

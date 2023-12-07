@@ -21,7 +21,7 @@ import java.util.ArrayList;
  *
  * @author Admin
  */
-@WebServlet({"/order" ,"/add-Order","/delete-Order","/update-Order"})
+@WebServlet({"/order" ,"/add-Order","/delete-Order","/update-Order","/update-Status-Order"})
 public class OrderServlet extends HttpServlet {
    
     /** 
@@ -112,6 +112,11 @@ public class OrderServlet extends HttpServlet {
             int status = Integer.parseInt(request.getParameter("status"));
             OrderModel od = new OrderModel(idOrder, idCustomer, dateCreated, totalBill, status);
             odDAL.updateOrder(od);
+        }
+        else if(url.contains("update-Status-Order")){
+            String idOrder = request.getParameter("idOrder");
+            int status = Integer.parseInt(request.getParameter("status"));
+            odDAL.updateStatusOrder(status, idOrder);
         }
         response.setContentType("application/json");
 //        response.getWriter().write(jsonResponse.toString());

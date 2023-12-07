@@ -13,9 +13,9 @@
 <%@include file="component/navbar.jsp" %>
 
 
-<div class="modal fade">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
+<div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="min-width: 750px" role="document">
+    <div class="modal-content" style="width: 750px; align-content: center">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Thêm Mã Giảm Giá</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -45,35 +45,55 @@
             <div class="form-group">
 
                 <label style="margin-left: 15px"> Ngày Bắt Đầu </label>
-                <input type="text" style="width: 90%;margin: auto" name="dateStart" id="dateStart" class="form-control" placeholder="Enter Date Start">
+                <input type="date" style="width: 90%;margin: auto" name="dateStart" id="dateStart" class="form-control" placeholder="Enter Date Start">
 
             </div>
             
             <div class="form-group">
 
                 <label style="margin-left: 15px"> Ngày Kết Thúc </label>
-                <input type="text" style="width: 90%;margin: auto" name="dateEnd" id="dateEnd" class="form-control" placeholder="Enter Date End">
+                <input type="date" style="width: 90%;margin: auto" name="dateEnd" id="dateEnd" class="form-control" placeholder="Enter Date End">
 
             </div>
-            
             <div class="form-group">
 
                 <label style="margin-left: 15px"> Chiết Khấu </label>
-                <input type="text" style="width: 90%;margin: auto" name="saleOff" id="saleOff" class="form-control"  placeholder="Enter Discount">
+                <input type="text" style="width: 90%;margin: auto" name="saleOff" id="saleOff" class="form-control"  placeholder="Enter Discount" oninput="validateNumber(this)">
                 
             </div>
             
             <div class="form-group">
 
                 <label style="margin-left: 15px"> Giảm Tối Đa </label>
-                <input type="text" style="width: 90%;margin: auto" name="reduceMax" id="reduceMax" class="form-control" placeholder="Enter Reduce Max">
+                <input type="text" style="width: 90%;margin: auto" name="reduceMax" id="reduceMax" class="form-control" placeholder="Enter Reduce Max"oninput="formatAndDisplayCurrency(this)">
+                <script>
+        function formatAndDisplayCurrency(input) {
+            // Lấy giá trị nhập vào từ người dùng
+            let inputValue = input.value;
 
+            // Xóa tất cả các ký tự không phải số
+            inputValue = inputValue.replace(/\D/g, '');
+
+            // Định dạng số theo kiểu tiền tệ VNĐ
+            let formattedValue = Number(inputValue).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+
+            // Gán giá trị đã định dạng vào ô input
+            input.value = formattedValue;
+        }
+        // Sự kiện để kiểm tra nếu người dùng nhấn nút xóa (backspace)
+        document.getElementById('reduceMax').addEventListener('keydown', function(event) {
+            if (event.key === 'Backspace') {
+                // Khôi phục giá trị gốc khi người dùng nhấn nút xóa
+                this.value = this.dataset.originalValue;
+            }
+        });
+    </script>
             </div>
             
             <div class="form-group">
                 <label style="margin-left: 15px"> Danh Sách Sản Phẩm </label>
                 <div class="container-fluid" style="display: flex; justify-content: space-between; gap: 10px;">
-                    <div class="card shadow mb-4"style="min-width: 650px;">
+                    <div class="card shadow mb-4"style="max-width: 650px;min-width: 650px;max-height: 260px !important; overflow: auto !important">
                         <div class="card-body" >
                             <div class="table-responsive table-Cover">
                                 
@@ -93,7 +113,7 @@
 
                                                         <td>${c.idProduct}</td>
                                             <td>${c.nameProduct}</td>
-                                            <td><img src="./resources/img/${c.image}" style="width: 120px; height: 100px" ></td>
+                                            <td><img src="resources/img/${c.image}" style="width: 80px" ></td>
 
                                             
                                         </tr>
@@ -193,6 +213,33 @@
 </div>
 
 <script>
+    document.getElementById('dateEnd').addEventListener('change', function() {
+            validateDateRange();
+        });
+
+        function validateDateRange() {
+            // Lấy giá trị ngày bắt đầu và ngày kết thúc
+            var dateStart = document.getElementById('dateStart').value;
+            var dateEnd = document.getElementById('dateEnd').value;
+
+            // Nếu ngày kết thúc trước ngày bắt đầu, hiển thị thông báo và xóa giá trị ngày kết thúc
+            if (dateEnd < dateStart) {
+                alert('Ngày kết thúc không được trước ngày bắt đầu');
+                document.getElementById('dateEnd').value = '';
+            } 
+        }
+    function validateNumber(input){
+        input.value = input.value.replace(/[^\d.]/g, '');
+        if (input.value !== '') {
+        let numberValue = parseFloat(input.value);
+
+        // Kiểm tra giá trị có nằm trong khoảng [0, 100] hay không
+        if (numberValue < 0 || numberValue > 100) {
+            // Nếu không, đặt giá trị về giá trị cuối cùng hợp lệ (0 hoặc 100)
+            input.value = Math.min(100, Math.max(0, numberValue));
+        }
+    }
+    }
     //Hành động của table
     table = document.getElementById("dataTable");
     const listProduct = new Set();
@@ -227,6 +274,7 @@
 //    });
 
     //Thêm và Cập nhật
+    
                 document.addEventListener('click',function(e){
                         if(e.target && e.target.id ==='btn-Save'){
                             
@@ -240,7 +288,7 @@
                                     productStr+=productList[i];
                                 }
                             }
-       
+                            alert(productStr);
                             document.getElementById("productStr").value = productStr;
                         }
                         else if(e.target && e.target.id ==='edit_btn'){
@@ -251,11 +299,12 @@
                             let row = e.target.closest('tr');
                         
                             document.getElementById("idPromo").value = row.cells[0].innerText;
+                            const idPromotion =row.cells[0].innerText;
                             document.getElementById("namePromo").value = row.cells[2].innerText;
                             document.getElementById("code").value = row.cells[1].innerText;
                             let time = row.cells[3].innerText.split('->');
-                            document.getElementById("dateStart").value = time[0];
-                            document.getElementById("dateEnd").value = time[1];
+                            document.getElementById("dateStart").value = time[0].trim();
+                            document.getElementById("dateEnd").value = time[1].trim();
                             document.getElementById("saleOff").value = row.cells[4].innerText.slice(0,-1);
                             let permissionCell = row.cells[4];
                             let permissionInput = permissionCell.querySelector('input');
@@ -276,17 +325,24 @@
                             
                                   
                             $.ajax({
-                                url: "/J2EE_Project_Admin/load",
-                                type: "get", //send it through get method
+                                url: "/J2EE_Project_Admin/loadPromtionDetaill",
+                                type: "post", //send it through get method
                                 data: {
-                                    
+                                    idPromotion : idPromotion
                                 },
                                 success: function (data) {
-//                                    var dataa = ${data};
-//                                    alert(dataa.length);
+                                    console.log(data);
+//                                    try {
+//                                    if(data.str !==""){
+////                                        var arrIdProduct =data.strIdProduct.split(',');
+//                                        
+//                                    }
+//                                    } catch (error) {
+//            console.error("Lỗi phân tích JSON:", error);
+//        }
                                 },
                                 error: function (xhr) {
-                                    alert("kho load");
+                                    
                                     //Do Something to handle error
                                 }
                             });

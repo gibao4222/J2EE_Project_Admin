@@ -26,6 +26,9 @@
             <div class="form-group">
                 <label> Tên Người Dùng </label>
                 <input id="fullName" type="text" name="fullName" required class="form-control" placeholder="Enter Username">
+                <div class="alert-danger" id="alert-danger" role="alert">
+                
+                </div>
             </div>            
             <div class="form-group">
                 <label>Email</label>
@@ -41,14 +44,20 @@
              <div class="form-group">
                 <label>Mật khẩu </label>
                 <input id="password" type="text" name="password" class="form-control" placeholder="Enter Password">
+                <div class="alert-danger" id="alert-danger" role="alert">
+                
+            </div>
             </div>             
             <div class="form-group">
                 <label> Địa Chỉ</label>
                 <input id="address" type="text" name="address" class="form-control" value="" placeholder="Enter Address">
+                <div class="alert-danger" id="alert-danger" role="alert">
+                
+            </div>
             </div>
             <div class="form-group">
                 <label> Số điện thoại </label>
-                <input id="numberPhone" type="text" name="numberPhone" class="form-control" value="" placeholder="Enter Number Phone">
+                <input id="numberPhone" type="text" name="numberPhone" class="form-control" value="" placeholder="Enter Number Phone" oninput="validatePhoneNumber(this)">
                 <div class="alert-danger" id="alert-danger1" role="alert">
                 
             </div>
@@ -62,13 +71,14 @@
                 <select id="bankSelect" class="form-control" name="bankAccount">
                 
                 </select>
-                <div class="form-group">
-                
-            </div>
+
             </div>
             <div class="form-group">
                 <label> Số Tài Khoản </label>
                 <input id="accountNumber" type="text" name="accountNumber" class="form-control" value="" placeholder="Enter Account Number">
+                <div class="alert-danger" id="alert-danger" role="alert">
+                
+            </div>
             </div>
             <div class="form-group">
                 <label>Nhóm quyền</label>
@@ -182,7 +192,8 @@
         
         emailtxt.addEventListener('input',function (){
 //            alert(emailtxt.value);
-            const note = document.getElementById("alert-danger");
+            const inputArr = document.querySelectorAll("#StaffForm .form-group .alert-danger");
+            const note = inputArr[1];
             const note1 = document.getElementById("alert-success");
                     if(emailtxt.value===""){
                         note.style.display ='none';
@@ -201,15 +212,16 @@
         
         function isValidPhoneNumber(phoneNumber) {
             // Biểu thức chính quy kiểm tra số điện thoại
-            var phoneRegex = /^\d{10,12}$/;
+            var phoneRegex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
 
             // Sử dụng test() để kiểm tra xem số điện thoại có khớp với biểu thức chính quy hay không
             return phoneRegex.test(phoneNumber);
         }
         const phonetxt = document.getElementById("numberPhone");
         phonetxt.addEventListener('input',function (){
-//            alert(emailtxt.value);
-            const note = document.getElementById("alert-danger1");
+//            alert(phonetxt.value);
+            const inputArr = document.querySelectorAll("#StaffForm .form-group .alert-danger");
+            const note = inputArr[4];
             const note1 = document.getElementById("alert-success1");
                     if(phonetxt.value===""){
                         note.style.display ='none';
@@ -225,6 +237,11 @@
                         note.style.display ='block';
                     }
         });
+        
+        function validatePhoneNumber(input) {
+            // Loại bỏ mọi ký tự không phải số từ giá trị nhập vào
+            input.value = input.value.replace(/\D/g, '');
+        }
         
         document.addEventListener('DOMContentLoaded', function() {
             var adminOnlyElements = document.getElementsByClassName('only-admin');
@@ -268,7 +285,7 @@
                 },  // Sử dụng serialize để lấy dữ liệu từ form
                 success: function (data) {
                      try {
-
+                         console.log(data);
                 // Xử lý phản hồi từ server
                     if (data.pass !== "") {
                         // Nếu đăng nhập thành công, thực hiện chuyển hướng hoặc các hành động khác
@@ -322,15 +339,52 @@
 
                 return false;
             }
-            
             $("#StaffForm").submit(function (event) {
+                const inputArr = document.querySelectorAll("#StaffForm .form-group input");
+                const alert_dangerArr = document.querySelectorAll("#StaffForm .form-group .alert-danger");
+                const note_danger = alert_dangerArr[1];
+                const note_danger1 = alert_dangerArr[4];
+                const note_success = document.getElementById("alert-success");
+                const note_success1 = document.getElementById("alert-success1");
+                
+                
+//                cần sửa
+//                var count=0;
+//                    for(var i=0;i<inputArr.length;i++){
+//                        if(inputArr[i].value===""){
+//                            alert_dangerArr[i].innerHTML = 'Vui lòng nhập thông tin.';
+//                            alert_dangerArr[i].style.display = 'block';
+//                            count++;
+//                        }
+//                    }
+//                if(count !== 0){
+//                        event.preventDefault();
+//                        alert("ngăn chặn rồi");
+//                }
+
+
+
+                if(note_danger.innerHTML === 'Email không hợp lệ'|| note_danger1.innerHTML === 'Số điện thoại không hợp lệ'){
+                    event.preventDefault();
+                    if(note_danger.innerHTML === 'Email không hợp lệ'){
+                    
+                        note_danger.style.display = 'block';
+                        note_success.style.display = 'none';
+                        note_danger.innerHTML = 'Vui lòng kiểm tra lại thông tin.';
+                    }
+                    if(note_danger1.innerHTML === 'Số điện thoại không hợp lệ'){
+                    
+                        note_danger1.style.display = 'block';
+                        note_success1.style.display = 'none';
+                        note_danger1.innerHTML = 'Vui lòng kiểm tra lại thông tin.';
+                    }
+                }
+                else{
                 // Lấy giá trị của action từ form
                 const formAction = $(this).attr('action');
                 // Kiểm tra xem action có phải là "add-Staff" không
                 if (formAction === "add-Staff") {
                     event.preventDefault();
-                    const note = document.getElementById("alert-danger");
-                    const note1 = document.getElementById("alert-success");
                     $.ajax({
                         url: "/J2EE_Project_Admin/checkAccount",  // Đường dẫn tương đối hoặc đầy đủ đến tài nguyên xử lý đăng nhập
                         type: "post",  // Phương thức HTTP là POST để bảo mật thông tin đăng nhập
@@ -341,9 +395,9 @@
                             // Xử lý phản hồi từ server
                                 if (data.result === "1") {
                                 // Nếu đăng nhập thành công, thực hiện chuyển hướng hoặc các hành động khác
-                                    note1.style.display ='none';
-                                    note.style.display ='block';
-                                    note.innerHTML="Email đã được đăng ký";
+                                    note_success.style.display ='none';
+                                    note_danger.style.display ='block';
+                                    note_danger.innerHTML="Email đã được đăng ký";
                                 } else {
                                     // Nếu đăng nhập không thành công, hiển thị thông báo lỗi
                                     $.ajax({
@@ -366,9 +420,11 @@
                             // Xử lý lỗi nếu có
                         }
                     });
-                }
+                }}
+                
         });
-            
+            // Thêm kiểm tra trạng thái bất kỳ ô input nào bị bỏ trống
+
             const apiURL = "https://api.vietqr.io/v2/banks";
             fetch(apiURL)
             .then(response => response.json())

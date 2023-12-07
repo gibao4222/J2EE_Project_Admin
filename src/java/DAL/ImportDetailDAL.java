@@ -90,7 +90,7 @@ public class ImportDetailDAL extends MyDatabaseManager{
         public int deleteImportDetail(String idImportDetail){
         int rs = 0;
         try {
-            String query = "DELETE FROM importdetail WHERE idImportDetail = ?";
+            String query = "DELETE FROM importdetail WHERE idImport = ?";
             PreparedStatement p = ImportDetailDAL.getConnection().prepareStatement(query);
             p.setString(1, idImportDetail);
             rs = p.executeUpdate();
@@ -98,5 +98,34 @@ public class ImportDetailDAL extends MyDatabaseManager{
             e.printStackTrace();
         }
         return rs;
+    }
+        
+        public ArrayList readImportDetailwithidImport(String idImport) {
+        ArrayList<ImportDetailModel> list = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM importdetail WHERE idImport = '"+ idImport+"'";
+            ResultSet rs = ImportDetailDAL.doReadQuery(query);
+            if (rs != null) {
+                while (rs.next()) {
+                    ImportDetailModel id = new ImportDetailModel();
+                    id.setIdImportDetail(rs.getString("idImportDetail"));
+                    id.setIdImport(rs.getString("idImport"));
+                    id.setIdProduct(rs.getString("idProduct"));
+                    id.setDateCreated(rs.getString("dateCreated"));
+                    id.setQuantity(rs.getInt("quantity"));
+                    id.setPrice(rs.getString("price"));
+                    id.setTotal(rs.getString("total"));
+                    list.add(id);
+                    System.out.println(id.getIdImport());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public static void main(String[] args) {
+        ImportDetailDAL ip = new ImportDetailDAL();
+        ip.deleteImportDetail("IP002");
     }
 }

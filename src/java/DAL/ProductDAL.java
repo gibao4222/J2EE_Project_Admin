@@ -37,7 +37,6 @@ public class ProductDAL extends MyDatabaseManager{
                      pr.setQuantity(rs.getInt("quantity"));
                      pr.setPrice(rs.getFloat("price"));
                      pr.setPortray(rs.getString("portray"));
-
                      
                      list.add(pr);
                  }
@@ -53,7 +52,7 @@ public class ProductDAL extends MyDatabaseManager{
         try {
             String query = "INSERT INTO product (idProduct,idCategory,nameProduct,introduce,image,size,stuff,quantity,price,portray) VALUES(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement p = ProductDAL.getConnection().prepareStatement(query);
-            p.setString(1, (new CreateID("PR")).create());
+            p.setString(1, pr.getIdProduct());
             p.setString(2, pr.getIdCategory());
             p.setString(3, pr.getNameProduct());
             p.setString(4, pr.getIntroduce());
@@ -68,6 +67,38 @@ public class ProductDAL extends MyDatabaseManager{
             e.printStackTrace();
         }
         return rs;
+    }
+    
+    public ProductModel findproductbyId_Product(String id_product)  {
+          ProductModel s = new ProductModel();
+         try {
+                 
+            
+        String query = "SELECT * FROM product WHERE idProduct = '"+ id_product + "'";
+        ResultSet rs = ProductDAL.doReadQuery(query);
+       
+
+        if (rs != null) {
+            while (rs.next()) {
+
+                s.setIdProduct(rs.getString("idProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setPrice(rs.getFloat("price"));
+                 s.setIdCategory(rs.getString("idCategory"));
+                 s.setQuantity(rs.getInt("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+
+                                                               
+            }
+        }
+         } catch (Exception e) {
+             System.out.println(e);
+             }
+        return s;
     }
     
     public ArrayList findproductbyId_category(int id_category)  {
@@ -115,33 +146,76 @@ public class ProductDAL extends MyDatabaseManager{
              }
         return result;
     }
-    
-    public ProductModel findProduct(int id)  {
-            ProductModel ps = new ProductModel();
-           try{
-        String query = "SELECT * FROM product WHERE IdProduct  = " + id + " ";
-        PreparedStatement p = ProductDAL.getConnection().prepareStatement(query);
-        ResultSet rs = p.executeQuery();
+    public ArrayList findproductbyName(String name)  {
+          ArrayList list = new ArrayList();
+         try {
+                 
+            
+        String query = "SELECT * FROM product WHERE nameProduct LIKE '%"+name+"%'";
+        ResultSet rs = ProductDAL.doReadQuery(query);
+       
+
         if (rs != null) {
             while (rs.next()) {
-                ps.setIdProduct(rs.getString("IdProduct"));
-                ps.setIntroduce(rs.getString("introduce"));
-                ps.setNameProduct(rs.getString("introduce"));
-                ps.setImage(rs.getString("image"));
-                ps.setSize(rs.getString("size"));
-                ps.setStuff(rs.getString("stuff"));
-                ps.setQuantity(Integer.parseInt(rs.getString("quantity")));
-                ps.setPrice(rs.getFloat("price"));
-                ps.setPortray(rs.getString("portray"));
-                ps.setIdCategory(rs.getString("idCategory"));
+                ProductModel s = new ProductModel();
+               s.setIdProduct(rs.getString("IdProduct"));
+                s.setIntroduce(rs.getString("introduce"));
+                s.setImage(rs.getString("image"));
+                s.setNameProduct(rs.getString("nameProduct"));
+                 s.setPortray(rs.getString("portray"));
+                s.setIdCategory(rs.getString("idCategory"));
+                s.setPrice(rs.getFloat("price"));
+                 s.setQuantity(rs.getInt("quantity"));
+                 s.setSize(rs.getString("size"));
+                 s.setStuff(rs.getString("stuff"));
+
+                                                                
+                list.add(s);
             }
         }
          } catch (Exception e) {
              System.out.println(e);
              }
-        return ps;
+        return list;
     }
+    
+//       
+       public int trusoluong(int quantity, String IdProduct) {
+           int result = 0 ;
+           try{
+                String query1 = "SELECT quantity FROM product WHERE IdProduct = ?";
+        PreparedStatement p1 = ProductDAL.getConnection().prepareStatement(query1);
+        p1.setString(1, IdProduct);
+       ResultSet rs = p1.executeQuery();
+       if (rs.next()) {
+                int updatedQuantity = rs.getInt("quantity");
+                System.out.print(updatedQuantity);
+                if (updatedQuantity > 0) {
+                    // Nếu số lượng sản phẩm âm, hủy bỏ giao dịch và xuất thông báo
+                   String query = "UPDATE product SET quantity = quantity - ? WHERE IdProduct = ?";
+        PreparedStatement p = ProductDAL.getConnection().prepareStatement(query);
+        p.setInt(1, quantity);
+        p.setString(2, IdProduct);
+         result = p.executeUpdate();
+         result=1;
+                }else{
+            result= 0 ; 
+                }
+                
+            }
+        
+         
+              
+
+
+        
+         
+        } catch (Exception e) {
+             System.out.println(e);
+             }
+        return result;
        
+    }
        public int updatePro(ProductModel ps, String id) {
            int result = 0 ;
            try{
@@ -166,9 +240,22 @@ public class ProductDAL extends MyDatabaseManager{
              }
         return result;
     }
+
+       public int updatePro_byQuantity(int quantity, String idPro){
+           int rs = 0;
+           try {
+               String query = "UPDATE product SET quantity = ? WHERE idProduct = ?";
+               PreparedStatement p = ProductDAL.getConnection().prepareStatement(query);
+               p.setInt(1, quantity);
+               p.setString(2, idPro);
+               rs = p.executeUpdate();
+           } catch (Exception e) {
+               System.out.println(e);
+           }
+           return rs;
+       }
        public static void main(String[] args) {
-        ProductDAL p =  new ProductDAL();
-        List<ProductModel> ls = p.readProduct();
-           System.out.println(ls.get(0).getIdCategory());
+        ProductDAL proDAL = new ProductDAL();
+        proDAL.updatePro_byQuantity(20, "PR019");
     }
 }

@@ -103,4 +103,18 @@ String query = "UPDATE orders "
         return rs;
     }
 
+    public int updateStatusOrder(int status, String idOrder){
+        int rs = 0 ; 
+        try {
+            String query ="UPDATE orders SET status = ? WHERE idOrder = ?";
+            PreparedStatement p = OrderDAL.getConnection().prepareStatement(query);
+            p.setInt(1, status);
+            p.setString(2, idOrder);
+            
+            rs = p.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
 }

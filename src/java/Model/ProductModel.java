@@ -45,6 +45,7 @@ public class ProductModel {
         this.idCategory = idCategory;
     }
 
+
     
     
     public String getNameProduct() {

@@ -130,6 +130,7 @@
                         <h6 class="collapse-header">Thông tin</h6>
                         <a class="collapse-item" href="supplier">Nhà Sản Xuất</a>
                         <a class="collapse-item" href="product">Danh Sách Sản Phẩm</a>
+                        <!--<a class="collapse-item" href="subimage">Danh Sách Ảnh Sản Phẩm</a>-->
                         <a class="collapse-item" href="category">Danh Mục Sản Phẩm</a>
                         <a class="collapse-item" href="promotion">Chương Trình Khuyến Mãi</a>
                     </div>

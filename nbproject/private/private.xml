@@ -3,15 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/src/java/Controller/Staff.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/src/java/Controller/HomeServlet.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/web/login.jsp</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/src/java/Model/StaffModel.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/src/java/DAL/StaffDAL.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/src/java/Controller/Login.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/src/java/Controller/editAdminServlet.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/src/java/Controller/productController.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/web/editAdmin.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/src/java/Controller/OrderServlet.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/web/listOrder.jsp</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/J2EE_Project_Admin/web/listStaff.jsp</file>
         </group>
     </open-files>

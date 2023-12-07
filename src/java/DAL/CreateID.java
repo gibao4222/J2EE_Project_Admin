@@ -87,6 +87,9 @@ public class CreateID extends MyDatabaseManager{
             case "ID":
                 query = "SELECT * FROM importdetail";
                 break;
+            case "SI":
+                query = "SELECT * FROM subimage";
+                break;
             default:
         
         }
@@ -96,7 +99,6 @@ public class CreateID extends MyDatabaseManager{
         if(rs!=null){
             while(rs.next()){
                 String id = rs.getString(1);
-                System.out.println(id);
                 String numbers = "";
                 for(int i = 0 ; i < id.length();i++){
                     char c = id.charAt(i);
@@ -120,7 +122,7 @@ public class CreateID extends MyDatabaseManager{
     }
     
     public static void main(String[] args) {
-        CreateID cre = new CreateID("TK");
+        CreateID cre = new CreateID("SI");
         System.out.println(cre.create());
     }
 }

@@ -11,7 +11,7 @@
   height: 700px;
   overflow: scroll;
 }
-.image-input {
+/*.image-input {
   text-aling: center;
 }
 .image-input input {
@@ -58,7 +58,7 @@
   100% {
     transform: rotate(0deg);
   }
-}
+}*/
 
 </style>
 
@@ -74,7 +74,7 @@
         
       </div>
      
-        <form action="add-product" id="Productform" method="POST">
+        <form action="add-product" id="Productform" method="POST" enctype="multipart/form-data">
 
         <div class="modal-body">
             <input type="hidden" name="IdProduct" id="IdProduct">
@@ -88,7 +88,7 @@
                  <div class="form-group">
 
                 <label>category </label>
-                <select name="id_category" id="id_category">
+                <select name="id_category" id="id_category" class="form-control">
                     <c:forEach items="${cate}" var="v">
                         <option value="${v.idCategory }">${v.nameCategory}</option>
                      </c:forEach>
@@ -98,19 +98,14 @@
              <div class="form-group">
 
                 <label> introduce </label>
-                <input type="text" name="introduce" id="introduce1" class="form-control" placeholder="Enter introduce">
+                <textarea class="form-control" rows="5" name="introduce" id="introduce1" placeholder="Enter introduce"></textarea>
             </div>
              <div class="form-group">
 
                 <label> Ảnh </label>
-                <!--<input type="text" name="image1" id="image1" class="form-control" style="display: none">-->
-                <div class="image-input">
-                    <input type="file" accept="image/*" id="image" name="image">
-                    <label for="image" class="image-button"><i class="far fa-image"></i> Choose image</label>
-                    <img src="" class="image-preview" id="nameImg">
-                    <span class="change-image">Choose different image</span>
-                </div>
+                <input type="file" name="image" class="form-control">
             </div>
+
                  <div class="form-group">
 
                 <label> size </label>
@@ -123,18 +118,41 @@
             <div class="form-group">
 
                 <label> Quantity </label>
-                <input type="text" name="quantity" id="quantity1" class="form-control" placeholder="Enter quantity">
+                <input type="number" name="quantity" id="quantity1" class="form-control" placeholder="Enter quantity">
             </div>
+
                 <div class="form-group">
 
                 <label> Price </label>
-                <input type="text" name="price" id="price1" class="form-control" placeholder="Enter price">
+                <input type="text" name="price" id="price1" class="form-control" placeholder="Enter price" oninput="formatAndDisplayCurrency(this)">
+                <script>
+        function formatAndDisplayCurrency(input) {
+            // Lấy giá trị nhập vào từ người dùng
+            let inputValue = input.value;
+
+            // Xóa tất cả các ký tự không phải số
+            inputValue = inputValue.replace(/\D/g, '');
+
+            // Định dạng số theo kiểu tiền tệ VNĐ
+            let formattedValue = Number(inputValue).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+
+            // Gán giá trị đã định dạng vào ô input
+            input.value = formattedValue;
+        }
+        // Sự kiện để kiểm tra nếu người dùng nhấn nút xóa (backspace)
+        document.getElementById('price1').addEventListener('keydown', function(event) {
+            if (event.key === 'Backspace') {
+                // Khôi phục giá trị gốc khi người dùng nhấn nút xóa
+                this.value = this.dataset.originalValue;
+            }
+        });
+    </script>
             </div>
             
             <div class="form-group">
 
                 <label> portray </label>
-                <input type="text" name="portray" id="portray1" class="form-control" placeholder="Enter portray">
+                <textarea class="form-control" rows="5" name="portray" id="portray1" placeholder="Enter portray"></textarea>
             </div>
     </div>
            
@@ -211,7 +229,7 @@
                     <td>  ${c.nameProduct} </td>
                      
                      <td>  ${c.introduce} </td>
-                     <td>  ${c.image} </td>
+                     <td>  <img src="resources/img/${c.image}" alt="${c.image}" width="50" /> </td>
                      <td>   ${c.size}  </td>
                     
                      <td>  ${c.stuff}  </td>
@@ -219,7 +237,7 @@
                      <td>   ${c.portray}  </td>
                      <td>   ${c.price}  </td>
                      <td> 
-                         <button name="edit-btn" id="edit-btn" class="btn btn-success" data-toggle="modal" data-target="#addadminprofile">update</button>
+                         <a href="productDetail?idProduct=${c.idProduct}"><button name="edit-btn" class="btn btn-success">Chi tiết</button></a>
                          <form action="delete-Product" method="post">
                             <input type="hidden" name="idProduct" value="${c.idProduct}">
                             <button type="submit" name="delete-btn" class="btn btn-danger">delete</button>
@@ -245,7 +263,7 @@
 </div>
 
 <script>
-    
+  
     document.addEventListener('click',function (e){
         if(e.target && e.target.id==='edit-btn'){
             let form = document.getElementById('Productform');
@@ -261,7 +279,8 @@
             document.getElementById("size1").value = row.cells[5].innerText;
             document.getElementById("stuff1").value = row.cells[6].innerText;
             document.getElementById("quantity1").value = row.cells[7].innerText;
-            document.getElementById("price1").value = row.cells[9].innerText;
+            document.getElementById("color1").value = row.cells[9].innerText;
+            document.getElementById("price1").value = row.cells[10].innerText;
             document.getElementById("portray1").value = row.cells[8].innerText;
             var originalSelect = document.getElementById('id_category');
     
@@ -274,17 +293,17 @@
                     originalSelect.options[i].selected = true;
                 }
             }
-            var fakeFileInput = document.createElement('input');
-            var fakeFile = new File([fakeFileInput], 'leuleu', { type: 'image/jpeg' });
-            
-		fileReader = new FileReader();
-		fileReader.onload = function (data) {
-		$('.image-preview').attr('src', "./resources/img/"+row.cells[4].innerText );
-		}
-		fileReader.readAsDataURL(fakeFile);
-		$('.image-button').css('display', 'none');
-		$('.image-preview').css('display', 'block');
-		$('.change-image').css('display', 'block');
+//            var fakeFileInput = document.createElement('input');
+//            var fakeFile = new File([fakeFileInput], 'leuleu', { type: 'image/jpeg' });
+//            
+//		fileReader = new FileReader();
+//		fileReader.onload = function (data) {
+//		$('.image-preview').attr('src', "./resources/img/"+row.cells[4].innerText );
+//		}
+//		fileReader.readAsDataURL(fakeFile);
+//		$('.image-button').css('display', 'none');
+//		$('.image-preview').css('display', 'block');
+//		$('.change-image').css('display', 'block');
             
 
             
@@ -325,29 +344,29 @@
 //        }
 //            
 //    });
-    $('#image').on('change', function() {
-	$input = $(this);
-	if($input.val().length > 0) {
-		fileReader = new FileReader();
-		fileReader.onload = function (data) {
-		$('.image-preview').attr('src', data.target.result);
-		}
-		fileReader.readAsDataURL($input.prop('files')[0]);
-		$('.image-button').css('display', 'none');
-		$('.image-preview').css('display', 'block');
-		$('.change-image').css('display', 'block');
-	}
-});
-						
-$('.change-image').on('click', function() {
-	$control = $(this);			
-	$('#image').val('');	
-	$preview = $('.image-preview');
-	$preview.attr('src', '');
-	$preview.css('display', 'none');
-	$control.css('display', 'none');
-	$('.image-button').css('display', 'block');
-});
+//    $('#image').on('change', function() {
+//	$input = $(this);
+//	if($input.val().length > 0) {
+//		fileReader = new FileReader();
+//		fileReader.onload = function (data) {
+//		$('.image-preview').attr('src', data.target.result);
+//		}
+//		fileReader.readAsDataURL($input.prop('files')[0]);
+//		$('.image-button').css('display', 'none');
+//		$('.image-preview').css('display', 'block');
+//		$('.change-image').css('display', 'block');
+//	}
+//});
+//						
+//$('.change-image').on('click', function() {
+//	$control = $(this);			
+//	$('#image').val('');	
+//	$preview = $('.image-preview');
+//	$preview.attr('src', '');
+//	$preview.css('display', 'none');
+//	$control.css('display', 'none');
+//	$('.image-button').css('display', 'block');
+//});
 </script>
 <script>
      //Cập nhật

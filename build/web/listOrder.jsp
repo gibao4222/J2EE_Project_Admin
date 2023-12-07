@@ -46,35 +46,33 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" name="submit" class="btn btn-primary">Lưu</button>
                         </div>-->
-                <h5 class="modal-title" id="exampleModalLabel">Thêm Đơn hàng </h5>
+                <h5 class="modal-title" id="exampleModalLabel">Cập nhật trạng thái đơn hàng </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id= "OrderForm" name="idOrder" action="add-Order" method="POST">
-                <input type="hidden" name="idOrder" id="idOrder" >
-
+            <form id= "OrderForm" name="idOrder" action="update-Status-Order" method="POST">
                 <div class="modal-body">
-                    <input type="hidden" name="delete_id" value="">
-                    <div class="form-group">
-                        <label> IDCustomer </label>
-                        <input id="idCustomer" type="text" name="idCustomer" required class="form-control" placeholder="Enter IDCustomer">
-                    </div>            
-                    <div class="form-group">
-                        <label>Ngày đặt</label>
-                        <input id="dateCreated" type="date" name="dateCreated"  class="form-control" placeholder="Enter Date">
-                    </div>
-                    <div class="form-group">
-                        <label> TotalBill</label>
-                        <input id="totalBill" type="text" name="totalBill" class="form-control" value="" placeholder="Enter TotalBill">
-                    </div>
-                    <div class="form-group">
-                        <label> Trạng thái </label>
-                        <input id="status" type="text" name="status" class="form-control" value="" placeholder="Enter status">
-                    </div>
-                   
 
-                    </div>
+            <div class="form-group">
+
+                <label> Trạng thái </label>
+                <input type="hidden" name="idOrder" id="idOrder"  value="">
+                <!-- <input type="text" name="brandName" class="form-control" placeholder="Enter Brand"> -->
+                <select class="form-control"  id="status" name="status">
+                    
+                  
+                        <option  selected value="0">Đang Xử Lý</option>
+                        <option value="1">Đang Giao Hàng</option>
+                        <option value="2">Giao Thành Công</option>
+                        <option value="3">Hủy Đơn Hàng</option>
+                   
+                  </select>
+                
+            </div>
+            
+        
+        </div>
               
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -91,9 +89,9 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Danh Sách Đơn Hàng
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
+<!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
               Thêm Đơn Hàng
-            </button>
+            </button>-->
             </h6>
 
         </div>
@@ -113,8 +111,8 @@
                             <th>Tổng Tiền</th>
 
                             <th width="15%">Trạng Thái </th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Thao Tác</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -124,21 +122,35 @@
                                 <td>${order.idCustomer}</td>
                                 <td>${order.dateCreated}</td>
                                 <td>${order.totalBill}</td>
-                                <td>${order.status}</td>
-                                <td>
+                                
+                                <c:choose>
+                                    <c:when test="${order.status == 0}">
+                                        <td>Đang Xử Lý</td>
+                                    </c:when>
+                                    <c:when test="${order.status == 1}">
+                                        <td>Đang Giao Hàng</td>
+                                    </c:when>
+                                    <c:when test="${order.status == 2}">
+                                        <td style="color: blue">Giao Thành Công</td>
+                                    </c:when>
+                                    <c:when test="${order.status == 3}">
+                                        <td style="color: red">Hủy Đơn Hàng</td>
+                                    </c:when>
+
+                                </c:choose>                                <td>
                                     <form action="" method="post">
                                         <!--<input type="hidden" name="edit_user" value="<?php echo $result['admin_User']; ?>">-->
-                                        <button  id="edit_btn" type="button" name="edit_btn" class="btn btn-success"data-toggle="modal" data-target="#addadminprofile"> Sửa </button>
+                                        <button  id="edit_btn" type="button" name="edit_btn" class="btn btn-success"data-toggle="modal" data-target="#addadminprofile"> Cập nhật trạng thái </button>
                                         <!--<a href="editStaff.jsp" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">EDIT</a>--> 
                                     </form>
                                 </td>
-                                <td>
+<!--                                <td>
                                     <form action="delete-Order" method="post">
                                        
                                         <button type="submit" name="delete_btn" class="btn btn-danger"> Xóa </button>
                                          <input type="hidden" name="idOrder" value="${order.idOrder}">
                                     </form>
-                                </td>
+                                </td>-->
                             </tr>
                         </c:forEach>
 
@@ -187,9 +199,7 @@
 </script>-->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var table = document.getElementById('dataTable');
-
-        const existingContent = new Set();
+        
 
 
 
@@ -198,22 +208,41 @@
         document.addEventListener('click', function (e) {
             if (e.target && e.target.id === 'edit_btn') {
 
-                let form = document.getElementById('OrderForm');
-                form.action = 'update-Order';
-
 
                 let row = e.target.closest('tr');
 
                 document.getElementById("idOrder").value = row.cells[0].innerText;
-                document.getElementById("idCustomer").value = row.cells[1].innerText;
-                document.getElementById("dateCreated").value = row.cells[2].innerText;
-                document.getElementById("totalBill").value = row.cells[3].innerText;
-                document.getElementById("status").value = row.cells[4].innerText;
-                existingContent.clear();
+                
+                var originalSelect = document.getElementById('status');
+                var selectedText = row.cells[4].innerText;
+                var selectedValue =0;
+                switch(selectedText){
+                    case "Đang Xử Lý":
+                        selectedValue = 0;
+                        break;
+                    case "Đang Giao Hàng":
+                        selectedValue = 1;
+                        break;
+                    case "Giao Thành Công":
+                        selectedValue = 2;
+                        break;
+                    case "Hủy Đơn Hàng":
+                        selectedValue = 3;
+                        break;
+                }
+                // Duyệt qua các tùy chọn trong thẻ <select> trong biểu mẫu và đặt thuộc tính "selected" cho tùy chọn tương ứng
+                for (var i = 0; i < originalSelect.options.length; i++) {
+                    if (originalSelect.options[i].value == selectedValue) {
+                        originalSelect.options[i].selected = true;
+                    }
+                }
+
 
             }
         });
-
+        
+        
+        
     });
 
 </script>

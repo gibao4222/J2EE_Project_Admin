@@ -27,7 +27,9 @@
                 <label> Tên Nhà Sản Xuất </label>
 
                 <input type="text" id="SupplierNameAdd" name="SupplierNameAdd" class="form-control" placeholder="Enter Supplier">
+                <div class="alert-danger" id="alert-danger1" role="alert">
                 
+            </div>
             </div>
             
             <div class="form-group">
@@ -35,15 +37,27 @@
                 <label> Địa Chỉ </label>
 
                 <input type="text"id="addressSupplierAdd" name="addressSupplierAdd" class="form-control" placeholder="Enter Address">
+                <div class="alert-danger" id="alert-danger1" role="alert">
                 
             </div>
-            
+            </div>
+            <script>
+                function validatePhoneNumber(input) {
+                // Loại bỏ mọi ký tự không phải số từ giá trị nhập vào
+                input.value = input.value.replace(/\D/g, '');
+            }
+            </script>
             <div class="form-group">
 
                 <label> SĐT </label>
 
-                <input type="text" id="PhoneSupplierAdd" name="PhoneSupplierAdd" class="form-control" placeholder="Enter Number Phone">
+                <input type="text" id="PhoneSupplierAdd" name="PhoneSupplierAdd" class="form-control" placeholder="Enter Number Phone" oninput="validatePhoneNumber(this)" value="">
+                <div class="alert-danger" id="alert-danger1" role="alert">
                 
+                </div>
+                <div class="alert-success" id="alert-success1" role="alert">
+                
+                </div>
             </div>
             
         
@@ -73,7 +87,7 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">Danh Sách NSX 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile" id="add-btn">
              Thêm NSX
             </button>
     </h6>
@@ -131,7 +145,7 @@
 
 </div>
 <script>
-                 document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
                 var table = document.getElementById('dataTable');
             
                 const existingContent = new Set();
@@ -157,8 +171,47 @@
                         existingContent.clear();
                                                 
                     }
+                    else if(e.target && e.target.id === 'add-btn'){
+                        document.getElementById("idSupplier").value ="";
+                        document.getElementById("SupplierNameAdd").value ="";
+                        document.getElementById("addressSupplierAdd").value = "";
+                        document.getElementById("PhoneSupplierAdd").value ="";
+                    }
                 });
+                
 
             });
+            
+            function isValidPhoneNumber(phoneNumber) {
+                // Biểu thức chính quy kiểm tra số điện thoại
+                var phoneRegex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+
+                // Sử dụng test() để kiểm tra xem số điện thoại có khớp với biểu thức chính quy hay không
+                return phoneRegex.test(phoneNumber);
+            }
+            const phonetxt = document.getElementById("PhoneSupplierAdd");
+            
+            phonetxt.addEventListener('input',function (){
+                const inputArr = document.querySelectorAll("#SupplierForm .form-group .alert-danger");
+                console.log(inputArr.length);
+                const note_danger = inputArr[2];
+                const note_success = document.getElementById("alert-success1");
+                if(phonetxt.value===""){
+                        note_danger.style.display ='none';
+                        note_success.style.display ='none';
+                    }
+                    else if (isValidPhoneNumber(phonetxt.value)) {
+                        note_success.innerHTML ='Số điện thoại hợp lệ';
+                        note_danger.style.display ='none';
+                        note_success.style.display ='block';
+                    } else {
+                        note_danger.innerHTML ='Số điện thoại không hợp lệ';
+                        note_success.style.display ='none';
+                        note_danger.style.display ='block';
+                    }
+
+            });
+            
+            
 </script>
 <%@include file="component/footer.jsp" %>
