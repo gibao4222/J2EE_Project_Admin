@@ -8,6 +8,7 @@ package Controller;
 import DAL.CreateID;
 import DAL.OrderDAL;
 import Model.OrderModel;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  *
  * @author Admin
  */
-@WebServlet({"/order" ,"/add-Order","/delete-Order","/update-Order","/update-Status-Order"})
+@WebServlet({"/order" ,"/add-Order","/delete-Order","/update-Order","/update-Status-Order","/filterDate"})
 public class OrderServlet extends HttpServlet {
    
     /** 
@@ -61,8 +62,22 @@ public class OrderServlet extends HttpServlet {
     throws ServletException, IOException {
         OrderDAL orderDAL = new OrderDAL();
         ArrayList<OrderModel> orderList = orderDAL.readOrder();
-        request.setAttribute("data", orderList);
-        request.getRequestDispatcher("listOrder.jsp").forward(request, response);
+        String status = request.getParameter("status");
+        if(status == null){
+            request.setAttribute("data", orderList);
+            request.getRequestDispatcher("listOrder.jsp").forward(request, response);
+        }
+        else{
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            Gson gson = new Gson();
+            String listJSON = gson.toJson(orderList);
+            response.getWriter().write(listJSON);
+        }
+        
+        
+        
+        
     } 
 
     /** 
@@ -95,12 +110,14 @@ public class OrderServlet extends HttpServlet {
 //            Order o = new Order(idOrder, idCustomer, dateCreated, totalBill, status);
 //            int result = odDAL.addOrder(o);
 //            jsonResponse.addProperty("message", "Thêm đơn hàng thành công");
+response.sendRedirect("order");
         }
         else if(url.contains("delete-Order")){
                 String idOrder = String.valueOf(request.getParameter("idOrder"));
 //                System.out.println("hllo");
                 odDAL.deleteOrder(idOrder);
 //                jsonResponse.addProperty("message", "Xóa đơn hàng thành công");
+response.sendRedirect("order");
         }
         else if(url.contains("update-Order")){
             String idOrder = String.valueOf(request.getParameter("idOrder"));
@@ -112,15 +129,25 @@ public class OrderServlet extends HttpServlet {
             int status = Integer.parseInt(request.getParameter("status"));
             OrderModel od = new OrderModel(idOrder, idCustomer, dateCreated, totalBill, status);
             odDAL.updateOrder(od);
+            response.sendRedirect("order");
         }
         else if(url.contains("update-Status-Order")){
             String idOrder = request.getParameter("idOrder");
             int status = Integer.parseInt(request.getParameter("status"));
             odDAL.updateStatusOrder(status, idOrder);
+            response.sendRedirect("order");
         }
-        response.setContentType("application/json");
-//        response.getWriter().write(jsonResponse.toString());
-response.sendRedirect("order");
+        else if(url.contains("filterDate")){
+            String date = request.getParameter("filterDate");
+            ArrayList<OrderModel> listFilterDate = odDAL.filterDate(date);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            Gson gson = new Gson();
+            String listJSON = gson.toJson(listFilterDate);
+            response.getWriter().write(listJSON);
+        }
+
+
     }
 
     /** 

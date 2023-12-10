@@ -96,6 +96,7 @@ public class ImportServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+       request.setCharacterEncoding("UTF-8");
         ImportDAL importDAL = new ImportDAL();
         ImportDetailDAL importDetailDAL = new ImportDetailDAL();
         ProductDAL pr = new ProductDAL();
@@ -121,24 +122,34 @@ public class ImportServlet extends HttpServlet {
                         String idProduct =jsonObject.get("idProduct").getAsString();
                         int quantity = jsonObject.get("quantity").getAsInt();
                         String price = jsonObject.get("price").getAsString();
-                        String total = String.valueOf(quantity * Float.parseFloat(price));
+                        String totalStr = jsonObject.get("total").getAsString();
+                        String total = cleanString(totalStr);
                         String idImportDetails = new CreateID("ID").create();
                         ImportDetailModel importDetailModel = new ImportDetailModel(idImportDetails, idImport, idProduct, dateCreated, quantity, price, total);
                         importDetailDAL.addImportDetail(importDetailModel);
+                        pr.updateQuantityPro_Add(quantity, idProduct);
                     }
                 }
                
                 response.sendRedirect("import");
            }
            else if(url.contains("delete-Import")){
-                String idImport = String.valueOf(request.getParameter("idImport"));            
+                String idImport = String.valueOf(request.getParameter("idImport"));        
+                ArrayList<ImportDetailModel> importDetails = importDetailDAL.readImportDetailwithidImport(idImport);
+                
             if(importDAL.deleteImport(idImport)!=0){
                 importDetailDAL.deleteImportDetail(idImport);
+                for(ImportDetailModel im: importDetails){
+                    int quantityImportDetailNow = im.getQuantity();
+                    int quantityProductNow = pr.findproductbyId_Product(im.getIdProduct()).getQuantity();
+                    quantityProductNow = quantityProductNow - quantityImportDetailNow;
+                    pr.updatePro_byQuantity(quantityProductNow, im.getIdProduct());
+                }
             }
             response.sendRedirect("import");
               }
            else if (url.contains("update-Import")) {
-              String idImport = String.valueOf(request.getParameter("idImport"));
+            String idImport = String.valueOf(request.getParameter("idImport"));
             String idSupplier = String.valueOf(request.getParameter("idSupplier"));
             String dateCreated = String.valueOf(request.getParameter("dateCreated"));
             String totalBill = String.valueOf(request.getParameter("totalBill"));
@@ -147,17 +158,38 @@ public class ImportServlet extends HttpServlet {
             importDAL.updateImport(importModel);
 //               lấy dữ liệu product 
             String listProduct = String.valueOf(request.getParameter("chosenProducts"));
-
             // Sử dụng Gson để chuyển đổi chuỗi JSON thành JsonObject
             JsonArray jsonArray = JsonParser.parseString(listProduct).getAsJsonArray();
             // Duyệt qua mảng JSON và lấy giá trị từ các đối tượng JSON
+         
+            ArrayList<ImportDetailModel> importDetails = importDetailDAL.readImportDetailwithidImport(idImport);
             importDetailDAL.deleteImportDetail(idImport);
             for (int i = 0; i < jsonArray.size(); i++) {
                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
                 String idProduct = jsonObject.get("idProduct").getAsString();
                 int quantity = jsonObject.get("quantity").getAsInt();
+                for(ImportDetailModel im : importDetails){
+                    if(idProduct.contains(im.getIdProduct())){
+                        System.out.println(idProduct+"-"+idImport);
+                        int quantityImportDetailNow = im.getQuantity();
+
+                        System.out.println(quantityImportDetailNow);
+                        if(quantityImportDetailNow!=0){
+                            int quantityProductNow = pr.findproductbyId_Product(idProduct).getQuantity();
+                            System.out.println(quantityProductNow);
+                            quantityProductNow = quantityProductNow - quantityImportDetailNow +quantity;
+                            System.out.println(quantityProductNow);
+
+                            pr.updatePro_byQuantity(quantityProductNow, idProduct);
+                        }
+                        
+                    }
+                }
+                
+                
                 String price = jsonObject.get("price").getAsString();
-                String total = String.valueOf(quantity * Float.parseFloat(price));
+                String totalStr = jsonObject.get("total").getAsString();
+                        String total = cleanString(totalStr);
                 // In ra giá trị
 
                 String idImportDetails = new CreateID("ID").create();
@@ -169,7 +201,7 @@ public class ImportServlet extends HttpServlet {
         }
            else if (url.contains("load_datacheckproduct")) {
             String idImport = String.valueOf(request.getParameter("idImport"));           
-            System.out.println("Id import lay tu ajax : " + idImport);
+//            System.out.println("Id import lay tu ajax : " + idImport);
             ArrayList<ImportDetailModel> importDetails = importDetailDAL.readImportDetailwithidImport(idImport);
             ArrayList<ProductModel> dataProduct = pr.readProduct();
             // Chuyển danh sách thành JSON để gửi về
@@ -183,6 +215,11 @@ public class ImportServlet extends HttpServlet {
         response.setContentType("application/json");
 
 
+    }
+    
+      private static String cleanString(String input) {
+        // Loại bỏ các kí tự không mong muốn từ chuỗi
+        return input.replaceAll("[^\\d.]", "");
     }
 
     /** 

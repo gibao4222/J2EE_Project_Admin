@@ -185,7 +185,7 @@
             // Lấy giá trị từ các ô trong hàng
             var idProduct = row.cells[0].textContent.trim();
             var nameProduct = row.cells[1].textContent.trim();
-            var price = parseFloat(row.cells[2].textContent.trim());
+            var price = parseFloat(row.cells[2].textContent.trim().replace(/,/g, ''));
             var datacheckProduct = document.getElementById('datacheckProduct');
             var newRow = datacheckProduct.insertRow();
             var existingRow = null;
@@ -214,7 +214,7 @@
                 var deleteCell = newRow.insertCell(5);
                 idCell.textContent = idProduct;
                 nameCell.textContent = nameProduct;
-                priceCell.textContent = price;
+                priceCell.textContent = formatNumber(price);
                 var quantityInput = document.createElement('input');
                 quantityInput.type = 'number';
                 quantityInput.id = 'quantity_' + idProduct;
@@ -243,46 +243,58 @@
 
                 var initialQuantity = parseInt(quantityInput.value);
                 var initialTotal = price * initialQuantity;
-                totalCell.textContent = initialTotal;
+                totalCell.textContent = formatNumber(initialTotal);
             }
             updateTotal();
         }
     });
 
-    // Tính tổng tiền từ các giá trị trong bảng datacheckProduct
-    function calculateTotal() {
-        let total = 0;
-        const datacheckProduct = document.getElementById('datacheckProduct');
-        const rows = datacheckProduct.getElementsByTagName('tr');
-        if (rows.length <= 1) {
-            const totalSpan = document.getElementById('totalprice');
-            totalSpan.textContent = '0';
-            total = 0;
-        } else
-            for (let i = 1; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                if (cells.length >= 5) {
-                    const price = parseFloat(cells[2].textContent.trim());
-                    const quantity = parseInt(cells[3].querySelector('input[type="number"]').value);
-                    const rowTotal = price * quantity;
-                    total += rowTotal;
-                }
+    // Hàm định dạng số thành chuỗi có dấu phẩy ngăn cách hàng nghìn
+function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+    
+    // Hàm định dạng số thành chuỗi có dấu phẩy ngăn cách hàng nghìn
+function formatCurrency(amount) {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
-            }
-        return total;
-    }
-
-// Cập nhật tổng tiền khi có thay đổi trong bảng datacheckProduct
-    function updateTotal() {
+// Tính tổng tiền từ các giá trị trong bảng datacheckProduct
+function calculateTotal() {
+    let total = 0;
+    const datacheckProduct = document.getElementById('datacheckProduct');
+    const rows = datacheckProduct.getElementsByTagName('tr');
+    if (rows.length <= 1) {
         const totalSpan = document.getElementById('totalprice');
-        const totalPrice = calculateTotal();
-        totalSpan.textContent = formatCurrency(totalPrice);
-        // Cập nhật giá trị totalBill trong form
-        const totalBillInput = document.getElementById('totalBill');
-        if (totalBillInput) {
-            totalBillInput.value = totalPrice;
+        totalSpan.textContent = '0';
+        total = 0;
+    } else {
+        for (let i = 1; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            if (cells.length >= 5) {
+                const price = parseFloat(cells[2].textContent.trim().replace(/,/g, ''));
+                const quantity = parseInt(cells[3].querySelector('input[type="number"]').value);
+                const rowTotal = price * quantity;
+                total += rowTotal;
+                // Cập nhật lại giá trị trong cột total với định dạng số
+                cells[4].textContent = formatNumber(rowTotal);
+            }
         }
     }
+    return total;
+}
+
+// Cập nhật tổng tiền khi có thay đổi trong bảng datacheckProduct
+function updateTotal() {
+    const totalSpan = document.getElementById('totalprice');
+    const totalPrice = calculateTotal();
+    totalSpan.textContent = formatNumber(totalPrice);
+    // Cập nhật giá trị totalBill trong form
+    const totalBillInput = document.getElementById('totalBill');
+    if (totalBillInput) {
+        totalBillInput.value = formatNumber(totalPrice);
+    }
+}
 // Gọi hàm updateTotal khi xóa sản phẩm
     function deleteRow(row) {
         row.parentElement.removeChild(row);
@@ -297,8 +309,8 @@
                 // Kiểm tra xem row.cells[0] có tồn tại không
                 if (row.cells.length > 0) {
                     var idProduct = row.cells[0].textContent.trim();
-                    var price = parseFloat(row.cells[2].textContent.trim());
-
+                    var price = row.cells[2].textContent.trim();
+                    var total = row.cells[4].textContent.trim();
                     var quantityInput = row.cells[3].querySelector('input[type="number"]');
 
                     if (quantityInput) {
@@ -306,7 +318,8 @@
                         productList.push({
                             idProduct: idProduct,
                             price: price,
-                            quantity: quantity
+                            quantity: quantity,
+                            total: total
                         });
                     }
                 }

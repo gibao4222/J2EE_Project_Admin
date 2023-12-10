@@ -91,4 +91,23 @@ public class CustomerDAL extends MyDatabaseManager{
         }
         return rs;
     }
+        public String searchNameCustomerById(String idCustomer){
+            String nameCustomer = "";
+            try {
+                String query = "SELECT * FROM customer WHERE idCustomer = '"+idCustomer+"'";
+                ResultSet rs = CustomerDAL.doReadQuery(query);
+                if(rs != null && rs.next()){
+                    nameCustomer = rs.getString("fullName");
+                }
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return nameCustomer;
+        }
+        public static void main(String[] args) {
+            CustomerDAL cs = new CustomerDAL();
+            String name = cs.searchNameCustomerById("CT001");
+            System.out.println(name);
+    }
 }

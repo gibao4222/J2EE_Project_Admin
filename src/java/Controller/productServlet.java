@@ -200,7 +200,6 @@ public class productServlet extends HttpServlet {
 
             String priceStr = request.getParameter("price");
             String clearPrice = cleanString(priceStr);
-            float price = Float.parseFloat(clearPrice);
               
             Part part = request.getPart("image");
             String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
@@ -222,7 +221,7 @@ public class productServlet extends HttpServlet {
             pro.setSize(size);
             pro.setStuff(stuff);
             pro.setQuantity(quantity);
-            pro.setPrice(price);
+            pro.setPrice(clearPrice);
             pro.setPortray(portray);
             product.addProduct(pro);
 //            request.setAttribute("mess", "add thành công");
@@ -263,7 +262,6 @@ public class productServlet extends HttpServlet {
             int quantity = Integer.parseInt(request.getParameter("quantity"));
             String priceStr = request.getParameter("price");
             String clearPrice = cleanString(priceStr);
-            float price	 = Float.parseFloat(clearPrice);
             String portray = request.getParameter("portray");
             String idCategory = request.getParameter("id_category");
          
@@ -274,7 +272,7 @@ public class productServlet extends HttpServlet {
             pro.setSize(size);
             pro.setStuff(stuff);
             pro.setQuantity(quantity);
-            pro.setPrice(price);
+            pro.setPrice(clearPrice);
             pro.setPortray(portray);
            pro.setIdCategory(idCategory);
             ProductDAL p = new ProductDAL();

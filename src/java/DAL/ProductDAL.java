@@ -35,7 +35,7 @@ public class ProductDAL extends MyDatabaseManager{
                      pr.setSize(rs.getString("size"));
                      pr.setStuff(rs.getString("stuff"));
                      pr.setQuantity(rs.getInt("quantity"));
-                     pr.setPrice(rs.getFloat("price"));
+                     pr.setPrice(rs.getString("price"));
                      pr.setPortray(rs.getString("portray"));
                      
                      list.add(pr);
@@ -60,7 +60,7 @@ public class ProductDAL extends MyDatabaseManager{
             p.setString(6, pr.getSize());
             p.setString(7, pr.getStuff());
             p.setInt(8, pr.getQuantity());
-            p.setFloat(9, pr.getPrice());
+            p.setString(9, pr.getPrice());
             p.setString(10, pr.getPortray());
             rs = p.executeUpdate();
         } catch (Exception e) {
@@ -86,7 +86,7 @@ public class ProductDAL extends MyDatabaseManager{
                 s.setImage(rs.getString("image"));
                 s.setNameProduct(rs.getString("nameProduct"));
                  s.setPortray(rs.getString("portray"));
-                s.setPrice(rs.getFloat("price"));
+                s.setPrice(rs.getString("price"));
                  s.setIdCategory(rs.getString("idCategory"));
                  s.setQuantity(rs.getInt("quantity"));
                  s.setSize(rs.getString("size"));
@@ -118,7 +118,7 @@ public class ProductDAL extends MyDatabaseManager{
                 s.setImage(rs.getString("image"));
                 s.setNameProduct(rs.getString("nameProduct"));
                  s.setPortray(rs.getString("portray"));
-                s.setPrice(rs.getInt("price"));
+                s.setPrice(rs.getString("price"));
                  s.setIdCategory(rs.getString("idCategory"));
                  s.setQuantity(rs.getInt("quantity"));
                  s.setSize(rs.getString("size"));
@@ -164,7 +164,7 @@ public class ProductDAL extends MyDatabaseManager{
                 s.setNameProduct(rs.getString("nameProduct"));
                  s.setPortray(rs.getString("portray"));
                 s.setIdCategory(rs.getString("idCategory"));
-                s.setPrice(rs.getFloat("price"));
+                s.setPrice(rs.getString("price"));
                  s.setQuantity(rs.getInt("quantity"));
                  s.setSize(rs.getString("size"));
                  s.setStuff(rs.getString("stuff"));
@@ -228,7 +228,7 @@ public class ProductDAL extends MyDatabaseManager{
         p.setString(4, ps.getSize());
         p.setString(5, ps.getStuff());
         p.setInt(6, ps.getQuantity());
-        p.setFloat(7, ps.getPrice());
+        p.setString(7, ps.getPrice());
         p.setString(8, ps.getPortray());
         p.setString(9, ps.getIdCategory());
                 p.setString(10, String.valueOf(id));
@@ -251,6 +251,21 @@ public class ProductDAL extends MyDatabaseManager{
                rs = p.executeUpdate();
            } catch (Exception e) {
                System.out.println(e);
+           }
+           return rs;
+       }
+       public int updateQuantityPro_Add(int quantity, String idProduct){
+           int rs = 0 ;
+           try {
+               String query = "UPDATE Product\n" +
+"SET quantity = quantity + ?\n" +
+"WHERE idProduct = ?";
+               PreparedStatement p = ProductDAL.getConnection().prepareStatement(query);
+               p.setInt(1, quantity);
+               p.setString(2, idProduct);
+               rs = p.executeUpdate();
+           } catch (Exception e) {
+               e.printStackTrace();
            }
            return rs;
        }

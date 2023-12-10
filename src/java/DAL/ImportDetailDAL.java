@@ -124,8 +124,30 @@ public class ImportDetailDAL extends MyDatabaseManager{
         }
         return list;
     }
+    public ImportDetailModel searchImportDetail(String idImport, String idProduct){
+        ImportDetailModel id = new ImportDetailModel();
+        try {
+            String query = "SELECT * FROM importdetail WHERE idProduct ='"+idProduct+"' AND idImport = '"+idImport+"'";
+            ResultSet rs = ImportDetailDAL.doReadQuery(query);
+            if (rs != null) {
+                while (rs.next()) {
+                    id.setIdImportDetail(rs.getString("idImportDetail"));
+                    id.setIdImport(rs.getString("idImport"));
+                    id.setIdProduct(rs.getString("idProduct"));
+                    id.setDateCreated(rs.getString("dateCreated"));
+                    id.setQuantity(rs.getInt("quantity"));
+                    id.setPrice(rs.getString("price"));
+                    id.setTotal(rs.getString("total"));
+                    
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
     public static void main(String[] args) {
         ImportDetailDAL ip = new ImportDetailDAL();
-        ip.deleteImportDetail("IP002");
+        System.out.println(ip.searchImportDetail("IP002", "PR001").getIdImportDetail());
     }
 }

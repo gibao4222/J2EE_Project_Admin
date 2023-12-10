@@ -92,6 +92,8 @@
 <!--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
               Thêm Đơn Hàng
             </button>-->
+<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right" onclick="exportToExcel()"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
             </h6>
 
         </div>
@@ -140,7 +142,7 @@
                                 </c:choose>                                <td>
                                     <form action="" method="post">
                                         <!--<input type="hidden" name="edit_user" value="<?php echo $result['admin_User']; ?>">-->
-                                        <button  id="edit_btn" type="button" name="edit_btn" class="btn btn-success"data-toggle="modal" data-target="#addadminprofile"> Cập nhật trạng thái </button>
+                                        <button  id="edit_btn" type="button" name="edit_btn" class="btn btn-success"data-toggle="modal" data-target="#addadminprofile" data-status="${order.status}"> Cập nhật trạng thái </button>
                                         <!--<a href="editStaff.jsp" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">EDIT</a>--> 
                                     </form>
                                 </td>
@@ -174,6 +176,14 @@
 
             </div>
             <!--  </form>-->
+            <div class="form-group float-right mr-lg-5">
+    <label for="filterDate">Ngày đặt:</label>
+    <input type="date" class="form-control mb-2" id="filterDate" name="filterDate">
+    <button type="button" class="btn btn-primary " onclick="filterOrders()">Lọc</button>
+    <button type="button" class="btn btn-secondary " onclick="CancelFilter()">Hủy</button>
+
+</div>
+
         </div>
     </div>
 
@@ -197,6 +207,7 @@
   
   
 </script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         
@@ -239,11 +250,129 @@
 
 
             }
+            
         });
-        
+        check();
         
         
     });
+    function check(){
+        var editButtons = document.querySelectorAll('#edit_btn');
+        editButtons.forEach(function (button) {
+            // Lấy giá trị của status từ data-status
+            var status = button.getAttribute('data-status');
+            // Kiểm tra giá trị status và tắt nút nếu là 2 hoặc 3
+            if (status === '2' || status === '3') {
+                button.disabled = true;
+            }
+        });
+    }
+    function filterOrders() {
+        var filterDate = document.getElementById('filterDate').value;
 
+        // Gửi yêu cầu AJAX đến server để lấy danh sách hóa đơn theo ngày
+        // Dựa vào kết quả trả về để cập nhật giao diện (ví dụ: thông qua jQuery)
+        $.ajax({
+            url: "/J2EE_Project_Admin/filterDate",
+            type: 'POST',
+            data: { filterDate: filterDate },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                // Cập nhật giao diện với dữ liệu mới
+                updateTable(data);
+            },
+            error: function (xhr) {
+                console.error("Lỗi khi gửi yêu cầu đến Servlet:", xhr);
+            }
+        });
+    }
+    function CancelFilter() {
+
+        // Gửi yêu cầu AJAX đến server để lấy danh sách hóa đơn theo ngày
+        // Dựa vào kết quả trả về để cập nhật giao diện (ví dụ: thông qua jQuery)
+        $.ajax({
+            url: "/J2EE_Project_Admin/order",
+            type: 'GET',
+            dataType: "json",
+            data: { status: 'ajax' },
+            success: function (data) {
+                // Cập nhật giao diện với dữ liệu mới
+                updateTable(data);
+            },
+            error: function (xhr) {
+                console.error("Lỗi khi gửi yêu cầu đến Servlet:", xhr);
+            }
+        });
+    }
+    function updateTable(data) {
+        // Xóa các dòng hiện tại trong bảng
+        $("#dataTable tbody").empty();
+
+        // Thêm các dòng mới từ dữ liệu được lọc
+        $.each(data, function (index, order) {
+            var statusColor = getStatusColor(order.status);
+
+            var row = "<tr>" +
+                "<td>" + order.idOrder + "</td>" +
+                "<td>" + order.idCustomer + "</td>" +
+                "<td>" + order.dateCreated + "</td>" +
+                "<td>" + order.totalBill + "</td>" +
+                "<td style='color: " + statusColor + "'>" + getStatusText(order.status) + "</td>" +
+                "<td><button id='edit_btn' type='button' class='btn btn-success' data-toggle='modal' data-target='#addadminprofile' data-status="+order.status+">Cập nhật trạng thái</button></td>" +
+                "</tr>";
+
+            $("#dataTable tbody").append(row);
+        });
+        check()
+    }
+
+    function getStatusText(status) {
+        // Chuyển đổi mã trạng thái thành văn bản trạng thái tương ứng
+        switch (status) {
+            case 0:
+                return "Đang Xử Lý";
+            case 1:
+                return "Đang Giao Hàng";
+            case 2:
+                return "Giao Thành Công";
+            case 3:
+                return "Hủy Đơn Hàng";
+            default:
+                return "Unknown Status";
+        }
+    }
+
+    function getStatusColor(status) {
+        // Hàm này có thể được mở rộng để trả về màu sắc dựa trên mã trạng thái
+        // Ví dụ: Màu xanh cho "Đang Giao Hàng", màu đỏ cho "Hủy Đơn Hàng", ...
+        // Đối với mục đích minh họa, nó sẽ trả về màu đen
+        if (status == 2)
+            return "blue";
+        else if(status ==3)
+            return "red";
+        else
+            return "black";
+    }
+    function exportToExcel() {
+        // Lấy dữ liệu từ bảng HTML
+        var table = document.getElementById("dataTable");
+        var data = [];
+        for (var i = 0; i < table.rows.length; i++) {
+            var row = [];
+            for (var j = 0; j < table.rows[i].cells.length; j++) {
+                row.push(table.rows[i].cells[j].innerText);
+            }
+            data.push(row);
+        }
+
+        // Tạo đối tượng Workbook của SheetJS
+        var ws = XLSX.utils.aoa_to_sheet(data);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "HoaDon");
+
+        // Xuất file Excel
+        XLSX.writeFile(wb, "HoaDon.xlsx");
+    }
 </script>
 <%@include file ="component/footer.jsp" %>

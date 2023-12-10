@@ -36,7 +36,8 @@
 
     <!-- Custom styles for this template-->
     <link href="./resources/css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!--<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>-->
+    <script src="https://kit.fontawesome.com/ece76e5624.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>

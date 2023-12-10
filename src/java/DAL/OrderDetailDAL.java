@@ -103,4 +103,42 @@ public class OrderDetailDAL extends MyDatabaseManager{
         }
         return rs;
     }
+        public ArrayList<Object[]> getTop10Product(){
+            ArrayList<Object[]> arr = new ArrayList();
+            try {
+                String query ="SELECT\n" +
+"    P.idProduct,P.nameProduct,\n" +
+"    SUM(OD.quantity) AS totalQuantity,\n" +
+"    FORMAT(SUM(CAST(REPLACE(OD.total, ',', '') AS UNSIGNED)), 0) AS grandTotal\n" +
+"FROM\n" +
+"    Product P\n" +
+"JOIN\n" +
+"    orderDetail OD ON P.idProduct = OD.idProduct\n" +
+"GROUP BY\n" +
+"    P.idProduct\n" +
+"ORDER BY\n" +
+"    totalQuantity DESC,\n" +
+"    grandTotal DESC\n" +
+"LIMIT 10;";
+                ResultSet rs = OrderDetailDAL.doReadQuery(query);
+                if(rs!=null){
+                    while(rs.next()){
+                        Object[] ob = new Object[4];
+                        ob[0] = rs.getString("idProduct");
+                        ob[1] = rs.getString("nameProduct");
+                        ob[2] = rs.getString("totalQuantity");
+                        ob[3] = rs.getString("grandTotal");
+                        arr.add(ob);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return arr;
+        }
+        public static void main(String[] args) {
+            OrderDetailDAL o = new OrderDetailDAL();
+            ArrayList<Object[]> ob = o.getTop10Product();
+            System.out.println(ob.get(0)[0]);
+    }
 }

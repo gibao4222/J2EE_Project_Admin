@@ -9,14 +9,13 @@ package Model;
  * @author Admin
  */
 public class ProductModel {
-    private String idProduct,idCategory,nameProduct,introduce,image,size,stuff,portray;
+    private String idProduct,idCategory,nameProduct,introduce,image,size,stuff,portray,price;
     int quantity;
-    float price;
 
     public ProductModel() {
     }
 
-    public ProductModel(String idProduct,String idCategory, String nameProduct, String introduce, String image, String size, String stuff, String portray, int quantity, float price) {
+    public ProductModel(String idProduct,String idCategory, String nameProduct, String introduce, String image, String size, String stuff, String portray, int quantity, String price) {
         this.idProduct = idProduct;
         this.idCategory = idCategory;
         this.nameProduct = nameProduct;
@@ -104,11 +103,11 @@ public class ProductModel {
         this.quantity = quantity;
     }
 
-    public float getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(String price) {
         this.price = price;
     }
     
