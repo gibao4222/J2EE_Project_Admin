@@ -21,12 +21,46 @@
                </c:forEach>
                        
                     </div>
+                    <div class="sidebar__item sidebar__item__color--option">
+                        <a> <h4>Chất liệu</h4>
+                            <div class="sidebar__item__color sidebar__item__color--white">
+                                 <label for="white">
+                                    Gỗ
+                                    <input type="radio" id="white">
+                                </label>
+                            </div>      
+                            </a>
+                            <div class="sidebar__item__color sidebar__item__color--red">
+                                <label for="red">
+                                    Nhôm
+                                    <input type="radio" id="red">
+                                </label>
+                            </div>
+                            <div class="sidebar__item__color sidebar__item__color--black">
+                                <label for="black">
+                                    Kim loại
+                                    <input type="radio" id="black">
+                                </label>
+                            </div>
+                            <div class="sidebar__item__color sidebar__item__color--blue">
+                                <label for="blue">
+                                    Cao su
+                                    <input type="radio" id="blue">
+                                </label>
+                            </div>
+                            <div class="sidebar__item__color sidebar__item__color--green">
+                                <label for="green">
+                                    Nhựa an toàn 
+                                    <input type="radio" id="green">
+                                </label>
+                            </div>
+                        </div>
                 </div>
                 <div class="col-lg-9">
                     <div class="hero__search">
                         <div class="hero__search__form">
                             
-                            <form action="Search    " method="POST">
+                            <form action="Search" method="POST">
                                 <!-- <div class="hero__search__categories">
                                     All Categories
                                     <span class="arrow_carrot-down"></span>

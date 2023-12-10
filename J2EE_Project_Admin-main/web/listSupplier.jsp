@@ -3,8 +3,9 @@
     Created on : Oct 10, 2023, 8:56:08 AM
     Author     : Admin
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="component/navbar.jsp" %>
 <div class="modal fade" id="addadminprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
   <div class="modal-dialog" role="document">
@@ -17,15 +18,15 @@
         
       </div>
      
-      <form action="" method="POST">
-
+      <form id= "SupplierForm" action="add-Supplier" method="POST">
+        <input type="hidden" name="idSupplier" id="idSupplier" >
         <div class="modal-body">
 
             <div class="form-group">
 
                 <label> Tên Nhà Sản Xuất </label>
 
-                <input type="text" name="SupplierNameAdd" class="form-control" placeholder="Enter Supplier">
+                <input type="text" id="SupplierNameAdd" name="SupplierNameAdd" class="form-control" placeholder="Enter Supplier">
                 
             </div>
             
@@ -33,7 +34,7 @@
 
                 <label> Địa Chỉ </label>
 
-                <input type="text" name="addressSupplierAdd" class="form-control" placeholder="Enter Address">
+                <input type="text"id="addressSupplierAdd" name="addressSupplierAdd" class="form-control" placeholder="Enter Address">
                 
             </div>
             
@@ -41,7 +42,7 @@
 
                 <label> SĐT </label>
 
-                <input type="text" name="PhoneSupplierAdd" class="form-control" placeholder="Enter Number Phone">
+                <input type="text" id="PhoneSupplierAdd" name="PhoneSupplierAdd" class="form-control" placeholder="Enter Number Phone">
                 
             </div>
             
@@ -82,7 +83,7 @@
 
     <div class="table-responsive">
 
-     <form action="" method="POST">
+     <!--<form action="Supplier" method="POST">-->
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
@@ -95,33 +96,34 @@
           </tr>
         </thead>
         <tbody>
-
-          <tr>
-            <td>  </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td>
-                <form action="" method="post ">
-                    <input type="hidden" name="edit_id" value="<?php echo $result['brandId']?>">
-                    <a href="editbrand.php?brandid=<?php echo $result['brandId']?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Chỉnh Sửa</a>
-                  
-                </form>
-            </td>
-            <td>
-                <form action="" method="post">
-                  <input type="hidden" name="delete_id" value="<?php echo $result['brandId']?>">
-                  <button  type="submit" name="delete_btn" class="btn btn-danger">Xóa</button>
-                </form>
-            </td>
-          </tr>
-        <?php
-          }
-            }
-            ?>  
+             <c:forEach items="${listSupplier}" var="sup">
+                <tr>
+                    <td>${sup.idSupplier}</td>
+                    <td>${sup.nameSuppiler}</td>                    
+                    <td>${sup.address}</td>
+                    <td>${sup.numberPhone}</td>
+                    <td>
+                        <form action="update-Supplier" method="post">
+                            <!--<input type="hidden" name="edit_user" value="<?php echo $result['admin_User']; ?>">-->
+                            <button  id="edit_btn" type="button" name="edit_btn" class="btn btn-success"data-toggle="modal" data-target="#addadminprofile"> Sửa </button>
+                              <!--<a href="editCustomer.jsp" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">EDIT</a>--> 
+                        </form>
+                     </td>
+                      <td>
+                        <form action="delete-Supplier" method="post">
+                          <input type="hidden" name="idSupplier" value="${sup.idSupplier}">
+                          <button type="submit" name="delete_btn" class="btn btn-danger"> Xóa </button>
+                        </form>
+                      </td>
+                </tr>
+            </c:forEach>
+<!--          <tr>
+          
+            
+          </tr>-->
         </tbody>
       </table>
-       </form>
+       <!--</form>-->
 
     </div>
   </div>
@@ -129,15 +131,34 @@
 
 </div>
 <script>
-  $(document).ready(function(){
-    
-    $("#dataTable").on('click','#edit_btn',function(){
-      var currentRow = $(this).closest("tr");
-      var id=currentRow.find("td:eq(0)").text();
-      $("#test").val(id);
-      
-    });
- });
-  
-  
+                 document.addEventListener('DOMContentLoaded', function() {
+                var table = document.getElementById('dataTable');
+            
+                const existingContent = new Set();
+                
+               
+              
+                
+                //Cập nhật
+                document.addEventListener('click',function(e){
+                    if(e.target && e.target.id === 'edit_btn'){
+                        
+                        let form = document.getElementById('SupplierForm');
+                        form.action='update-Supplier';
+                        
+                        
+                        let row = e.target.closest('tr');
+                        
+                        document.getElementById("idSupplier").value = row.cells[0].innerText;                        
+                        document.getElementById("SupplierNameAdd").value = row.cells[1].innerText;
+                        document.getElementById("addressSupplierAdd").value = row.cells[2].innerText;
+                        document.getElementById("PhoneSupplierAdd").value = row.cells[3].innerText;
+
+                        existingContent.clear();
+                                                
+                    }
+                });
+
+            });
 </script>
+<%@include file="component/footer.jsp" %>

@@ -5,6 +5,7 @@
 --%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.io.*" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ page session="true" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

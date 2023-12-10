@@ -3,47 +3,61 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/checkoutController.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/searchProductServlet.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/categoryController.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/SupplierDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/Supplier1.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/cart.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listProduct.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listCustomer.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/homepages1.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/StaffDAL.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/LoginServlet.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/productDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/OrderDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listcategory.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/detailsproduct.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/SupplierModel.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/StaffModel.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/editAdminServlet.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/productController.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/OrderModel.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/OrderServlet.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/registerServlet.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listStaff.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/PromotionModel.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/promotion.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listCategory1.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/HomeServlet.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/Staff.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/promotionDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/LogoutServlet1.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/promotion.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/index.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/checkoutController.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/categoryController.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/promotion.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/bill.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/homepages1.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/StaffDAL.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/AccountModel.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/LoginAdmin.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/productDAL.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/Supplier.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/LogoutServlet.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/category.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listCustomeraaaa.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/PermissionGroupModel.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/AccountDAL.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/OrderDAL.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listcategory.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/listImport.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/component/navbar.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/Login.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/detailsproduct.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/StaffModel.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/PermissionGroupDAL.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/editAdminServlet.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/Ordercustomer.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/component-ui/header.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/productController.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/model/OrderModel.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/OrderServlet.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listOrder.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/registerServlet.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listStaff.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listCategory1.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/HomeServlet.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/material.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/Customer.java</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/Staff.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listSupplier.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/Home.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/login.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/LogoutServlet1.java</file>
         </group>
     </open-files>
 </project-private>
