@@ -4,7 +4,6 @@
  */
 package DAL;
 
-import Controller.EmailSender;
 import java.util.Locale;
 import model.AccountModel;
 import java.sql.PreparedStatement;
