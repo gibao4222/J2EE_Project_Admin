@@ -125,7 +125,7 @@ img.sub-galerry {
     </section>
     <div class="container1">
        
-       <form action="ShoppingCartServlet" method="GET">
+      
          <div class="product">
             <div class="product-image">
                 <img src="./resources/image/<%=   request.getAttribute("img") %>" alt="Product Image">
@@ -145,6 +145,8 @@ img.sub-galerry {
             </c:forEach>
             <!-- Thêm các hình ảnh phụ khác -->
         </div>
+                 <form action="ShoppingCartServlet" method="GET">
+                <input name="quantity" type="hidden" min="1" value="1" />
                 <input type="hidden" name="action" value="AddCart">
                                 <input type="hidden" name="price" value="<%=   request.getAttribute("price") %>" />    
                                 <input type="hidden" name="image" value="<%=   request.getAttribute("img") %>" />    

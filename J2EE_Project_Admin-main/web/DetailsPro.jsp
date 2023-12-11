@@ -8,22 +8,35 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@include file="component-ui/header.jsp" %>
-
+  <style>
+       img.product__details__pic__item--large {
+    height: 500px;
+    width: 200px;
+}
+img.sub-galerry {
+    height: 130px;
+}
+    </style>
+   
   <section class="hero hero-normal">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
-                <div class="hero__categories">
-                    <div class="hero__categories__all">
-                        <i class="fa fa-bars"></i>
-                        <span>Thương hiệu</span>
-                    </div>
-                    <ul>
+               <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Danh mục sản phẩm</span>
+                        </div>
+                                                         <c:forEach items="${cate}" var="cate">
+
+                        <ul>
+
+                            <li><a href="categoryHome?idCategory=<c:out value="${cate.idCategory}"/>">${cate.nameCategory}</a></li>
                             
-                        <li><a href="product.php?brandid=<?php echo $result['brandId'] ?>,&brandName=<?php echo $result['brandName'] ?>"><?php echo $result['brandName'] ?></a></li>
-                        
-                    </ul>
-                </div>
+                        </ul>
+               </c:forEach>
+                       
+                    </div>
             </div>
             <div class="col-lg-9">
                 <div class="hero__search">
@@ -75,7 +88,7 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Product Details Section Begin -->
-    <form action="" method="post">  
+    <form action="ShoppingCartServlet" method="GET">
     
 
     <section class="product-details spad">
@@ -89,14 +102,10 @@
                                 src="./resources/image/<%=   request.getAttribute("img") %>" alt="">
                         </div>
                          <div class="product__details__pic__slider owl-carousel">
-                            <img data-imgbigurl="./resources/img/undraw_posting_photo.svg"
-                                src="./resources/img/undraw_posting_photo.svg" alt="">
-                            <img data-imgbigurl="./resources/img/undraw_posting_photo.svg"
-                                src="./resources/img/undraw_posting_photo.svg" alt="">
-                            <img data-imgbigurl="img/product/details/product-details-5.jpg"
-                                src="./resources/img/undraw_posting_photo.svg" alt="">
-                            <img data-imgbigurl="./resources/img/undraw_posting_photo.svg"
-                                src="./resources/img/undraw_posting_photo.svg" alt="">
+                              <c:forEach items="${sub}" var="c">
+                            <img data-imgbigurl="./resources/image/<%=   request.getAttribute("img") %>"
+                <img class="sub-galerry" src="./resources/image/<c:out value="${c.subImage}"/>" alt="Product Image 1">
+                            </c:forEach>
                         </div> 
                     </div>
                 </div>
@@ -119,9 +128,19 @@
                         
                        
                        
-                        <!-- <a  class="primary-btn" name="submit">ADD TO CARD</a> -->
-                        <button type="submit" class="site-btn" name="submit">ADD TO CARD</button>
+                         
                         
+                        
+                <input name="quantity" type="hidden" min="1" value="1" />
+                <input type="hidden" name="action" value="AddCart">
+                                <input type="hidden" name="price" value="<%=   request.getAttribute("price") %>" />    
+                                <input type="hidden" name="image" value="<%=   request.getAttribute("img") %>" />    
+
+                <input type="hidden" name="nameproduct" value="<%=   request.getAttribute("nameproduct") %>" />    
+           <input type="hidden" name="action" value="add" />
+            <input type="hidden" name="idProduct" value="<%=   request.getAttribute("IdProduct") %>"/>
+                <input  type="submit" class="buy-button primary-btn" value="Mua hàng" />
+         </form>
                         <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
                             
@@ -154,7 +173,7 @@
                             </li>
                             
                             <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
-                            <li><b>Weight</b> <span>0.5 kg</span></li>
+                            
                             <li><b>Share on</b>
                                 <div class="share">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -189,20 +208,20 @@
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Thông tin sản phẩm</h6>
-                                    <p>Enjoy luxurious comfort and improved bounce with the men's GEL-KAYANO® 26 running shoe, featuring GEL® technology to the forefoot and rear for high-density shock absorption and a comfortable feel over long distances. Featuring a jacquard mesh upper and FLYTEFOAM® Propel technology for a lightweight quality that allows your feet to breathe, this ASICS running shoe is all about going the distance, providing exceptional support and comfort over long periods of time. The EVA sockliner offers excellent rebound and cushioning, while the Guidance TRUSSTIC SYSTEM® technology brings a new level of stability, working with the contoured midsole to help control torsion. Meanwhile, the SpEVA 45 lasting improves bounce-back characteristics to put a spring in your step (quite literally).</p>
+                                    <p><%=request.getAttribute("portray")%></p>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Thông tin sản phẩm</h6>
-                                    <p>Enjoy luxurious comfort and improved bounce with the men's GEL-KAYANO® 26 running shoe, featuring GEL® technology to the forefoot and rear for high-density shock absorption and a comfortable feel over long distances. Featuring a jacquard mesh upper and FLYTEFOAM® Propel technology for a lightweight quality that allows your feet to breathe, this ASICS running shoe is all about going the distance, providing exceptional support and comfort over long periods of time. The EVA sockliner offers excellent rebound and cushioning, while the Guidance TRUSSTIC SYSTEM® technology brings a new level of stability, working with the contoured midsole to help control torsion. Meanwhile, the SpEVA 45 lasting improves bounce-back characteristics to put a spring in your step (quite literally).</p>
-                                </div>
+                                    <p><%=request.getAttribute("portray")%></p>
+                                    </div>
                             </div>
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div class="product__details__tab__desc">
                                     <h6>Thông tin sản phẩm</h6>
-                                    <p>Enjoy luxurious comfort and improved bounce with the men's GEL-KAYANO® 26 running shoe, featuring GEL® technology to the forefoot and rear for high-density shock absorption and a comfortable feel over long distances. Featuring a jacquard mesh upper and FLYTEFOAM® Propel technology for a lightweight quality that allows your feet to breathe, this ASICS running shoe is all about going the distance, providing exceptional support and comfort over long periods of time. The EVA sockliner offers excellent rebound and cushioning, while the Guidance TRUSSTIC SYSTEM® technology brings a new level of stability, working with the contoured midsole to help control torsion. Meanwhile, the SpEVA 45 lasting improves bounce-back characteristics to put a spring in your step (quite literally).</p>
-                                </div>
+                                    <p><%=request.getAttribute("portray")%></p>
+                                    </div>
                             </div>
                         </div>
                     </div>

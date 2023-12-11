@@ -22,35 +22,37 @@
                        
                     </div>
                     <div class="sidebar__item sidebar__item__color--option">
-                        <h4>Chất liệu</h4>
+                        <h4>Tìm kiếm theo chất liệu</h4>
                             <div class="sidebar__item__color sidebar__item__color--white">
                                  <label for="white">
-                                     <a href="stuff" style="color:black" >  Gỗ</a>
+                                     <a href="stuff?id=wood
+" style="color:black" >  Wood
+</a>
                                     <input type="radio" id="white">
                                 </label>
                             </div>      
                         
                             <div class="sidebar__item__color sidebar__item__color--red">
                                 <label for="red">
-                                   <a href="stuff" style="color:black" >  Nhôm</a>
+                                   <a href="stuff?id=aluminum" style="color:black" >  Aluminum</a>
                                     <input type="radio" id="red">
                                 </label>
                             </div>
                             <div class="sidebar__item__color sidebar__item__color--black">
                                 <label for="black">
-                                    <a href="stuff" style="color:black" >  Kim loại</a>
+                                    <a href="stuff?id=metal" style="color:black" >  Metal</a>
                                     <input type="radio" id="black">
                                 </label>
                             </div>
                             <div class="sidebar__item__color sidebar__item__color--blue">
                                 <label for="blue">
-                                   <a href="stuff" style="color:black" >  Cao su</a>
+                                   <a href="stuff?id=rubber" style="color:black" >  Rubber</a>
                                     <input type="radio" id="blue">
                                 </label>
                             </div>
                             <div class="sidebar__item__color sidebar__item__color--green">
                                 <label for="green">
-                                   <a href="stuff" style="color:black" >  Nhựa cao cấp</a>
+                                   <a href="stuff?id=plastic" style="color:black" >  High quality plastic</a>
                                     <input type="radio" id="green">
                                 </label>
                             </div>

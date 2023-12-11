@@ -18,11 +18,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import model.OrderModel;
+import model.ProductModel;
 /**
  *
  * @author Thanhchan
  */
-@WebServlet({"/show-category", "/add-category", "/edit-category","/delete-category","/save-category","/order-customer"})
+@WebServlet({"/show-category", "/add-category", "/edit-category","/stuff","/delete-category","/save-category","/order-customer"})
 public class categoryController extends HttpServlet {
 
     /**
@@ -88,6 +89,16 @@ public class categoryController extends HttpServlet {
              String id = request.getParameter("id");
              c.deletecategory(id);
                response.sendRedirect("show-category");
+} if(uri.contains("stuff")){
+    String id = request.getParameter("id");
+  productDAL p = new productDAL();
+
+         List<ProductModel> l  =  p.findproductbyStuff(id);
+          request.setAttribute("data", l);
+          categoryDAL c = new categoryDAL();
+         List<category> cate = c.readcategory();
+           request.setAttribute("cate", cate);
+                 request.getRequestDispatcher("Home.jsp").forward(request, response);
 }
     }
 

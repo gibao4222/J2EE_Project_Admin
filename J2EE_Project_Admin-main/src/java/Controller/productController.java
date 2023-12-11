@@ -93,6 +93,7 @@ public class productController extends HttpServlet {
 
          
      }else if(uri.contains("details")){
+         
          String id = request.getParameter("idproduct");
      ProductModel p = new ProductModel();
      productDAL pro = new productDAL();
@@ -119,6 +120,9 @@ public class productController extends HttpServlet {
        subimageDAL sub =new subimageDAL();
        List<subimage> lists = sub.findsubByidpro(id);
        request.setAttribute("sub", lists);
+        categoryDAL cate = new categoryDAL();
+        List <category> listcate = cate.readcategory();
+        request.setAttribute("cate", listcate);
              request.getRequestDispatcher("DetailsPro.jsp").forward(request, response);
 
              
