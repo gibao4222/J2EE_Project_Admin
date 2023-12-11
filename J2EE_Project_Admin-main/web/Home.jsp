@@ -22,35 +22,35 @@
                        
                     </div>
                     <div class="sidebar__item sidebar__item__color--option">
-                        <a> <h4>Chất liệu</h4>
+                        <h4>Chất liệu</h4>
                             <div class="sidebar__item__color sidebar__item__color--white">
                                  <label for="white">
-                                    Gỗ
+                                     <a href="stuff" style="color:black" >  Gỗ</a>
                                     <input type="radio" id="white">
                                 </label>
                             </div>      
-                            </a>
+                        
                             <div class="sidebar__item__color sidebar__item__color--red">
                                 <label for="red">
-                                    Nhôm
+                                   <a href="stuff" style="color:black" >  Nhôm</a>
                                     <input type="radio" id="red">
                                 </label>
                             </div>
                             <div class="sidebar__item__color sidebar__item__color--black">
                                 <label for="black">
-                                    Kim loại
+                                    <a href="stuff" style="color:black" >  Kim loại</a>
                                     <input type="radio" id="black">
                                 </label>
                             </div>
                             <div class="sidebar__item__color sidebar__item__color--blue">
                                 <label for="blue">
-                                    Cao su
+                                   <a href="stuff" style="color:black" >  Cao su</a>
                                     <input type="radio" id="blue">
                                 </label>
                             </div>
                             <div class="sidebar__item__color sidebar__item__color--green">
                                 <label for="green">
-                                    Nhựa an toàn 
+                                   <a href="stuff" style="color:black" >  Nhựa cao cấp</a>
                                     <input type="radio" id="green">
                                 </label>
                             </div>

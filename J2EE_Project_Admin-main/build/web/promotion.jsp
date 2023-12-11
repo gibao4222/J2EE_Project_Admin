@@ -88,9 +88,9 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Danh Sách NSX 
+    <h6 class="m-0 font-weight-bold text-primary">Danh Sách Mã giảm giá
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addadminprofile">
-             Thêm NSX
+             Thêm Mã giảm giá
             </button>
     </h6>
   </div>
@@ -127,10 +127,10 @@
             <td>
                 <form action="delete-Promotion" method="POST">
                     <input type="hidden" name="idPromo" id="idPromo" value="${c.idSale}">
-                  <button  type="submit" name="delete_btn" class="btn btn-danger">Xóa</button>
+                  <button  type="submit" name="delete_btn" class="btn btn-danger">Delete</button>
                 </form>
                   <form action="load" method="post">
-                      <button  type="button" name="edit_btn" id="edit_btn" class="btn btn-success" data-toggle="modal" data-target="#addadminprofile" data-idPromo="${c.idSale}">ê đít</button>
+                      <button  type="button" name="edit_btn" id="edit_btn" class="btn btn-success" data-toggle="modal" data-target="#addadminprofile" data-idPromo="${c.idSale}">edit</button>
                   </form>
                 
                 

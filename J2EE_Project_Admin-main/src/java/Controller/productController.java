@@ -100,10 +100,15 @@ public class productController extends HttpServlet {
         p = pro.findProduct(id);
         String nameproduct= p.getNameProduct();
         float price=p.getPrice();
-        System.out.print(p.getNameProduct());
         int quantity = p.getQuantity();
         String IdProduct = p.getIdProduct();
+        String introduce = p.getIntroduce();
+        String portray = p.getPortray();
         String img=p.getImage();
+        int quantities = p.getQuantity();
+                request.setAttribute("introduce", introduce);
+                request.setAttribute("portray", portray);
+                request.setAttribute("quantities", quantities);
         request.setAttribute("IdProduct", IdProduct);
         request.setAttribute("img", img);
         request.setAttribute("nameproduct", nameproduct);
@@ -114,7 +119,7 @@ public class productController extends HttpServlet {
        subimageDAL sub =new subimageDAL();
        List<subimage> lists = sub.findsubByidpro(id);
        request.setAttribute("sub", lists);
-             request.getRequestDispatcher("detailsproduct.jsp").forward(request, response);
+             request.getRequestDispatcher("DetailsPro.jsp").forward(request, response);
 
              
      
