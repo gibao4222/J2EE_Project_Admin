@@ -26,7 +26,7 @@ import model.category;
  *
  * @author Thanhchan
  */
-@WebServlet({"/product","/details", "/add-product", "/update-poduct","/delete-Product","/save-product","/home","/categoryHome"})
+@WebServlet({"/product","","/details", "/add-product", "/update-poduct","/delete-Product","/save-product","/home","/categoryHome"})
 public class productController extends HttpServlet {
 
     /**
@@ -134,6 +134,10 @@ public class productController extends HttpServlet {
  
 
         
+     
+     
+     }else if(uri.contains("")){
+        response.sendRedirect("home");
      
      
      }// [Tính diện tích].Click

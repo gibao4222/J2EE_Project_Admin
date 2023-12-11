@@ -27,11 +27,11 @@
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/promotion.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listCategory1.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/HomeServlet.java</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/importDetail.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/Staff.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/promotionDAL.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/LogoutServlet1.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/promotion.jsp</file>
-            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/index.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/checkoutController.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/categoryController.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/promotion.java</file>
@@ -52,6 +52,7 @@
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/DAL/PermissionGroupDAL.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/Ordercustomer.java</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/component-ui/header.jsp</file>
+            <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/indexAdmin.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/listOrder.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/web/material.jsp</file>
             <file>file:/C:/Users/Thanhchan/Desktop/J2EE_Project_Admin/J2EE_Project_Admin-main/src/java/Controller/Customer.java</file>
